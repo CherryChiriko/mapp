@@ -13,10 +13,14 @@
 height="400px"
 width="750px"></google-map> -->
 <div class="container mt-5">
-    <google-map height="400px"
-    width="750px"
-    [center]="center"
-    [zoom]="zoom">
+    <google-map height="400px" width="750px" [center]="center" [zoom]="zoom">
+        <map-marker #marker="mapMarker"
+        *ngFor="let place of markers" [position]="place.position"
+        (mapClick)="openInfoWindow(marker, infoWindow)"
+        >
+        <map-info-window #infoWindow="mapInfoWindow">
+            {{place.info.name}}
+        </map-info-window>
+        </map-marker>
     </google-map>
 </div>
-
