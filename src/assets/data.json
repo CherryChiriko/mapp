@@ -25,4 +25,18 @@
     "name": "Bologna",
     "direction": "Bologna, Italy"
     }
+},
+{
+    "position": { "lat": 39.46, "lng": -0.36},
+    "info": {
+    "name": "Màster Universitari en Professorat d'Educació Secundària",
+    "direction": "Carrer de l'Alcalde Reig, 8, 46004 València, Valencia, Spain"
+    }
+},
+{
+    "position": { "lat": 40.40, "lng": -3.68},
+    "info": {
+    "name": "Subestación de Atocha",
+    "direction": "28045 Madrid, Spain"
+    }
 }]
