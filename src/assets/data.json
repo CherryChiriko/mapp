@@ -1,42 +1,72 @@
-[{
-    "position": { "lat": 38.9987208, "lng": -77.2538699 },
-    "info": {
-    "name": "Great Falls",
-    "direction": "Potomac, MD 20854, United States"
-    }
-},
-{
-    "position": { "lat": 39.7, "lng": -76.0 },
-    "info": {
-    "name": "Grove Farm Wildlife Management Area",
-    "direction": "1989-2103 Grove Neck Rd, Earleville, MD 21919, United States"
-    }
-},
-{
-    "position": { "lat": 37.9, "lng": -76.8 },
-    "info": {
-    "name": "Virginia",
-    "direction": "Virginia, United States"
-    }
-},
-{
-    "position": { "lat": 44.4949, "lng": 11.3426},
-    "info": {
-    "name": "Bologna",
-    "direction": "Bologna, Italy"
-    }
-},
-{
-    "position": { "lat": 39.46, "lng": -0.36},
-    "info": {
-    "name": "Màster Universitari en Professorat d'Educació Secundària",
-    "direction": "Carrer de l'Alcalde Reig, 8, 46004 València, Valencia, Spain"
-    }
-},
-{
-    "position": { "lat": 40.40, "lng": -3.68},
-    "info": {
-    "name": "Subestación de Atocha",
-    "direction": "28045 Madrid, Spain"
-    }
-}]
+[
+  {
+      "Nome": "Livio Rossi",
+      "Email": "livio@live.it",
+      "Telefono": "333 22 55 671",
+      "Domicilio": "Bologna",
+      "Disp_Trasferimento": "true",
+      "Studi": "Laurea",
+      "Competenza_Princ": "Web dev",
+      "Drivers": "true",
+      "Disponibilita_dal": "20/10/2023",
+      "Preavviso": 10,
+      "Latitude": 44.5075,
+      "Longitude": 44.5075
+  },
+  {
+      "Nome": "Mario Bianchi",
+      "Email": "mario@live.it",
+      "Telefono": "334 22 55 672",
+      "Domicilio": "Cagliari",
+      "Disp_Trasferimento": "false",
+      "Studi": "Diploma",
+      "Competenza_Princ": "CAD",
+      "Drivers": "false",
+      "Disponibilita_dal": "22/09/2023",
+      "Preavviso": 11,
+      "Latitude": 39.25,
+      "Longitude": 9.05
+  },
+  {
+      "Nome": "Anna Verdi",
+      "Email": "anna@live.it",
+      "Telefono": "335 22 55 673",
+      "Domicilio": "Genova",
+      "Disp_Trasferimento": "false",
+      "Studi": "Diploma ",
+      "Competenza_Princ": "Front-end",
+      "Drivers": "true",
+      "Disponibilita_dal": "01/01/2023",
+      "Preavviso": 12,
+      "Latitude": 44.411111,
+      "Longitude": 8.932778
+  },
+  {
+      "Nome": "Lara Neri",
+      "Email": "lara@live.it",
+      "Telefono": "336 22 55 674",
+      "Domicilio": "Firenze",
+      "Disp_Trasferimento": "true",
+      "Studi": "Laurea",
+      "Competenza_Princ": "Excel",
+      "Drivers": "false",
+      "Disponibilita_dal": "13/07/2023",
+      "Preavviso": 10,
+      "Latitude": 43.7686976,
+      "Longitude": 11.2569291
+  },
+  {
+      "Nome": "Sofia Gialli",
+      "Email": "sofia@live.it",
+      "Telefono": "337 22 55 675",
+      "Domicilio": "Palermo",
+      "Disp_Trasferimento": "true",
+      "Studi": "Laurea",
+      "Competenza_Princ": "Back-end",
+      "Drivers": "true",
+      "Disponibilita_dal": "10/02/2023",
+      "Preavviso": 11,
+      "Latitude": 38.116667,
+      "Longitude": 13.366667
+  }
+]
