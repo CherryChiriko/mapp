@@ -23,17 +23,17 @@ export class MapComponent implements OnInit{
 
   color: string = "orange";
 
-  constructor(private map: MapService){}
+  constructor(private map: MapService, private _excel : ExcelService){}
 
   ngOnInit(){
-    // this.markersSubs = this._excel.getAll().subscribe(
-    //   value => this.specialists = value);
+     //this.markersSubs = this._excel.getAll().subscribe(
+       //value => this.specialists = value);
     this.markersSubs = this.map.getMarkers().subscribe(
       value => this.specialists = value);
   }
 
-  
-  originalOrder = 
+
+  originalOrder =
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 
   markerInfo(mark: ISpecialist){ return this.map.getMarkerInfo(mark)}

@@ -27,7 +27,7 @@ export class ExcelService {
     const fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
     fileReader.onload = (e) => {
-      console.log(e);
+      //console.log(e);
       let workBook = XLSX.read(fileReader.result, {type: 'binary'});
       let data = workBook.SheetNames;
       this.excelData = XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]);
@@ -41,5 +41,6 @@ export class ExcelService {
   public addCity(value : ISpecialist) {
     this._excelData.push(value);
     this.excelData = this.excelData;
+    console.log(this.excelData);
   }
 }
