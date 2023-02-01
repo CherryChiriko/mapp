@@ -6,7 +6,7 @@ export interface ISpecialist {
   Disp_Trasferimento: boolean;
   Studi: string;
   Competenza_Princ: string;
-  Drivers: boolean;
+  Drivers: string[];
   Disponibilita_dal: string;
   Preavviso: number;
   Latitude: number;

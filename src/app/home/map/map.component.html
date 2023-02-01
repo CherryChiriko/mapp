@@ -1,14 +1,15 @@
+<input type="file" (change)="loadFile($event)" >
 <div class="container mt-5">
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker"
-        *ngFor="let specialist of specialists" 
+        *ngFor="let specialist of specialists"
         [position]="{lat: specialist.Latitude, lng: specialist.Longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow">
             <div class="card text-center rounded" style="--color: {{color}};">
                 <div id="head" class="card-header text-center rounded">
-                    <h5>{{specialist.Nome}}</h5> 
+                    <h5>{{specialist.Nome}}</h5>
                 </div>
                 <table class="table" id="body">
                     <tr *ngFor="let item of specialist | keyvalue">
