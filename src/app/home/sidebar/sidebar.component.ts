@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
   reactiveForm !: FormGroup;
   add(){
     const val = this.reactiveForm.value;
@@ -18,4 +18,38 @@ export class SidebarComponent {
     // val.city !== null  ? this.profile.city = val.city : null;
     // val.email !== null && this.reactiveForm.valid ? this.profile.email = val.email : null;
   }
+
+  ngOnInit(){
+    this.reactiveForm = new FormGroup({
+      city: new FormControl(null),
+      picture: new FormControl(null)      
+    })
+  }
+
+
+  // addMarker(latLng: google.maps.LatLngLiteral, color: string = 'yellow') {
+  //   // let img = picture === null ? `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png` :
+  //   // `../assets/${picture}`;
+    
+  //   // let url = "..\\assets\\img\\ima_logo.png"
+  //   let img = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+  //   console.log(color)
+  //   let marker = new google.maps.Marker({
+  //     position: latLng,
+  //     icon: img
+  //   });
+
+  //   this.markers.push(marker);
+  // }
+
+  // add(){
+  //   const val = this.reactiveForm.value;
+    
+  //   this.addMarker({ "lat": 43.48, "lng": 1.68})
+  //   // val.name !== null  ? this.profile.name = val.name : null;
+  //   // val.species !== null  ? this.profile.species = val.species : null;
+  //   // val.country !== null  ? this.profile.country = val.country : null;    
+  //   // val.city !== null  ? this.profile.city = val.city : null;
+  //   // val.email !== null && this.reactiveForm.valid ? this.profile.email = val.email : null;
+  // }
 }
