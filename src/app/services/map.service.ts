@@ -25,12 +25,6 @@ export class MapService {
     console.log(distance)  // answer is in meters
   }
   getMarkers(): Observable<ISpecialist[]> { return this.markers}
-<<<<<<< HEAD
-  // getMarkers() {
-  //   console.log( this.markers)
-  //   console.log( this.markers)
-  // }
-=======
 
   getMarkerInfo(mark: ISpecialist){
     let info = {
@@ -43,8 +37,4 @@ export class MapService {
     }
     return info
   }
-  getContactInfo(mark: ISpecialist){
-    return [mark.Email, mark.Telefono]
-  }
->>>>>>> e0edceba76b466c5e740cbba91ee67e6df402ca1
 }
