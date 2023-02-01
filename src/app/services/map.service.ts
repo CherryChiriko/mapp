@@ -13,7 +13,6 @@ export class MapService {
   data : ISpecialist[] = markerData;
 
   constructor(private http: HttpClient) {
-    // http.get("src/assets/data.json").subscribe( dat => this.markers.next(dat))
     this.markers.next(this.data);
   }
 
@@ -37,4 +36,5 @@ export class MapService {
     }
     return info
   }
+
 }

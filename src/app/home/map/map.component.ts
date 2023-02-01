@@ -22,6 +22,7 @@ export class MapComponent implements OnInit{
   zoom = 5;
 
   color: string = "orange";
+  contacts: boolean[] = [];
 
   constructor(private map: MapService, private _excel : ExcelService){}
 
@@ -32,13 +33,33 @@ export class MapComponent implements OnInit{
       value => this.specialists = value);
   }
 
+<<<<<<< HEAD
 
   originalOrder =
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 
+=======
+  
+  originalOrder = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
+>>>>>>> 30b08b7af7f4c3b990b5f006c4ce3820a7d54087
   markerInfo(mark: ISpecialist){ return this.map.getMarkerInfo(mark)}
+  
+  toggleContacts(i: number){
+    this.contacts[i] = !this.contacts[i];
+    // return this.contacts
+  }
+  setContact(){
+    if (!this.contacts.length){
+    for (let i = 0; i<this.specialists.length; i++){
+      this.contacts.push(false);
+    }}
+    else {
+      this.contacts.map( contact => contact = false)
+    }
+  }
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
+    this.setContact();
     infoWindow.open(marker);
   }
 

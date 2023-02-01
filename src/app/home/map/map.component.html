@@ -2,7 +2,7 @@
 <div class="container mt-5">
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker" 
-        *ngFor="let specialist of specialists" 
+        *ngFor="let specialist of specialists; let i=index" 
         [position]="{lat: specialist.Latitude, lng: specialist.Longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
@@ -11,10 +11,18 @@
                 <div id="head" class="card-header text-center rounded">
                     <div class="row">
                         <h6 class="col-9">{{specialist.Nome}}</h6>  
-                        <a  class="col-1"><i class="material-symbols-outlined">contact_page</i></a>
-                    </div> 
+                        <i (click)="toggleContacts(i)" class="material-symbols-outlined col-1"
+                        id="contact-icon">contact_page</i>
+                    </div>
                 </div>
                 <table class="table" id="body">
+                    <tr *ngIf="contacts[i]" class="contacts">
+                      <td><i class="material-symbols-outlined">mail</i>
+                      {{specialist.Email}}</td>
+                    <tr *ngIf="contacts[i]" class="contacts">
+                      <td><i class="material-symbols-outlined">call</i>
+                        {{specialist.Telefono}}</td>
+                    </tr>
                     <tr *ngFor="let item of markerInfo(specialist) | keyvalue: originalOrder">
                         <td class="rounded">
                             {{item.key}} : {{item.value}}
