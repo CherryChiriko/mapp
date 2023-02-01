@@ -1,33 +1,24 @@
 <div class="container mt-5">
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker"
-        *ngFor="let place of markers" [position]="place.position"
+        *ngFor="let specialist of markers" 
+        [position]="{lat: specialist.Latitude, lng: specialist.Longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow">
             <div class="container">
             <table class="table text-center expand-md">
             <thead>
-                <th>{{place.info.name}}</th>
+                <th>{{specialist.Nome}}</th>
             </thead>
             <tbody>
-                <tr><td>{{place.info.direction}}</td></tr>
+                <tr *ngFor="let item of specialist | keyvalue">
+                    <td>{{item.key}} : {{item.value}}</td>
+                </tr>
             </tbody>
             </table>
             </div>
         </map-info-window>
         </map-marker>
     </google-map>
-    <!-- <button class="btn btn-primary" (click)="add()">Add Client</button>
-    <button class="btn btn-success" (click)="add()">Add Specialist</button>
-    <form [formGroup]="reactiveForm">
-        <input #mapSearchField type="text" name="city" 
-            class="form-control text-center" placeholder="City"
-            formControlName = "name">
-            <input type="text" name="picture" id="picture" 
-            class="form-control text-center" placeholder="Picture file name (include extension)"
-            formControlName = "picture">
-    </form> -->
 </div>
-
-<!-- [center]="center" [zoom]="zoom" -->
