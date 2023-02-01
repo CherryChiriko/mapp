@@ -22,6 +22,7 @@ export class MapComponent implements OnInit{
   zoom = 5;
 
   color: string = "orange";
+  contacts: boolean[] = [];
 
   constructor(private map: MapService){}
 
@@ -33,12 +34,25 @@ export class MapComponent implements OnInit{
   }
 
   
-  originalOrder = 
-  (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
-
+  originalOrder = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
   markerInfo(mark: ISpecialist){ return this.map.getMarkerInfo(mark)}
+  
+  toggleContacts(i: number){
+    this.contacts[i] = !this.contacts[i];
+    // return this.contacts
+  }
+  setContact(){
+    if (!this.contacts.length){
+    for (let i = 0; i<this.specialists.length; i++){
+      this.contacts.push(false);
+    }}
+    else {
+      this.contacts.map( contact => contact = false)
+    }
+  }
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
+    this.setContact();
     infoWindow.open(marker);
   }
 
