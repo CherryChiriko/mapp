@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -28,6 +29,11 @@ export class MapComponent implements OnInit{
       val => this.specialists = val
     );
   }
+
+  originalOrder = 
+  (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
+
+  markerInfo(mark: ISpecialist){ return this.map.getMarkerInfo(mark)}
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
     infoWindow.open(marker);
