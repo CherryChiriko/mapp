@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -29,6 +30,7 @@ export class MapComponent implements OnInit{
       value => this.specialists = value);
   }
 
+<<<<<<< HEAD
   public loadFile(event : any) {
     this._excel.loadExcelFile(event);
     console.log('File open with success');
@@ -50,6 +52,12 @@ export class MapComponent implements OnInit{
       Longitude : 333
   })
 }
+=======
+  originalOrder = 
+  (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
+
+  markerInfo(mark: ISpecialist){ return this.map.getMarkerInfo(mark)}
+>>>>>>> e0edceba76b466c5e740cbba91ee67e6df402ca1
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
     infoWindow.open(marker);

@@ -1,18 +1,30 @@
 <input type="file" (change)="loadFile($event)" >
 <div class="container mt-5">
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
+<<<<<<< HEAD
         <map-marker #marker="mapMarker"
         *ngFor="let specialist of specialists"
+=======
+        <map-marker #marker="mapMarker" 
+        *ngFor="let specialist of specialists" 
+>>>>>>> e0edceba76b466c5e740cbba91ee67e6df402ca1
         [position]="{lat: specialist.Latitude, lng: specialist.Longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow">
             <div class="card text-center rounded" style="--color: {{color}};">
                 <div id="head" class="card-header text-center rounded">
+<<<<<<< HEAD
                     <h5>{{specialist.Nome}}</h5>
+=======
+                    <div class="row">
+                        <h6 class="col-9">{{specialist.Nome}}</h6>  
+                        <a  class="col-1"><i class="material-symbols-outlined">contact_page</i></a>
+                    </div> 
+>>>>>>> e0edceba76b466c5e740cbba91ee67e6df402ca1
                 </div>
                 <table class="table" id="body">
-                    <tr *ngFor="let item of specialist | keyvalue">
+                    <tr *ngFor="let item of markerInfo(specialist) | keyvalue: originalOrder">
                         <td class="rounded">
                             {{item.key}} : {{item.value}}
                         </td>
@@ -23,3 +35,33 @@
         </map-marker>
     </google-map>
 </div>
+<<<<<<< HEAD
+=======
+
+<!-- [icon]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'" -->
+
+<!-- [icon]="'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'" -->
+
+
+
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+>>>>>>> e0edceba76b466c5e740cbba91ee67e6df402ca1
