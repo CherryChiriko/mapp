@@ -10,11 +10,11 @@ import { ISpecialist } from '../interfaces/interfaces';
 
 export class MapService {
   markers = new BehaviorSubject<ISpecialist[]>([])
-  //data : ISpecialist[] = markerData;
+  data : ISpecialist[] = markerData;
 
   constructor(private http: HttpClient) {
     // http.get("src/assets/data.json").subscribe( dat => this.markers.next(dat))
-    //this.markers.next(this.data);
+    this.markers.next(this.data);
   }
 
   distanceCalc(latLng1: google.maps.LatLngLiteral, latLng2: google.maps.LatLngLiteral){

@@ -23,34 +23,16 @@ export class MapComponent implements OnInit{
 
   color: string = "orange";
 
-  constructor(private map: MapService, private _excel : ExcelService){}
+  constructor(private map: MapService){}
 
   ngOnInit(){
-    this.markersSubs = this._excel.getAll().subscribe(
+    // this.markersSubs = this._excel.getAll().subscribe(
+    //   value => this.specialists = value);
+    this.markersSubs = this.map.getMarkers().subscribe(
       value => this.specialists = value);
   }
 
-  public loadFile(event : any) {
-    this._excel.loadExcelFile(event);
-    console.log('File open with success');
-  }
-
-  public addSpecialist(value : ISpecialist) {
-    this._excel.addCity({
-      Nome : "sss",
-      Email: "E",
-      Telefono: "222",
-      Domicilio: "aa",
-      Disp_Trasferimento: true,
-      Studi : "aa",
-      Competenza_Princ : "ss",
-      Drivers: [""],
-      Disponibilita_dal : "20/10/22",
-      Preavviso : 2,
-      Latitude: 2222,
-      Longitude : 333
-  })
-}
+  
   originalOrder = 
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 
