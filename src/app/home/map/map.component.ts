@@ -1,7 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Subscription } from 'rxjs';
 import { ISpecialist } from 'src/app/interfaces/interfaces';
@@ -38,19 +36,14 @@ export class MapComponent implements OnInit{
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 
   markerInfo(mark: ISpecialist){ return this.map.getMarkerInfo(mark)}
-
-  toggleContacts(i: number){
-    this.contacts[i] = !this.contacts[i];
-    // return this.contacts
-  }
+  
+  toggleContacts(i: number){    this.contacts[i] = !this.contacts[i];  }
   setContact(){
     if (!this.contacts.length){
     for (let i = 0; i<this.specialists.length; i++){
       this.contacts.push(false);
     }}
-    else {
-      this.contacts.map( contact => contact = false)
-    }
+    else {      this.contacts.map( contact => contact = false)    }
   }
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
