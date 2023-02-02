@@ -13,11 +13,10 @@
             </div>
             <div class="col-auto">
                 <input #mapSearchField type="text" name="city" id="city"
-                class="form-control text-center my-2 my-map-search-field" placeholder="City"
-                formControlName = "city">
+                class="form-control text-center my-2 my-map-search-field" placeholder="City">
             </div>
         </div>
-        <div class="container form-div client rounded" *ngIf="isClientOpen">
+        <!-- <div class="container form-div client rounded" *ngIf="isClientOpen">
             <form [formGroup]="reactiveForm" class="my-3 pt-3" >
                 <input #mapSearchField type="text" name="city" 
                     class="form-control text-center my-2 my-map-search-field" placeholder="City"
@@ -30,16 +29,70 @@
                     formControlName = "picture">
                 <button class="btn btn-primary m-2 mb-4" (click)="addClient()">Add client</button>
             </form>
-        </div>
+        </div> -->
         <div class="container form-div specialist rounded" *ngIf="isSpecialistOpen">
             <form [formGroup]="reactiveForm" class="my-3 pt-3" >
-                <input #mapSearchField type="text" name="city" 
-                    class="form-control text-center my-2" placeholder="City"
+                <input type="text" name="name" 
+                    class="form-control text-center my-2" placeholder="Name"
                     formControlName = "name">
-                    <input type="text" name="picture" id="picture" 
-                    class="form-control text-center my-2" placeholder="Picture file name (include extension)"
-                    formControlName = "picture">
+                <input type="email" name="email" 
+                    class="form-control text-center my-2" placeholder="Email"
+                    formControlName = "email">
+                <input type="text" name="phone" id="phone" 
+                    class="form-control text-center my-2" placeholder="Phone number"
+                    formControlName = "phone">
+                <select name="degree" id="degree" 
+                    class="form-select text-center my-2" 
+                    formControlName = "degree">
+                    <option [ngValue]="null" disabled selected>Highest degree</option>
+                    <option value="Ph.D.">              Ph.D.           </option>
+                    <option value="Master">             Master          </option>
+                    <option value="Bachelor">           Bachelor        </option>
+                    <option value="Technical school">   Technical school</option>
+                    <option value="High School">        High School     </option>
+                    <option value="No degree">          No degree       </option>
+                  </select>
+                
+                <div class="form-check" id="specialties" 
+                formControlName = "specialties">
+                    <p>Specialties</p>
+                    <input type="checkbox" class="btn-check" name="options" id="option1" autocomplete="off">
+                    <label class="btn btn-success" for="option1">Backend</label>
+                    <input type="checkbox" class="btn-check" name="options" id="option2" autocomplete="off">
+                    <label class="btn btn-success" for="option2">Frontend</label>
+                    <input type="checkbox" class="btn-check" name="options" id="option3" autocomplete="off">
+                    <label class="btn btn-success" for="option3">FullStack</label>
+                    <input type="checkbox" class="btn-check" name="options" id="option4" autocomplete="off">
+                    <label class="btn btn-success" for="option4">Embedded</label>
+                    <input type="checkbox" class="btn-check" name="options" id="option5" autocomplete="off">
+                    <label class="btn btn-success" for="option5">Mobile</label>
+                </div>
+                  
+                <span class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="canMove">
+                    <label class="form-check-label" for="canMove">
+                      Available to move
+                    </label>
+                </span>
                 <button class="btn btn-success m-2 mb-4" (click)="addSpecialist()">Add specialist</button>
             </form>
         </div>
     </div>
+    <!-- export interface ISpecialist {
+        Drivers: string[];
+        Disponibilita_dal: string;
+        Preavviso: number;
+      } -->
+
+      <!-- <div class="container">
+        <form id="login" onsubmit="process(event)">
+          <p>Enter your phone number:</p>
+          <input id="phone" type="tel" name="phone" />
+          <input type="submit" class="btn" value="Verify" />
+        </form>
+       </div> -->
+       
+
+
+<input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_4"/>
+

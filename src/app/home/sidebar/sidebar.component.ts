@@ -1,6 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
+import intlTelInput from 'intl-tel-input';
+// import datepicker from 'jquery-datepicker';
+import moment from 'moment';
+import { ISpecialist } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,20 +12,31 @@ import { ExcelService } from 'src/app/services/excel.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit{
-  @ViewChild('mapSearchField',{static:true}) searchField: any;
-  @ViewChild('test') test!: ElementRef;
-  // @ViewChild('mapSearchField',{static:false, read: ElementRef}) searchField: any;
-  // @ViewChild('mapSearchField') searchField!: ElementRef;
+  @ViewChild('mapSearchField') searchField !: { nativeElement: HTMLInputElement; };
+
   reactiveForm !: FormGroup;
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
 
+  newSpecialist !: ISpecialist;
+
+  // phoneInputField: Element = document.querySelector("#phone")!;
+  // phoneInput = window?.intlTelInput(this.phoneInputField, {
+  //   utilsScript:
+  //     "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+  // });
+
   constructor(private _excel : ExcelService){}
+
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
       city: new FormControl(null),
       name: new FormControl(null),
-      picture: new FormControl(null)
+      email: new FormControl(null),
+      phone: new FormControl(null),
+      degree: new FormControl(null),
+      // email: new FormControl(null),
+      // email: new FormControl(null),
     })
   }
   ngAfterViewInit(): void{
@@ -29,19 +44,36 @@ export class SidebarComponent implements OnInit{
     new google.maps.places.SearchBox(
       this.searchField.nativeElement,
       );
-    console.log(searchBox)
-    // searchBox.addListener('places_changed', ()=>{
-    //   const places = searchBox.getPlaces();
-    //   console.log(places)
-    //   if (places?.length === 0){return;}
-    // })
+    searchBox.addListener('places_changed', ()=>{
+      const places = searchBox.getPlaces();
+      console.log(places)
+      if (places?.length === 0){return;}
+    })
   }
   addClient(){
 
   }
   addSpecialist(){
-
+    const val = this.reactiveForm.value;
+    console.log(val)
+    this.newSpecialist = {
+      Nome: val.name,
+      Email: val.email,
+      Telefono: val.phone,
+      Domicilio: val.city,
+      Disp_Trasferimento: val.canMove,
+      Studi: val.degree,
+      Competenza_Princ: val.specialties[0],
+      Drivers: [],
+      Disponibilita_dal: "",
+      Preavviso: 0,
+      Latitude: 0,
+      Longitude: 0
+    }
+    console.log(this.newSpecialist)
+    // this.addMarker({ "lat": 43.48, "lng": 1.68})
   }
+
   toggleSpecialist(){this.isSpecialistOpen = !this.isSpecialistOpen}
   toggleClient(){this.isClientOpen = !this.isClientOpen}
   // add(){
@@ -62,19 +94,14 @@ export class SidebarComponent implements OnInit{
   // })
 
     // this.addMarker({ "lat": 43.48, "lng": 1.68})
-    // val.name !== null  ? this.profile.name = val.name : null;
-    // val.species !== null  ? this.profile.species = val.species : null;
-    // val.country !== null  ? this.profile.country = val.country : null;
-    // val.city !== null  ? this.profile.city = val.city : null;
-    // val.email !== null && this.reactiveForm.valid ? this.profile.email = val.email : null;
+    // val.name !== null  ? this.newSpecialist.name = val.name : null;
+    // val.species !== null  ? this.newSpecialist.species = val.species : null;
+    // val.country !== null  ? this.newSpecialist.country = val.country : null;
+    // val.city !== null  ? this.newSpecialist.city = val.city : null;
+    // val.email !== null && this.reactiveForm.valid ? this.newSpecialist.email = val.email : null;
   // }
 
-  // ngOnInit(){
-  //   this.reactiveForm = new FormGroup({
-  //     city: new FormControl(null),
-  //     picture: new FormControl(null)
-  //   })
-  // }
+
 
 
   // addMarker(latLng: google.maps.LatLngLiteral, color: string = 'yellow') {
@@ -96,11 +123,11 @@ export class SidebarComponent implements OnInit{
   //   const val = this.reactiveForm.value;
 
   //   this.addMarker({ "lat": 43.48, "lng": 1.68})
-  //   // val.name !== null  ? this.profile.name = val.name : null;
-  //   // val.species !== null  ? this.profile.species = val.species : null;
-  //   // val.country !== null  ? this.profile.country = val.country : null;
-  //   // val.city !== null  ? this.profile.city = val.city : null;
-  //   // val.email !== null && this.reactiveForm.valid ? this.profile.email = val.email : null;
+  //   // val.name !== null  ? this.newSpecialist.name = val.name : null;
+  //   // val.species !== null  ? this.newSpecialist.species = val.species : null;
+  //   // val.country !== null  ? this.newSpecialist.country = val.country : null;
+  //   // val.city !== null  ? this.newSpecialist.city = val.city : null;
+  //   // val.email !== null && this.reactiveForm.valid ? this.newSpecialist.email = val.email : null;
   // }
 
 
@@ -184,3 +211,29 @@ export class SidebarComponent implements OnInit{
 
 
 }
+
+
+
+
+var start: any = moment().subtract(29, "days");
+var end: any = moment();
+
+function cb(start: any, end: any) {
+    $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
+}
+
+// $("#kt_daterangepicker_4").daterangepicker({
+//     startDate: start,
+//     endDate: end,
+//     ranges: {
+//     "Today": [moment(), moment()],
+//     "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+//     "Last 7 Days": [moment().subtract(6, "days"), moment()],
+//     "Last 30 Days": [moment().subtract(29, "days"), moment()],
+//     "This Month": [moment().startOf("month"), moment().endOf("month")],
+//     "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+//     }
+// }, cb);
+
+cb(start, end);
+

@@ -15,6 +15,40 @@ hr { color: var(--dark-color-black)}
 }
 .specialist{
     background-color: var(--light-green);
+    color: var(--dark-green);
+}
+#specialties label{
+    margin: .2rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--google-green);
+    border-color: var(--google-green);
+}
+
+.btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active {
+    /* color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color); */
+    color: var(--bs-btn-active-color);
+    background-color: var(--google-green);
+    border-color: var(--google-green);
+}
+.btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active {
+    /* color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color); */
+    color: var(--bs-btn-active-color);
+    background-color: var(--google-green);
+    border-color: var(--google-green);
+}
+.btn-check {
+    color: var(--bs-btn-color);
+    background-color: var(--light-green);
+    border-color: var(--light-green);
+    /* color: var(--bs-btn-color);
+    background-color: var(--bs-btn-bg);
+    border-color: var(--bs-btn-border-color); */
 }
 
 /* #search-addon{
@@ -22,24 +56,4 @@ hr { color: var(--dark-color-black)}
     color: cadetblue;
 }
 #search-bar, #search-addon{margin-bottom: 1rem;}
-img {
-    max-height: 5rem;
-    margin: 0.75rem;
-    padding:0;
-    border: 1px solid white;
-}
-h4{
-    margin-bottom: 1rem;
-    font-weight: bold;
-}
-table {color: white}
-table i {margin: .5rem}
-td{ vertical-align: middle;}
-a {color: white;}
-
-#head{
-    position: relative;
-}
-#body{
-    overflow-y:auto;
-} */
+*/

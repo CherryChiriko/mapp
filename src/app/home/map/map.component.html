@@ -1,7 +1,7 @@
 
 <div class="container mt-5">
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
-        <map-marker #marker="mapMarker" 
+        <map-marker #marker="mapMarker" [icon]="'http://maps.google.com/mapfiles/ms/icons/green-dot.png'"
         *ngFor="let specialist of specialists; let i=index" 
         [position]="{lat: specialist.Latitude, lng: specialist.Longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
