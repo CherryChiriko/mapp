@@ -7,7 +7,8 @@
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow">
-            <div class="card text-center rounded" style="--color: {{color}};">
+            <div class="card text-center rounded" 
+            style="--color: {{color}}; --lightColor: {{lightColor}}; --darkColor: {{darkColor}}">
                 <div id="head" class="card-header text-center rounded">
                     <div class="row">
                         <h6 class="col-9">{{specialist.Nome}}</h6>  
@@ -16,11 +17,11 @@
                     </div>
                 </div>
                 <table class="table" id="body">
-                    <tr *ngIf="contacts[i]" class="contacts">
-                      <td><i class="material-symbols-outlined">mail</i>
+                    <tr *ngIf="contacts[i]">
+                      <td  class="contacts rounded" ><i class="material-symbols-outlined">mail</i>
                       {{specialist.Email}}</td>
-                    <tr *ngIf="contacts[i]" class="contacts">
-                      <td><i class="material-symbols-outlined">call</i>
+                    <tr *ngIf="contacts[i]">
+                      <td  class="contacts rounded"><i class="material-symbols-outlined">call</i>
                         {{specialist.Telefono}}</td>
                     </tr>
                     <tr *ngFor="let item of markerInfo(specialist) | keyvalue: originalOrder">
@@ -41,3 +42,5 @@
 
 
 
+<!-- not working:
+[icon]="'src/assets/img/google_marker_green.jpg'" -->

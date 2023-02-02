@@ -19,7 +19,10 @@ export class MapComponent implements OnInit{
   center: google.maps.LatLngLiteral = { lat: this.INITIAL_COORDS[0], lng: this.INITIAL_COORDS[1]};
   zoom = 5;
 
-  color: string = "orange";
+  color: string = "var(--google-green)";
+  lightColor: string = "var(--light-green)";
+  darkColor: string = "var(--dark-green)";
+
   contacts: boolean[] = [];
 
   constructor(private map: MapService, private _excel : ExcelService){}

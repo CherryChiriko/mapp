@@ -2,8 +2,21 @@
     background-color: orange;
     color: white;
     border: solid white 1px;
+    max-height: 85vh;
+    overflow-y: auto;
 }
-hr { color: black}
+hr { color: var(--dark-color-black)}
+.form-div{
+    background-color: var(--dark-color-black);
+    color: orange;
+}
+.client{
+    background-color: var(--light-blue);
+}
+.specialist{
+    background-color: var(--light-green);
+}
+
 /* #search-addon{
     background-color: white;
     color: cadetblue;

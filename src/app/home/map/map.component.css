@@ -1,5 +1,6 @@
 #head{
     background-color: var(--color);
+    color: white;
     position: fixed;
     top: .5rem;
     width: 87%;
@@ -9,12 +10,13 @@
 }
 #contact-icon {margin: 0; cursor: pointer;}
 .contacts{
-    background-color: #212121;
-    color: orange;
+    background-color: var(--lightColor);
+    color: var(--darkColor);
 }
 .contacts i {
     margin-left: -.75rem;
     margin-right: .75rem;
+    color: var(--color);
 }
 table{
     border-collapse: separate;

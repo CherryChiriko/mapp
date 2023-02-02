@@ -1,21 +1,45 @@
 <div id="sidebar-div" class="d-flex flex-column flex-shrink-0 p-3 text-center rounded">
-    <div id="head">
-        
-        
-    </div>
+    <!-- <div id="head">
+    </div> -->
     <div id="body"> 
         <h4>Filter</h4>
         <hr>
         <h4>Add New</h4>
-        <form [formGroup]="reactiveForm" class="my-3">
-            <input #mapSearchField type="text" name="city" 
-                class="form-control text-center my-2" placeholder="City"
-                formControlName = "name">
-                <input type="text" name="picture" id="picture" 
-                class="form-control text-center my-2" placeholder="Picture file name (include extension)"
-                formControlName = "picture">
-        </form>
-        <button class="btn btn-primary m-2" (click)="add()">Add Client</button>
-        <button class="btn btn-danger m-2" (click)="add()">Add Specialist</button>
+        <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
+        <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="city" class="col-form-label">Where?</label>
+            </div>
+            <div class="col-auto">
+                <input #mapSearchField type="text" name="city" id="city"
+                class="form-control text-center my-2 my-map-search-field" placeholder="City"
+                formControlName = "city">
+            </div>
+        </div>
+        <div class="container form-div client rounded" *ngIf="isClientOpen">
+            <form [formGroup]="reactiveForm" class="my-3 pt-3" >
+                <input #mapSearchField type="text" name="city" 
+                    class="form-control text-center my-2 my-map-search-field" placeholder="City"
+                    formControlName = "city">
+                    <input type="text" name="name" 
+                    class="form-control text-center my-2" placeholder="Name"
+                    formControlName = "name">
+                    <input type="text" name="picture" id="picture" 
+                    class="form-control text-center my-2" placeholder="Picture file name (include extension)"
+                    formControlName = "picture">
+                <button class="btn btn-primary m-2 mb-4" (click)="addClient()">Add client</button>
+            </form>
+        </div>
+        <div class="container form-div specialist rounded" *ngIf="isSpecialistOpen">
+            <form [formGroup]="reactiveForm" class="my-3 pt-3" >
+                <input #mapSearchField type="text" name="city" 
+                    class="form-control text-center my-2" placeholder="City"
+                    formControlName = "name">
+                    <input type="text" name="picture" id="picture" 
+                    class="form-control text-center my-2" placeholder="Picture file name (include extension)"
+                    formControlName = "picture">
+                <button class="btn btn-success m-2 mb-4" (click)="addSpecialist()">Add specialist</button>
+            </form>
+        </div>
     </div>
-</div>

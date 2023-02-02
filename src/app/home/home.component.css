@@ -6,3 +6,12 @@
 /* *{
     border: 1px solid red;
 } */
+
+@media screen and (max-width: 1000px) {
+    .sidebar {
+      background-color: blue;
+    }
+    .map{
+        width: 300px;
+    }
+}
