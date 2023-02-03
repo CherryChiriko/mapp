@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
 import intlTelInput from 'intl-tel-input';
 // import datepicker from 'jquery-datepicker';
@@ -24,12 +24,14 @@ export class SidebarComponent implements OnInit{
   specialArr: string[] = specialtiesArr;
   // specialArr ?:any;
   specialistForm !: FormGroup;
+  form!: FormGroup;
 
   isFilterOpen: boolean = false;
   isNewOpen: boolean = false;
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
 
+  
   // phoneInputField: Element = document.querySelector("#phone")!;
   // phoneInput = window?.intlTelInput(this.phoneInputField, {
   //   utilsScript:
@@ -46,15 +48,38 @@ export class SidebarComponent implements OnInit{
       phone: new FormControl(null),
       degree: new FormControl(null),
       specialties: new FormControl(null),
-      interests: new FormArray([]),
-      canMove: new FormControl(false)
-    })
+      interests: new FormGroup({}),
+      canMove: new FormControl(null),
+    });
+    // this.specialArr.forEach(item => {
+    //   this.specialistForm.controls['interests'].addControl(item, new FormControl(null));
+    // });
 
+    this.form = new FormGroup({ });
+
+    
+    
+    // this.specialArr.forEach(item => {
+    //   this.form.controls['checkboxes'].addControl(item, new FormControl(null));
+    // });
+
+    
+    this.specialArr.forEach(item => {
+      
+      let abstractControl : AbstractControl = this.specialistForm.get('interests')!;
+      if(abstractControl instanceof FormGroup){
+        (<FormGroup>abstractControl).addControl(item, new FormControl(null));
+      }
+      // this.specialistForm.controls['interests'].addControl(item, new FormControl(null));
+    });
+
+
+    console.log(this.specialistForm.value)
     // this.http.get('../assets/specialties.json').subscribe( val=>
     //   this.specialArr = val);
-    console.log(this.specialArr)
     // this.markersSubs = this.map.getMarkers().subscribe(
     //   value => this.specialists = value);
+    
   }
   ngAfterViewInit(): void{
     const searchBox = 
@@ -73,7 +98,11 @@ export class SidebarComponent implements OnInit{
   }
   addSpecialist(){
     const val = this.specialistForm.value;
-    console.log("I am val ", val)
+    let interestsArr : string[] = [];
+    Object.keys(val.interests).forEach(function (key) {
+    val.interests[key] ? interestsArr.push(key) : null;
+    })
+
     let newSpecialist: ISpecialist = {
       Nome: val.name,
       Email: val.email,
@@ -82,7 +111,7 @@ export class SidebarComponent implements OnInit{
       Disp_Trasferimento: val.canMove,
       Studi: val.degree,
       Competenza_Princ: val.specialties,
-      Drivers: val.interests,
+      Drivers: interestsArr,
       Disponibilita_dal: "",
       Preavviso: 0,
       Latitude: 0,

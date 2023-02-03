@@ -21,29 +21,19 @@ hr { color: var(--dark-color-black)}
     margin: .2rem;
 }
 
+p{font-size: 1.1rem;}
+h4{cursor: pointer;}
+
 .form-check-input:checked {
     background-color: var(--google-green);
     border-color: var(--google-green);
 }
 
-.btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active {
-    /* color: var(--bs-btn-active-color);
-    background-color: var(--bs-btn-active-bg);
-    border-color: var(--bs-btn-active-border-color); */
-    color: var(--bs-btn-active-color);
-    background-color: var(--green);
-    border-color: var(--google-green);
-}
-
-.btn-check {
-    color: var(--bs-btn-color);
+.special{
+    color: var(--dark-green);
     background-color: var(--light-green);
-    border-color: var(--light-green);
-    /* color: var(--bs-btn-color);
-    background-color: var(--bs-btn-bg);
-    border-color: var(--bs-btn-border-color); */
+    border-color: var(--bs-btn-active-border-color);
 }
-
 /* #search-addon{
     background-color: white;
     color: cadetblue;

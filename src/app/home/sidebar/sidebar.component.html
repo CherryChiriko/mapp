@@ -63,31 +63,24 @@
                     <input type="radio" class="btn-check" autocomplete="off"
                     name="specialties" id= "option{{i}}" value="{{s}}"
                     formControlName = "specialties">
-                    <label class="btn btn-success" for="option{{i}}">{{s}}</label>
+                    <label class="btn btn-success special" for="option{{i}}">{{s}}</label>
                 </div>
 
-                <p>Interests</p>
+                <p class="text-center">Interests</p>
+                <!-- <form [formGroup]="form.controls['checkboxes']">
+                    <div *ngFor="let item of items">
+                        <input type="checkbox" [formControlName]="item">
+                        <span>{{ item }}</span>
+                    </div>
+                </form> -->
+                
                 <div class="form-check" id="specialties" 
-                 *ngFor="let s of specialArr; let i=index">
+                 *ngFor="let s of specialArr; let i=index" formArrayName="interests">
                     <input type="checkbox" class="btn-check" autocomplete="off"
                     name="interests" id= "options{{i}}" value="{{s}}"
-                    formArrayName = "interests">
-                    <label class="btn btn-success" for="options{{i}}">{{s}}</label>
+                    formControlName="{{s}}">
+                    <label class="btn btn-success special" for="options{{i}}">{{s}}</label>
                 </div>
-
-                <!-- <p>Interests</p>
-                <div class="form-check" id="interests">
-                    <input type="checkbox" class="btn-check" name="option" id="options1" autocomplete="off" formArrayName = "interests">
-                    <label class="btn btn-success" for="options1">Backend</label>
-                    <input type="checkbox" class="btn-check" name="option" id="options2" autocomplete="off" formControlName = "interests">
-                    <label class="btn btn-success" for="options2">Frontend</label>
-                    <input type="checkbox" class="btn-check" name="option" id="options3" autocomplete="off" formControlName = "interests">
-                    <label class="btn btn-success" for="options3">FullStack</label>
-                    <input type="checkbox" class="btn-check" name="option" id="options4" autocomplete="off" formControlName = "interests">
-                    <label class="btn btn-success" for="options4">Embedded</label>
-                    <input type="checkbox" class="btn-check" name="option" id="options5" autocomplete="off" formControlName = "interests">
-                    <label class="btn btn-success" for="options5">Mobile</label>
-                </div> -->
 
                 <span class="form-check">
                     <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
