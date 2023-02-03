@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import markerData from 'src/assets/data.json'
@@ -12,7 +11,7 @@ export class MapService {
   markers = new BehaviorSubject<ISpecialist[]>([])
   data : ISpecialist[] = markerData;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.markers.next(this.data);
   }
 
@@ -37,4 +36,8 @@ export class MapService {
     return info
   }
 
+  addMarker(newMarker: ISpecialist){
+    this.markers.subscribe( val=>
+      this.markers.next([...val, newMarker])
+    )}
 }

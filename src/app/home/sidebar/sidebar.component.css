@@ -31,17 +31,10 @@ hr { color: var(--dark-color-black)}
     background-color: var(--bs-btn-active-bg);
     border-color: var(--bs-btn-active-border-color); */
     color: var(--bs-btn-active-color);
-    background-color: var(--google-green);
+    background-color: var(--green);
     border-color: var(--google-green);
 }
-.btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active {
-    /* color: var(--bs-btn-active-color);
-    background-color: var(--bs-btn-active-bg);
-    border-color: var(--bs-btn-active-border-color); */
-    color: var(--bs-btn-active-color);
-    background-color: var(--google-green);
-    border-color: var(--google-green);
-}
+
 .btn-check {
     color: var(--bs-btn-color);
     background-color: var(--light-green);

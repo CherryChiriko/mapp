@@ -1,10 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
 import intlTelInput from 'intl-tel-input';
 // import datepicker from 'jquery-datepicker';
 import moment from 'moment';
 import { ISpecialist } from 'src/app/interfaces/interfaces';
+import { MapService } from 'src/app/services/map.service';
+import { Subscription } from 'rxjs';
+
+import specialtiesArr from 'src/assets/specialties.json'
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,11 +19,16 @@ import { ISpecialist } from 'src/app/interfaces/interfaces';
 export class SidebarComponent implements OnInit{
   @ViewChild('mapSearchField') searchField !: { nativeElement: HTMLInputElement; };
 
-  reactiveForm !: FormGroup;
+  // specialists: ISpecialist[] =  [];
+  // markersSubs ?: Subscription;
+  specialArr: string[] = specialtiesArr;
+  // specialArr ?:any;
+  specialistForm !: FormGroup;
+
+  isFilterOpen: boolean = false;
+  isNewOpen: boolean = false;
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
-
-  newSpecialist !: ISpecialist;
 
   // phoneInputField: Element = document.querySelector("#phone")!;
   // phoneInput = window?.intlTelInput(this.phoneInputField, {
@@ -26,18 +36,25 @@ export class SidebarComponent implements OnInit{
   //     "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
   // });
 
-  constructor(private _excel : ExcelService){}
+  constructor(private _excel : ExcelService, private map: MapService, private http: HttpClient){}
 
   ngOnInit(): void {
-    this.reactiveForm = new FormGroup({
+    this.specialistForm = new FormGroup({
       city: new FormControl(null),
       name: new FormControl(null),
       email: new FormControl(null),
       phone: new FormControl(null),
       degree: new FormControl(null),
-      // email: new FormControl(null),
-      // email: new FormControl(null),
+      specialties: new FormControl(null),
+      interests: new FormArray([]),
+      canMove: new FormControl(false)
     })
+
+    // this.http.get('../assets/specialties.json').subscribe( val=>
+    //   this.specialArr = val);
+    console.log(this.specialArr)
+    // this.markersSubs = this.map.getMarkers().subscribe(
+    //   value => this.specialists = value);
   }
   ngAfterViewInit(): void{
     const searchBox = 
@@ -50,57 +67,42 @@ export class SidebarComponent implements OnInit{
       if (places?.length === 0){return;}
     })
   }
+
   addClient(){
 
   }
   addSpecialist(){
-    const val = this.reactiveForm.value;
-    console.log(val)
-    this.newSpecialist = {
+    const val = this.specialistForm.value;
+    console.log("I am val ", val)
+    let newSpecialist: ISpecialist = {
       Nome: val.name,
       Email: val.email,
       Telefono: val.phone,
       Domicilio: val.city,
       Disp_Trasferimento: val.canMove,
       Studi: val.degree,
-      Competenza_Princ: val.specialties[0],
-      Drivers: [],
+      Competenza_Princ: val.specialties,
+      Drivers: val.interests,
       Disponibilita_dal: "",
       Preavviso: 0,
       Latitude: 0,
       Longitude: 0
     }
-    console.log(this.newSpecialist)
+    console.log(newSpecialist)
+    // this.map.addMarker(newSpecialist);
+    // this._excel.addCity(newSpecialist);
     // this.addMarker({ "lat": 43.48, "lng": 1.68})
   }
 
+  toggleFilter(){    this.isFilterOpen = !this.isFilterOpen}
+  toggleNew(){       this.isNewOpen = !this.isNewOpen}
   toggleSpecialist(){this.isSpecialistOpen = !this.isSpecialistOpen}
-  toggleClient(){this.isClientOpen = !this.isClientOpen}
-  // add(){
-  //   const val = this.reactiveForm.value;
-  //   this._excel.addCity({
-  //     Nome : "sss",
-  //     Email: "E",
-  //     Telefono: "222",
-  //     Domicilio: "aa",
-  //     Disp_Trasferimento: true,
-  //     Studi : "aa",
-  //     Competenza_Princ : "ss",
-  //     Drivers: [""],
-  //     Disponibilita_dal : "20/10/22",
-  //     Preavviso : 2,
-  //     Latitude: 43.48,
-  //     Longitude : 1.68
-  // })
-
-    // this.addMarker({ "lat": 43.48, "lng": 1.68})
-    // val.name !== null  ? this.newSpecialist.name = val.name : null;
-    // val.species !== null  ? this.newSpecialist.species = val.species : null;
-    // val.country !== null  ? this.newSpecialist.country = val.country : null;
-    // val.city !== null  ? this.newSpecialist.city = val.city : null;
-    // val.email !== null && this.reactiveForm.valid ? this.newSpecialist.email = val.email : null;
+  toggleClient(){    this.isClientOpen = !this.isClientOpen}
+  
+  // logger(s:any){console.log(s)}
+  // ngOnDestroy(){
+  //   this.markersSubs?.unsubscribe();
   // }
-
 
 
 
@@ -115,21 +117,9 @@ export class SidebarComponent implements OnInit{
   //     position: latLng,
   //     icon: img
   //   });
-
-  //   this.markers.push(marker);
   // }
 
-  // add(){
-  //   const val = this.reactiveForm.value;
-
-  //   this.addMarker({ "lat": 43.48, "lng": 1.68})
-  //   // val.name !== null  ? this.newSpecialist.name = val.name : null;
-  //   // val.species !== null  ? this.newSpecialist.species = val.species : null;
-  //   // val.country !== null  ? this.newSpecialist.country = val.country : null;
-  //   // val.city !== null  ? this.newSpecialist.city = val.city : null;
-  //   // val.email !== null && this.reactiveForm.valid ? this.newSpecialist.email = val.email : null;
-  // }
-
+  
 
 
 
