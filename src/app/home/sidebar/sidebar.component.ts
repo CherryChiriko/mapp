@@ -4,12 +4,13 @@ import { ExcelService } from 'src/app/services/excel.service';
 import intlTelInput from 'intl-tel-input';
 // import datepicker from 'jquery-datepicker';
 import moment from 'moment';
-import { ISpecialist } from 'src/app/interfaces/interfaces';
+import { ISFilter, ISpecialist } from 'src/app/interfaces/interfaces';
 import { MapService } from 'src/app/services/map.service';
 import { Subscription } from 'rxjs';
 
-import specialtiesArr from 'src/assets/specialties.json'
+import data from 'src/assets/specifics.json'
 import { HttpClient } from '@angular/common/http';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,12 +22,17 @@ export class SidebarComponent implements OnInit{
 
   // specialists: ISpecialist[] =  [];
   // markersSubs ?: Subscription;
-  specialArr: string[] = specialtiesArr;
-  // specialArr ?:any;
+  specialArr: string[] = data.specialties;
+  degArr: string[] = data.degrees;
+  
   specialistForm !: FormGroup;
-  form!: FormGroup;
+  clientForm!: FormGroup;
+  filterForm !: FormGroup;
 
   isFilterOpen: boolean = false;
+  isFilterSpecialistOpen: boolean = false;
+  isFilterClientOpen: boolean = false;
+
   isNewOpen: boolean = false;
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
@@ -38,7 +44,7 @@ export class SidebarComponent implements OnInit{
   //     "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
   // });
 
-  constructor(private _excel : ExcelService, private map: MapService, private http: HttpClient){}
+  constructor(private _excel : ExcelService, private map: MapService, private form: FormService){}
 
   ngOnInit(): void {
     this.specialistForm = new FormGroup({
@@ -51,30 +57,24 @@ export class SidebarComponent implements OnInit{
       interests: new FormGroup({}),
       canMove: new FormControl(null),
     });
-    // this.specialArr.forEach(item => {
-    //   this.specialistForm.controls['interests'].addControl(item, new FormControl(null));
-    // });
 
-    this.form = new FormGroup({ });
-
-    
-    
-    // this.specialArr.forEach(item => {
-    //   this.form.controls['checkboxes'].addControl(item, new FormControl(null));
-    // });
-
-    
-    this.specialArr.forEach(item => {
-      
-      let abstractControl : AbstractControl = this.specialistForm.get('interests')!;
-      if(abstractControl instanceof FormGroup){
-        (<FormGroup>abstractControl).addControl(item, new FormControl(null));
-      }
-      // this.specialistForm.controls['interests'].addControl(item, new FormControl(null));
+    this.clientForm = new FormGroup({ 
+      name: new FormControl(null),
     });
 
+    this.filterForm = new FormGroup({ 
+      name: new FormControl(null),
+      degree: new FormGroup({}),
+      specialties: new FormGroup({}),
+      interests: new FormGroup({}),
+      canMove: new FormControl(null),
+    });
 
-    console.log(this.specialistForm.value)
+    this.form.addElementToFormGroup(this.specialistForm, 'interests', this.specialArr)
+    this.form.addElementToFormGroup(this.filterForm, 'specialties', this.specialArr)
+    this.form.addElementToFormGroup(this.filterForm, 'degree', this.degArr)
+    this.form.addElementToFormGroup(this.filterForm, 'interests', this.specialArr)
+
     // this.http.get('../assets/specialties.json').subscribe( val=>
     //   this.specialArr = val);
     // this.markersSubs = this.map.getMarkers().subscribe(
@@ -93,15 +93,13 @@ export class SidebarComponent implements OnInit{
     })
   }
 
+
   addClient(){
 
   }
   addSpecialist(){
     const val = this.specialistForm.value;
-    let interestsArr : string[] = [];
-    Object.keys(val.interests).forEach(function (key) {
-    val.interests[key] ? interestsArr.push(key) : null;
-    })
+    let interestsArr : string[] = this.form.convertToArray(val, "interests")
 
     let newSpecialist: ISpecialist = {
       Nome: val.name,
@@ -122,11 +120,33 @@ export class SidebarComponent implements OnInit{
     // this._excel.addCity(newSpecialist);
     // this.addMarker({ "lat": 43.48, "lng": 1.68})
   }
+  filterSpecialist(){
+    const val = this.filterForm.value;
+    
+    let degreeArr : string[] = this.form.convertToArray(val, "degree");
+    let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
+    let interestsArr : string[] = this.form.convertToArray(val, "interests");
 
-  toggleFilter(){    this.isFilterOpen = !this.isFilterOpen}
-  toggleNew(){       this.isNewOpen = !this.isNewOpen}
-  toggleSpecialist(){this.isSpecialistOpen = !this.isSpecialistOpen}
-  toggleClient(){    this.isClientOpen = !this.isClientOpen}
+    let specialistFilter: ISFilter = {
+      Nome: val.name,
+      Domicilio: val.city,
+      Disp_Trasferimento: val.canMove,
+      Studi: degreeArr,
+      Competenza_Princ: specialtiesArr,
+      Drivers: interestsArr,
+      Disponibilita_dal: "",
+      Preavviso: 0
+    }
+    console.log(specialistFilter)
+    // call service
+  }
+  
+  toggleFilter(){           this.isFilterOpen = !this.isFilterOpen}
+  toggleFilterSpecialist(){ this.isFilterSpecialistOpen = !this.isFilterSpecialistOpen}
+  toggleFilterClient(){     this.isFilterClientOpen = !this.isFilterClientOpen}
+  toggleNew(){              this.isNewOpen = !this.isNewOpen}
+  toggleSpecialist(){       this.isSpecialistOpen = !this.isSpecialistOpen}
+  toggleClient(){           this.isClientOpen = !this.isClientOpen}
   
   // logger(s:any){console.log(s)}
   // ngOnDestroy(){

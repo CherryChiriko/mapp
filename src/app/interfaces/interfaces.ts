@@ -12,3 +12,14 @@ export interface ISpecialist {
   Latitude: number;
   Longitude: number;
 }
+
+export interface ISFilter {
+  Nome: string;
+  Domicilio: string;
+  Disp_Trasferimento: boolean;
+  Studi: string[];
+  Competenza_Princ: string[];
+  Drivers: string[];
+  Disponibilita_dal: string;
+  Preavviso: number;
+}

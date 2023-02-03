@@ -12,16 +12,17 @@ hr { color: var(--dark-color-black)}
 }
 .client{
     background-color: var(--light-blue);
+    color: var(--dark-blue);
 }
 .specialist{
     background-color: var(--light-green);
     color: var(--dark-green);
 }
-#specialties label{
-    margin: .2rem;
-}
 
-p{font-size: 1.1rem;}
+p{
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
 h4{cursor: pointer;}
 
 .form-check-input:checked {
@@ -33,6 +34,7 @@ h4{cursor: pointer;}
     color: var(--dark-green);
     background-color: var(--light-green);
     border-color: var(--bs-btn-active-border-color);
+    margin: .2rem;
 }
 /* #search-addon{
     background-color: white;
