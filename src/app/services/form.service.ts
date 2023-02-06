@@ -1,12 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import citiesData from 'src/assets/istat-cities.json';
+import { ICities } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormService {
-
-  constructor() { }
+  
+  cities : ICities[] = [] ;
+  constructor(private http: HttpClient) { 
+    // this.http.get('src/assets/istat-cities.json').subscribe(values => {
+    //   this.cities = values as ICities[]})
+    this.cities = citiesData as ICities[];
+  }
 
   addElementToFormGroup(form: FormGroup, category: string, array: string[]){
     array.forEach(item => {
@@ -25,4 +33,19 @@ export class FormService {
     return arr;
   }
 
+  searchCity(expr: string){
+    let reg = new RegExp(expr, "gi")
+    let result = [{}];
+    this.cities.map(city=> {
+      city["Denominazione in italiano"].match(reg) ? result.push(
+        {name: city["Denominazione in italiano"], region: city["Denominazione regione"], country: "Italy"}
+        ): null;
+    })
+    console.log(result)
+    // console.log(this.cities)
+    // console.log(this.cities[0]["Denominazione in italiano"])
+  }
+    // console.log(citiesData["Codice Regione"])
+  
 }
+// .map(city=> city["Denominazione in italiano"])

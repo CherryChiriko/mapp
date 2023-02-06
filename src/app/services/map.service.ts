@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import markerData from 'src/assets/data.json'
+import markerData from 'src/assets/data.json';
 import { ISpecialist } from '../interfaces/interfaces';
 
 @Injectable({
@@ -37,9 +37,6 @@ export class MapService {
   }
 
   addMarker(newSpecialist: ISpecialist){
-    // this.markers.subscribe( val=>
-    //   this.markers.next([...val, newMarker])
-    // )}
     let newMarkers: ISpecialist[] = []
     this.markers.subscribe(val=>
       {
@@ -47,4 +44,6 @@ export class MapService {
       }
       )
     this.markers.next(newMarkers)}
+    
+  
 }

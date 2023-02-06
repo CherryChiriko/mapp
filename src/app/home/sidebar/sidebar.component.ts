@@ -152,7 +152,7 @@ export class SidebarComponent implements OnInit{
   //   this.markersSubs?.unsubscribe();
   // }
 
-
+  searchCity(){this.form.searchCity("Roma")}
 
   // addMarker(latLng: google.maps.LatLngLiteral, color: string = 'yellow') {
   //   // let img = picture === null ? `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png` :
