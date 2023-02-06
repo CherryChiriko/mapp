@@ -15,8 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-
-  
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';  
 
 @NgModule({
   declarations: [
@@ -32,10 +32,12 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     GoogleMapsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    
     MatSelectModule,
     MatButtonModule,
     MatFormFieldModule,
-    NgxMatSelectSearchModule
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

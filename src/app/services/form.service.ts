@@ -10,10 +10,13 @@ import { ICities, ICity } from '../interfaces/interfaces';
 export class FormService {
   
   cities : ICities[] = [] ;
+  apiUrl : string = "";
+
   constructor(private http: HttpClient) { 
     // this.http.get('src/assets/istat-cities.json').subscribe(values => {
     //   this.cities = values as ICities[]})
     this.cities = citiesData as ICities[];
+    this.apiUrl = "https://nominatim.openstreetmap.org/search?country=Italy,city="
   }
 
   addElementToFormGroup(form: FormGroup, category: string, array: string[]){
@@ -56,4 +59,7 @@ export class FormService {
     return result;
   }
   
+  getCityCoordinates(cityName : string){
+    this.http.get(`${this.apiUrl}${cityName}`).subscribe(data => console.log("I Am ", data))
+  }
 }

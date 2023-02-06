@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import data from 'src/assets/specifics.json';
 import { HttpClient } from '@angular/common/http';
 import { FormService } from 'src/app/services/form.service';
+import { GoogleMap } from '@angular/google-maps';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,6 +31,7 @@ export class SidebarComponent implements OnInit{
   clientForm!: FormGroup;
   filterForm !: FormGroup;
   cityForm !: FormGroup;
+  dateRangeForm !: FormGroup;
 
   isFilterOpen: boolean = false;
   isFilterSpecialistOpen: boolean = false;
@@ -39,7 +41,7 @@ export class SidebarComponent implements OnInit{
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
 
-  searchBody: string = '';
+  geocoder = new google.maps.Geocoder();
 
   
   // phoneInputField: Element = document.querySelector("#phone")!;
@@ -77,15 +79,15 @@ export class SidebarComponent implements OnInit{
       city: new FormControl(null)
     })
 
+    this.dateRangeForm = new FormGroup({
+      start: new FormControl<Date | null>(null),
+      end: new FormControl<Date | null>(null),
+    });
+
     this.form.addElementToFormGroup(this.specialistForm, 'interests', this.specialArr)
     this.form.addElementToFormGroup(this.filterForm, 'specialties', this.specialArr)
     this.form.addElementToFormGroup(this.filterForm, 'degree', this.degArr)
     this.form.addElementToFormGroup(this.filterForm, 'interests', this.specialArr)
-
-    // this.http.get('../assets/specialties.json').subscribe( val=>
-    //   this.specialArr = val);
-    // this.markersSubs = this.map.getMarkers().subscribe(
-    //   value => this.specialists = value);
     
   }
   ngAfterViewInit(): void{
@@ -108,7 +110,9 @@ export class SidebarComponent implements OnInit{
     const val = this.specialistForm.value;
     const city: string[] = this.cityForm.value.city;
     let interestsArr : string[] = this.form.convertToArray(val, "interests")
-    
+
+    // this.form.getCityCoordinates("Rome")
+    // console.log(this.geocoder.geocode({'address': city[0]}))
     let newSpecialist: ISpecialist = {
       Nome: val.name,
       Email: val.email,
@@ -154,21 +158,7 @@ export class SidebarComponent implements OnInit{
   toggleNew(){              this.isNewOpen = !this.isNewOpen}
   toggleSpecialist(){       this.isSpecialistOpen = !this.isSpecialistOpen}
   toggleClient(){           this.isClientOpen = !this.isClientOpen}
-  
-  // ngOnDestroy(){
-  //   this.markersSubs?.unsubscribe();
-  // }
 
-  searchCity(){                 this.form.searchCity(this.searchBody)  }
-  searchContent(event: any){    this.searchBody = event.target.value;  }
-
-  @HostListener('window:keyup', ['$event'])
-  keyEvent(event: KeyboardEvent) {
-    if(event.key == 'Enter' && this.cityForm.get('city')?.touched){
-      this.searchCity()
-    }
-  }
-  
 
 }
 
