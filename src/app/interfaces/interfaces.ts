@@ -51,3 +51,9 @@ export interface ICities{
   "Codice NUTS2 2006 (3)": string;
   "Codice NUTS3 2006": string
 }
+
+export interface ICity{
+  name: string;
+  region: string;
+  country: string;
+}

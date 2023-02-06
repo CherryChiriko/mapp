@@ -103,15 +103,21 @@
         <div [hidden]="!isNewOpen">    
         <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
         <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
-        <div class="row g-3 align-items-center">
+        <form class="row g-3 align-items-center" [formGroup]="cityForm">
             <div class="col-auto">
               <label for="city" class="col-form-label">Where?</label>
             </div>
             <div class="col-auto">
-                <input #mapSearchField type="text" name="city" id="city"
-                class="form-control text-center my-2 my-map-search-field" placeholder="City">
+                <select type="search" name="city" id="city"
+                class="form-control rounded text-center my-2" id="search-bar"
+                formControlName="city">
+                    <option disabled selected [ngValue]="null">-- City --</option>
+                    <option *ngFor="let city of citiesArr" 
+                    value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
+                </select>     
             </div>
-        </div>
+            
+        </form>
         <div class="container form-div client rounded" *ngIf="isClientOpen">
             <form [formGroup]="clientForm" class="my-3 pt-3" >
                 <input #mapSearchField type="text" name="city" 
@@ -181,6 +187,8 @@
         </div>
         
     </div>
+
+<!-- <p>{{}}</p> -->
     <!-- export interface ISpecialist {
         Disponibilita_dal: string;
         Preavviso: number;
@@ -197,5 +205,3 @@
 
 
 <!-- <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_4"/> -->
-
-<button (click)="searchCity()">Search City</button>

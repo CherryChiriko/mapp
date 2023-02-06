@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import citiesData from 'src/assets/istat-cities.json';
-import { ICities } from '../interfaces/interfaces';
+import { ICities, ICity } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -40,12 +40,20 @@ export class FormService {
       city["Denominazione in italiano"].match(reg) ? result.push(
         {name: city["Denominazione in italiano"], region: city["Denominazione regione"], country: "Italy"}
         ): null;
+      // result.length === this.cities.length ? result = [{}] : null;
     })
     console.log(result)
-    // console.log(this.cities)
-    // console.log(this.cities[0]["Denominazione in italiano"])
+    return result;
   }
-    // console.log(citiesData["Codice Regione"])
+  getAllCities(){
+    let result: ICity[] = [];
+    this.cities.map(city=> {
+      result.push(
+        {name: city["Denominazione in italiano"], region: city["Denominazione regione"], country: "Italy"}
+        )
+      // result.length === this.cities.length ? result = [{}] : null;
+    })
+    return result;
+  }
   
 }
-// .map(city=> city["Denominazione in italiano"])

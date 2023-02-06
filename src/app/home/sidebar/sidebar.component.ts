@@ -1,14 +1,14 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
 import intlTelInput from 'intl-tel-input';
 // import datepicker from 'jquery-datepicker';
 import moment from 'moment';
-import { ISFilter, ISpecialist } from 'src/app/interfaces/interfaces';
+import { ICity, ISFilter, ISpecialist } from 'src/app/interfaces/interfaces';
 import { MapService } from 'src/app/services/map.service';
 import { Subscription } from 'rxjs';
 
-import data from 'src/assets/specifics.json'
+import data from 'src/assets/specifics.json';
 import { HttpClient } from '@angular/common/http';
 import { FormService } from 'src/app/services/form.service';
 
@@ -24,10 +24,12 @@ export class SidebarComponent implements OnInit{
   // markersSubs ?: Subscription;
   specialArr: string[] = data.specialties;
   degArr: string[] = data.degrees;
+  citiesArr = this.form.getAllCities();
   
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
   filterForm !: FormGroup;
+  cityForm !: FormGroup;
 
   isFilterOpen: boolean = false;
   isFilterSpecialistOpen: boolean = false;
@@ -36,6 +38,8 @@ export class SidebarComponent implements OnInit{
   isNewOpen: boolean = false;
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
+
+  searchBody: string = '';
 
   
   // phoneInputField: Element = document.querySelector("#phone")!;
@@ -48,7 +52,6 @@ export class SidebarComponent implements OnInit{
 
   ngOnInit(): void {
     this.specialistForm = new FormGroup({
-      city: new FormControl(null),
       name: new FormControl(null),
       email: new FormControl(null),
       phone: new FormControl(null),
@@ -70,6 +73,10 @@ export class SidebarComponent implements OnInit{
       canMove: new FormControl(null),
     });
 
+    this.cityForm = new FormGroup({
+      city: new FormControl(null)
+    })
+
     this.form.addElementToFormGroup(this.specialistForm, 'interests', this.specialArr)
     this.form.addElementToFormGroup(this.filterForm, 'specialties', this.specialArr)
     this.form.addElementToFormGroup(this.filterForm, 'degree', this.degArr)
@@ -82,15 +89,15 @@ export class SidebarComponent implements OnInit{
     
   }
   ngAfterViewInit(): void{
-    const searchBox = 
-    new google.maps.places.SearchBox(
-      this.searchField.nativeElement,
-      );
-    searchBox.addListener('places_changed', ()=>{
-      const places = searchBox.getPlaces();
-      console.log(places)
-      if (places?.length === 0){return;}
-    })
+    // const searchBox = 
+    // new google.maps.places.SearchBox(
+    //   this.searchField.nativeElement,
+    //   );
+    // searchBox.addListener('places_changed', ()=>{
+    //   const places = searchBox.getPlaces();
+    //   console.log(places)
+    //   if (places?.length === 0){return;}
+    // })
   }
 
 
@@ -99,13 +106,14 @@ export class SidebarComponent implements OnInit{
   }
   addSpecialist(){
     const val = this.specialistForm.value;
+    const city: string[] = this.cityForm.value.city;
     let interestsArr : string[] = this.form.convertToArray(val, "interests")
-
+    
     let newSpecialist: ISpecialist = {
       Nome: val.name,
       Email: val.email,
       Telefono: val.phone,
-      Domicilio: val.city,
+      Domicilio: `${city}`,
       Disp_Trasferimento: val.canMove,
       Studi: val.degree,
       Competenza_Princ: val.specialties,
@@ -147,131 +155,45 @@ export class SidebarComponent implements OnInit{
   toggleSpecialist(){       this.isSpecialistOpen = !this.isSpecialistOpen}
   toggleClient(){           this.isClientOpen = !this.isClientOpen}
   
-  // logger(s:any){console.log(s)}
   // ngOnDestroy(){
   //   this.markersSubs?.unsubscribe();
   // }
 
-  searchCity(){this.form.searchCity("Roma")}
+  searchCity(){                 this.form.searchCity(this.searchBody)  }
+  searchContent(event: any){    this.searchBody = event.target.value;  }
 
-  // addMarker(latLng: google.maps.LatLngLiteral, color: string = 'yellow') {
-  //   // let img = picture === null ? `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png` :
-  //   // `../assets/${picture}`;
-
-  //   // let url = "..\\assets\\img\\ima_logo.png"
-  //   let img = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-  //   console.log(color)
-  //   let marker = new google.maps.Marker({
-  //     position: latLng,
-  //     icon: img
-  //   });
-  // }
-
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if(event.key == 'Enter' && this.cityForm.get('city')?.touched){
+      this.searchCity()
+    }
+  }
   
 
+}
 
 
-//   initAutocomplete() {
-//   const map = new google.maps.Map(
-//     document.getElementById("map") as HTMLElement,
-//     {
-//       center: { lat: -33.8688, lng: 151.2195 },
-//       zoom: 13,
-//       mapTypeId: "roadmap",
-//     }
-//   );
 
-//   // Create the search box and link it to the UI element.
-//   const input = document.getElementById("pac-input") as HTMLInputElement;
-//   const searchBox = new google.maps.places.SearchBox(input);
 
-//   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+// var start: any = moment().subtract(29, "days");
+// var end: any = moment();
 
-//   // Bias the SearchBox results towards current map's viewport.
-//   map.addListener("bounds_changed", () => {
-//     searchBox.setBounds(map.getBounds() as google.maps.LatLngBounds);
-//   });
-
-//   let markers: google.maps.Marker[] = [];
-
-//   // Listen for the event fired when the user selects a prediction and retrieve
-//   // more details for that place.
-//   searchBox.addListener("places_changed", () => {
-//     const places = searchBox.getPlaces();
-
-//     if (places?.length == 0) {
-//       return;
-//     }
-
-//     // Clear out the old markers.
-//     markers.forEach((marker) => {
-//       marker.setMap(null);
-//     });
-//     markers = [];
-
-//     // For each place, get the icon, name and location.
-//     const bounds = new google.maps.LatLngBounds();
-
-//     places?.forEach((place) => {
-//       if (!place.geometry || !place.geometry.location) {
-//         console.log("Returned place contains no geometry");
-//         return;
-//       }
-
-//       const icon = {
-//         url: place.icon as string,
-//         size: new google.maps.Size(71, 71),
-//         origin: new google.maps.Point(0, 0),
-//         anchor: new google.maps.Point(17, 34),
-//         scaledSize: new google.maps.Size(25, 25),
-//       };
-
-//       // Create a marker for each place.
-//       markers.push(
-//         new google.maps.Marker({
-//           map,
-//           icon,
-//           title: place.name,
-//           position: place.geometry.location,
-//         })
-//       );
-
-//       if (place.geometry.viewport) {
-//         // Only geocodes have viewport.
-//         bounds.union(place.geometry.viewport);
-//       } else {
-//         bounds.extend(place.geometry.location);
-//       }
-//     });
-//     map.fitBounds(bounds);
-//   });
+// function cb(start: any, end: any) {
+//     $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
 // }
 
+// // $("#kt_daterangepicker_4").daterangepicker({
+// //     startDate: start,
+// //     endDate: end,
+// //     ranges: {
+// //     "Today": [moment(), moment()],
+// //     "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+// //     "Last 7 Days": [moment().subtract(6, "days"), moment()],
+// //     "Last 30 Days": [moment().subtract(29, "days"), moment()],
+// //     "This Month": [moment().startOf("month"), moment().endOf("month")],
+// //     "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+// //     }
+// // }, cb);
 
-}
-
-
-
-
-var start: any = moment().subtract(29, "days");
-var end: any = moment();
-
-function cb(start: any, end: any) {
-    $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
-}
-
-// $("#kt_daterangepicker_4").daterangepicker({
-//     startDate: start,
-//     endDate: end,
-//     ranges: {
-//     "Today": [moment(), moment()],
-//     "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
-//     "Last 7 Days": [moment().subtract(6, "days"), moment()],
-//     "Last 30 Days": [moment().subtract(29, "days"), moment()],
-//     "This Month": [moment().startOf("month"), moment().endOf("month")],
-//     "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-//     }
-// }, cb);
-
-cb(start, end);
+// cb(start, end);
 
