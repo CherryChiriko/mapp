@@ -112,13 +112,12 @@ export class SidebarComponent implements OnInit{
       Drivers: interestsArr,
       Disponibilita_dal: "",
       Preavviso: 0,
-      Latitude: 0,
-      Longitude: 0
+      Latitude: 43.48,
+      Longitude: 1.68
     }
     console.log(newSpecialist)
-    // this.map.addMarker(newSpecialist);
+    this.map.addMarker(newSpecialist);
     // this._excel.addCity(newSpecialist);
-    // this.addMarker({ "lat": 43.48, "lng": 1.68})
   }
   filterSpecialist(){
     const val = this.filterForm.value;

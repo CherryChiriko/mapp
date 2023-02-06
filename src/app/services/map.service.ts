@@ -36,8 +36,15 @@ export class MapService {
     return info
   }
 
-  addMarker(newMarker: ISpecialist){
-    this.markers.subscribe( val=>
-      this.markers.next([...val, newMarker])
-    )}
+  addMarker(newSpecialist: ISpecialist){
+    // this.markers.subscribe( val=>
+    //   this.markers.next([...val, newMarker])
+    // )}
+    let newMarkers: ISpecialist[] = []
+    this.markers.subscribe(val=>
+      {
+        newMarkers = [...val, newSpecialist]; 
+      }
+      )
+    this.markers.next(newMarkers)}
 }
