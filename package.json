@@ -21,18 +21,15 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
-<<<<<<< HEAD
-    "file-saver": "^2.0.5",
-    "ngx-filesaver": "^15.0.0",
-=======
     "daterangepicker": "^3.1.0",
+    "file-saver": "^2.0.5",
     "intl-tel-input": "^17.0.19",
     "jquery": "^3.6.3",
     "jquery-datepicker": "^1.12.3",
     "material-icons": "^1.13.1",
     "moment": "^2.29.4",
+    "ngx-filesaver": "^15.0.0",
     "ngx-mat-select-search": "^7.0.0",
->>>>>>> 203da2c06edf5d7e6a6b0f8d39ff9287bfe70978
     "rxjs": "~7.5.0",
     "xlsx": "^0.18.5",
     "zone.js": "~0.12.0"

@@ -9,9 +9,6 @@ import { ISpecialist } from '../interfaces/interfaces';
 })
 export class ExcelService {
 
-  /**
- *  npm install file-saver ngx-filesaver --save
- */
   constructor(private _fileSaver : FileSaverService) { }
 
   public _excelData : ISpecialist[] = [];
