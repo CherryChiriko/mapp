@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import citiesData from 'src/assets/istat-cities.json';
+import geoData from 'src/assets/italy_geo.json';
 import { ICities, ICity } from '../interfaces/interfaces';
 
 @Injectable({
@@ -10,13 +11,13 @@ import { ICities, ICity } from '../interfaces/interfaces';
 export class FormService {
   
   cities : ICities[] = [] ;
-  apiUrl : string = "";
+  // apiUrl : string = "";
 
   constructor(private http: HttpClient) { 
     // this.http.get('src/assets/istat-cities.json').subscribe(values => {
     //   this.cities = values as ICities[]})
     this.cities = citiesData as ICities[];
-    this.apiUrl = "https://nominatim.openstreetmap.org/search?country=Italy,city="
+    // this.apiUrl = "https://nominatim.openstreetmap.org/search?country=Italy,city="
   }
 
   addElementToFormGroup(form: FormGroup, category: string, array: string[]){
@@ -50,16 +51,18 @@ export class FormService {
   }
   getAllCities(){
     let result: ICity[] = [];
+    
     this.cities.map(city=> {
       result.push(
         {name: city["Denominazione in italiano"], region: city["Denominazione regione"], country: "Italy"}
         )
-      // result.length === this.cities.length ? result = [{}] : null;
     })
     return result;
   }
   
   getCityCoordinates(cityName : string){
-    this.http.get(`${this.apiUrl}${cityName}`).subscribe(data => console.log("I Am ", data))
+    const res = geoData?.find( element => element.comune === cityName);
+    return [Number(res?.lat), Number(res?.lng)]
+    // this.http.get(`${this.apiUrl}${cityName}`).subscribe(data => console.log("I Am ", data))
   }
 }

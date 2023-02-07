@@ -21,11 +21,9 @@ import { GoogleMap } from '@angular/google-maps';
 export class SidebarComponent implements OnInit{
   @ViewChild('mapSearchField') searchField !: { nativeElement: HTMLInputElement; };
 
-  // specialists: ISpecialist[] =  [];
-  // markersSubs ?: Subscription;
   specialArr: string[] = data.specialties;
   degArr: string[] = data.degrees;
-  citiesArr = this.form.getAllCities();
+  citiesArr: ICity[] = this.form.getAllCities();
   
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
@@ -108,10 +106,13 @@ export class SidebarComponent implements OnInit{
   }
   addSpecialist(){
     const val = this.specialistForm.value;
-    const city: string[] = this.cityForm.value.city;
+    
+    const cityInfo: string[] = this.cityForm.value.city.split(",");
+    const city: string = cityInfo.join(", ");
+    const [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
+
     let interestsArr : string[] = this.form.convertToArray(val, "interests")
 
-    // this.form.getCityCoordinates("Rome")
     // console.log(this.geocoder.geocode({'address': city[0]}))
     let newSpecialist: ISpecialist = {
       Nome: val.name,
@@ -124,8 +125,8 @@ export class SidebarComponent implements OnInit{
       Drivers: interestsArr,
       Disponibilita_dal: "",
       Preavviso: 0,
-      Latitude: 43.48,
-      Longitude: 1.68
+      Latitude: lat,
+      Longitude: lng
     }
     console.log(newSpecialist)
     this.map.addMarker(newSpecialist);
@@ -162,28 +163,4 @@ export class SidebarComponent implements OnInit{
 
 }
 
-
-
-
-// var start: any = moment().subtract(29, "days");
-// var end: any = moment();
-
-// function cb(start: any, end: any) {
-//     $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
-// }
-
-// // $("#kt_daterangepicker_4").daterangepicker({
-// //     startDate: start,
-// //     endDate: end,
-// //     ranges: {
-// //     "Today": [moment(), moment()],
-// //     "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
-// //     "Last 7 Days": [moment().subtract(6, "days"), moment()],
-// //     "Last 30 Days": [moment().subtract(29, "days"), moment()],
-// //     "This Month": [moment().startOf("month"), moment().endOf("month")],
-// //     "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-// //     }
-// // }, cb);
-
-// cb(start, end);
 
