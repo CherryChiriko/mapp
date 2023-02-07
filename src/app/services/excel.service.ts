@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FileSaverService } from 'ngx-filesaver';
 import { Observable, ReplaySubject } from 'rxjs';
 import * as XLSX from 'xlsx';
 import { ISpecialist } from '../interfaces/interfaces';
@@ -8,7 +9,10 @@ import { ISpecialist } from '../interfaces/interfaces';
 })
 export class ExcelService {
 
-  constructor() { }
+  /**
+ *  npm install file-saver ngx-filesaver --save
+ */
+  constructor(private _fileSaver : FileSaverService) { }
 
   public _excelData : ISpecialist[] = [];
   private excelData$ = new ReplaySubject<ISpecialist[]>(1);
@@ -42,5 +46,24 @@ export class ExcelService {
     this._excelData.push(value);
     this.excelData = this.excelData;
     console.log(this.excelData);
+  }
+
+  public exportExcel() {
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+    //custom code
+    const worksheet = XLSX.utils.json_to_sheet(this.excelData);
+    const workbook = {
+      Sheets: {
+        testingSheet: worksheet,
+      },
+      SheetNames: ['testingSheet'],
+    };
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
+    this._fileSaver.save(blobData, 'demoFile');
   }
 }
