@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
 import intlTelInput from 'intl-tel-input';
 import moment from 'moment';
@@ -51,7 +51,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.specialistForm = new FormGroup({
       name: new FormControl(null),
-      email: new FormControl(null),
+      email: new FormControl(null, [Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]),
       phone: new FormControl(null),
       degree: new FormControl(null),
       specialties: new FormControl(null),

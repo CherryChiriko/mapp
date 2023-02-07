@@ -16,9 +16,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';  
+
+import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
-    
+
+// npm i ngx-mat-intl-tel-input --save
+// npm install libphonenumber-js --save
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +44,8 @@ import { DatePipe } from '@angular/common';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgxMatIntlTelInputComponent,
+
     BrowserAnimationsModule
   ],
   providers: [DatePipe],
