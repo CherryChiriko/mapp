@@ -32,3 +32,10 @@ td{
 .card {
     border: transparent;
 }
+
+@media screen and (max-width: 1000px) {
+    /* google-map{
+        height: 200px; width: 375px;
+    } */
+    
+}

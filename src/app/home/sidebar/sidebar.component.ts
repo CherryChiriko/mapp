@@ -1,12 +1,24 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
+import intlTelInput from 'intl-tel-input';
+// import datepicker from 'jquery-datepicker';
+import moment from 'moment';
+import { ICity, ISFilter, ISpecialist } from 'src/app/interfaces/interfaces';
+import { MapService } from 'src/app/services/map.service';
+import { Subscription } from 'rxjs';
+
+import data from 'src/assets/specifics.json';
+import { HttpClient } from '@angular/common/http';
+import { FormService } from 'src/app/services/form.service';
+import { GoogleMap } from '@angular/google-maps';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
 })
+<<<<<<< HEAD
 export class SidebarComponent implements OnInit {
   @ViewChild('mapSearchField', { static: true }) searchField: any;
   @ViewChild('test') test!: ElementRef;
@@ -17,10 +29,46 @@ export class SidebarComponent implements OnInit {
   isSpecialistOpen: boolean = false;
 
   constructor(private _excel: ExcelService) {}
+=======
+export class SidebarComponent implements OnInit{
+  @ViewChild('mapSearchField') searchField !: { nativeElement: HTMLInputElement; };
+
+  // specialists: ISpecialist[] =  [];
+  // markersSubs ?: Subscription;
+  specialArr: string[] = data.specialties;
+  degArr: string[] = data.degrees;
+  citiesArr = this.form.getAllCities();
+  
+  specialistForm !: FormGroup;
+  clientForm!: FormGroup;
+  filterForm !: FormGroup;
+  cityForm !: FormGroup;
+  dateRangeForm !: FormGroup;
+
+  isFilterOpen: boolean = false;
+  isFilterSpecialistOpen: boolean = false;
+  isFilterClientOpen: boolean = false;
+
+  isNewOpen: boolean = false;
+  isClientOpen: boolean = false;
+  isSpecialistOpen: boolean = false;
+
+  geocoder = new google.maps.Geocoder();
+
+  
+  // phoneInputField: Element = document.querySelector("#phone")!;
+  // phoneInput = window?.intlTelInput(this.phoneInputField, {
+  //   utilsScript:
+  //     "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+  // });
+
+  constructor(private _excel : ExcelService, private map: MapService, private form: FormService){}
+
+>>>>>>> 203da2c06edf5d7e6a6b0f8d39ff9287bfe70978
   ngOnInit(): void {
-    this.reactiveForm = new FormGroup({
-      city: new FormControl(null),
+    this.specialistForm = new FormGroup({
       name: new FormControl(null),
+<<<<<<< HEAD
       picture: new FormControl(null),
     });
   }
@@ -29,12 +77,55 @@ export class SidebarComponent implements OnInit {
       this.searchField.nativeElement
     );
     console.log(searchBox);
+=======
+      email: new FormControl(null),
+      phone: new FormControl(null),
+      degree: new FormControl(null),
+      specialties: new FormControl(null),
+      interests: new FormGroup({}),
+      canMove: new FormControl(null),
+    });
+
+    this.clientForm = new FormGroup({ 
+      name: new FormControl(null),
+    });
+
+    this.filterForm = new FormGroup({ 
+      name: new FormControl(null),
+      degree: new FormGroup({}),
+      specialties: new FormGroup({}),
+      interests: new FormGroup({}),
+      canMove: new FormControl(null),
+    });
+
+    this.cityForm = new FormGroup({
+      city: new FormControl(null)
+    })
+
+    this.dateRangeForm = new FormGroup({
+      start: new FormControl<Date | null>(null),
+      end: new FormControl<Date | null>(null),
+    });
+
+    this.form.addElementToFormGroup(this.specialistForm, 'interests', this.specialArr)
+    this.form.addElementToFormGroup(this.filterForm, 'specialties', this.specialArr)
+    this.form.addElementToFormGroup(this.filterForm, 'degree', this.degArr)
+    this.form.addElementToFormGroup(this.filterForm, 'interests', this.specialArr)
+    
+  }
+  ngAfterViewInit(): void{
+    // const searchBox = 
+    // new google.maps.places.SearchBox(
+    //   this.searchField.nativeElement,
+    //   );
+>>>>>>> 203da2c06edf5d7e6a6b0f8d39ff9287bfe70978
     // searchBox.addListener('places_changed', ()=>{
     //   const places = searchBox.getPlaces();
     //   console.log(places)
     //   if (places?.length === 0){return;}
     // })
   }
+<<<<<<< HEAD
   addClient() {}
   addSpecialist() {}
   toggleSpecialist() {
@@ -155,6 +246,65 @@ export class SidebarComponent implements OnInit {
   //         anchor: new google.maps.Point(17, 34),
   //         scaledSize: new google.maps.Size(25, 25),
   //       };
+=======
+
+
+  addClient(){
+
+  }
+  addSpecialist(){
+    const val = this.specialistForm.value;
+    const city: string[] = this.cityForm.value.city;
+    let interestsArr : string[] = this.form.convertToArray(val, "interests")
+
+    // this.form.getCityCoordinates("Rome")
+    // console.log(this.geocoder.geocode({'address': city[0]}))
+    let newSpecialist: ISpecialist = {
+      Nome: val.name,
+      Email: val.email,
+      Telefono: val.phone,
+      Domicilio: `${city}`,
+      Disp_Trasferimento: val.canMove,
+      Studi: val.degree,
+      Competenza_Princ: val.specialties,
+      Drivers: interestsArr,
+      Disponibilita_dal: "",
+      Preavviso: 0,
+      Latitude: 43.48,
+      Longitude: 1.68
+    }
+    console.log(newSpecialist)
+    this.map.addMarker(newSpecialist);
+    // this._excel.addCity(newSpecialist);
+  }
+  filterSpecialist(){
+    const val = this.filterForm.value;
+    
+    let degreeArr : string[] = this.form.convertToArray(val, "degree");
+    let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
+    let interestsArr : string[] = this.form.convertToArray(val, "interests");
+
+    let specialistFilter: ISFilter = {
+      Nome: val.name,
+      Domicilio: val.city,
+      Disp_Trasferimento: val.canMove,
+      Studi: degreeArr,
+      Competenza_Princ: specialtiesArr,
+      Drivers: interestsArr,
+      Disponibilita_dal: "",
+      Preavviso: 0
+    }
+    console.log(specialistFilter)
+    // call service
+  }
+  
+  toggleFilter(){           this.isFilterOpen = !this.isFilterOpen}
+  toggleFilterSpecialist(){ this.isFilterSpecialistOpen = !this.isFilterSpecialistOpen}
+  toggleFilterClient(){     this.isFilterClientOpen = !this.isFilterClientOpen}
+  toggleNew(){              this.isNewOpen = !this.isNewOpen}
+  toggleSpecialist(){       this.isSpecialistOpen = !this.isSpecialistOpen}
+  toggleClient(){           this.isClientOpen = !this.isClientOpen}
+>>>>>>> 203da2c06edf5d7e6a6b0f8d39ff9287bfe70978
 
   //       // Create a marker for each place.
   //       markers.push(
@@ -177,3 +327,29 @@ export class SidebarComponent implements OnInit {
   //   });
   // }
 }
+
+
+
+
+// var start: any = moment().subtract(29, "days");
+// var end: any = moment();
+
+// function cb(start: any, end: any) {
+//     $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
+// }
+
+// // $("#kt_daterangepicker_4").daterangepicker({
+// //     startDate: start,
+// //     endDate: end,
+// //     ranges: {
+// //     "Today": [moment(), moment()],
+// //     "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+// //     "Last 7 Days": [moment().subtract(6, "days"), moment()],
+// //     "Last 30 Days": [moment().subtract(29, "days"), moment()],
+// //     "This Month": [moment().startOf("month"), moment().endOf("month")],
+// //     "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+// //     }
+// // }, cb);
+
+// cb(start, end);
+

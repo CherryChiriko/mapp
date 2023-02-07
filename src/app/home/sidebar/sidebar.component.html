@@ -2,23 +2,124 @@
     <!-- <div id="head">
     </div> -->
     <div id="body"> 
-        <h4>Filter</h4>
+        <h4 (click)="toggleFilter()">Filter</h4>
+        <div [hidden]="!isFilterOpen">
+            <button class="btn btn-primary m-2" (click)="toggleFilterClient()">Client</button>
+            <button class="btn btn-success m-2" (click)="toggleFilterSpecialist()">Specialist</button>    
+        
+        <div class="container form-div specialist rounded" *ngIf="isFilterClientOpen">
+            <!-- <form [formGroup]="filterForm" class="my-3 pt-3" >
+                <input type="text" name="name" 
+                    class="form-control text-center my-2" placeholder="Name"
+                    formControlName = "name">
+
+                <p>Degree</p>
+                <div class="form-check" id="degree">
+                    <span *ngFor="let d of degArr; let i=index" formArrayName="degree">
+                    <input type="checkbox" class="btn-check" autocomplete="off"
+                    name="degree" id= "optio{{i}}" value="{{d}}"
+                    formControlName="{{d}}">
+                    <label class="btn btn-success special" for="optio{{i}}">{{d}}</label>
+                    </span>  
+                </div>
+
+                <p>Specialty</p>
+                <div class="form-check" id="specialties">
+                    <span *ngFor="let s of specialArr; let i=index" formArrayName="specialties">
+                    <input type="checkbox" class="btn-check" autocomplete="off"
+                    name="specialties" id= "option{{i}}" value="{{s}}"
+                    formControlName = "{{s}}">
+                    <label class="btn btn-success special" for="option{{i}}">{{s}}</label>
+                    </span>  
+                </div>
+
+                <p>Interests</p>                
+                <div class="form-check" id="interests">
+                    <span *ngFor="let s of specialArr; let i=index" formArrayName="interests">
+                    <input type="checkbox" class="btn-check" autocomplete="off"
+                    name="interests" id= "options{{i}}" value="{{s}}"
+                    formControlName="{{s}}">
+                    <label class="btn btn-success special" for="options{{i}}">{{s}}</label>
+                    </span>
+                </div>
+
+                <span class="form-check">
+                    <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
+                    <label class="form-check-label" for="canMove">
+                        Available to move
+                    </label>
+                </span>
+                <button class="btn btn-success m-2 mb-4" (click)="filterSpecialist()">Filter</button>
+            </form> -->
+        </div>
+        <div class="container form-div specialist rounded" *ngIf="isFilterSpecialistOpen">
+            <form [formGroup]="filterForm" class="my-3 pt-3" >
+                <input type="text" name="name" 
+                    class="form-control text-center my-2" placeholder="Name"
+                    formControlName = "name">
+
+                <p>Degree</p>
+                <div class="form-check" id="degree">
+                    <span *ngFor="let d of degArr; let i=index" formArrayName="degree">
+                    <input type="checkbox" class="btn-check" autocomplete="off"
+                    name="degree" id= "optio{{i}}" value="{{d}}"
+                    formControlName="{{d}}">
+                    <label class="btn btn-success special" for="optio{{i}}">{{d}}</label>
+                    </span>  
+                </div>
+
+              <p>Specialty</p>
+              <div class="form-check" id="specialties">
+                  <span *ngFor="let s of specialArr; let i=index" formArrayName="specialties">
+                  <input type="checkbox" class="btn-check" autocomplete="off"
+                  name="specialties" id= "option{{i}}" value="{{s}}"
+                  formControlName = "{{s}}">
+                  <label class="btn btn-success special" for="option{{i}}">{{s}}</label>
+                  </span>  
+              </div>
+
+              <p>Interests</p>                
+              <div class="form-check" id="interests">
+                  <span *ngFor="let s of specialArr; let i=index" formArrayName="interests">
+                  <input type="checkbox" class="btn-check" autocomplete="off"
+                  name="interests" id= "options{{i}}" value="{{s}}"
+                  formControlName="{{s}}">
+                  <label class="btn btn-success special" for="options{{i}}">{{s}}</label>
+                  </span>
+              </div>
+
+                <span class="form-check">
+                    <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
+                    <label class="form-check-label" for="canMove">
+                      Available to move
+                    </label>
+                </span>
+                <button class="btn btn-success m-2 mb-4" (click)="filterSpecialist()">Filter</button>
+            </form>
+        </div>
+        </div>
         <hr>
-        <h4>Add New</h4>
+        <h4 (click)="toggleNew()">Add New</h4>
+        <div [hidden]="!isNewOpen">    
         <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
         <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
-        <div class="row g-3 align-items-center">
+        <form class="row g-3 align-items-center" [formGroup]="cityForm">
             <div class="col-auto">
               <label for="city" class="col-form-label">Where?</label>
             </div>
             <div class="col-auto">
-                <input #mapSearchField type="text" name="city" id="city"
-                class="form-control text-center my-2 my-map-search-field" placeholder="City"
-                formControlName = "city">
+                <select type="search" name="city" id="city"
+                class="form-control rounded text-center my-2" id="search-bar"
+                formControlName="city">
+                    <option disabled selected [ngValue]="null">-- City --</option>
+                    <option *ngFor="let city of citiesArr" 
+                    value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
+                </select>     
             </div>
-        </div>
+            
+        </form>
         <div class="container form-div client rounded" *ngIf="isClientOpen">
-            <form [formGroup]="reactiveForm" class="my-3 pt-3" >
+            <form [formGroup]="clientForm" class="my-3 pt-3" >
                 <input #mapSearchField type="text" name="city" 
                     class="form-control text-center my-2 my-map-search-field" placeholder="City"
                     formControlName = "city">
@@ -32,14 +133,91 @@
             </form>
         </div>
         <div class="container form-div specialist rounded" *ngIf="isSpecialistOpen">
-            <form [formGroup]="reactiveForm" class="my-3 pt-3" >
-                <input #mapSearchField type="text" name="city" 
-                    class="form-control text-center my-2" placeholder="City"
+            <form [formGroup]="specialistForm" class="my-3 pt-3" >
+                <input type="text" name="name" 
+                    class="form-control text-center my-2" placeholder="Name"
                     formControlName = "name">
-                    <input type="text" name="picture" id="picture" 
-                    class="form-control text-center my-2" placeholder="Picture file name (include extension)"
-                    formControlName = "picture">
+                <input type="email" name="email" 
+                    class="form-control text-center my-2" placeholder="Email"
+                    formControlName = "email">
+                <input type="text" name="phone" id="phone" 
+                    class="form-control text-center my-2" placeholder="Phone number"
+                    formControlName = "phone">
+                <select name="degree" id="degree" 
+                    class="form-select text-center my-2" 
+                    formControlName = "degree">
+                    <option [ngValue]="null" disabled selected>Highest degree</option>
+                    <option value="Ph.D.">              Ph.D.           </option>
+                    <option value="Master">             Master          </option>
+                    <option value="Bachelor">           Bachelor        </option>
+                    <option value="Technical school">   Technical school</option>
+                    <option value="High School">        High School     </option>
+                    <option value="No degree">          No degree       </option>
+                  </select>
+                
+                <p>Specialty</p>
+                <div class="form-check" id="specialties">
+                    <span *ngFor="let s of specialArr; let i=index">
+                    <input type="radio" class="btn-check" autocomplete="off"
+                    name="specialties" id= "option{{i}}" value="{{s}}"
+                    formControlName = "specialties">
+                    <label class="btn btn-success special" for="option{{i}}">{{s}}</label>
+                    </span>  
+                </div>
+
+                <p>Interests</p>                
+                <div class="form-check" id="interests">
+                    <span *ngFor="let s of specialArr; let i=index" formArrayName="interests">
+                    <input type="checkbox" class="btn-check" autocomplete="off"
+                    name="interests" id= "options{{i}}" value="{{s}}"
+                    formControlName="{{s}}">
+                    <label class="btn btn-success special" for="options{{i}}">{{s}}</label>
+                    </span>
+                </div>
+
+                <span class="form-check">
+                    <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
+                    <label class="form-check-label" for="canMove">
+                      Available to move
+                    </label>
+                </span>
                 <button class="btn btn-success m-2 mb-4" (click)="addSpecialist()">Add specialist</button>
             </form>
         </div>
+        </div>
+        
     </div>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      
+        <mat-error *ngIf="dateRangeForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="dateRangeForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </mat-form-field>
+      
+      <p>Selected range: {{dateRangeForm.value | json}}</p>
+      
+<!-- <p>{{}}</p> -->
+    <!-- export interface ISpecialist {
+        Disponibilita_dal: string;
+        Preavviso: number;
+      } -->
+
+      <!-- <div class="container">
+        <form id="login" onsubmit="process(event)">
+          <p>Enter your phone number:</p>
+          <input id="phone" type="tel" name="phone" />
+          <input type="submit" class="btn" value="Verify" />
+        </form>
+       </div> -->
+       
+
+
+<!-- <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_4"/> -->

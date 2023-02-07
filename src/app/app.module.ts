@@ -11,6 +11,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './home/sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';  
 
 @NgModule({
   declarations: [
@@ -25,7 +31,13 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     GoogleMapsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
+    MatSelectModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

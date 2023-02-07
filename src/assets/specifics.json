@@ -1,0 +1,4 @@
+{
+    "specialties": ["Backend", "Frontend", "Fullstack", "Embedded", "Mobile"],
+    "degrees": ["Ph.D.", "Master", "Bachelor", "High School", "Technical School", "No degree"]
+}
