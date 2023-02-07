@@ -1,15 +1,12 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
 import intlTelInput from 'intl-tel-input';
-// import datepicker from 'jquery-datepicker';
 import moment from 'moment';
 import { ICity, ISFilter, ISpecialist } from 'src/app/interfaces/interfaces';
 import { MapService } from 'src/app/services/map.service';
-import { Subscription } from 'rxjs';
 
 import data from 'src/assets/specifics.json';
-import { HttpClient } from '@angular/common/http';
 import { FormService } from 'src/app/services/form.service';
 import { GoogleMap } from '@angular/google-maps';
 
@@ -29,17 +26,18 @@ export class SidebarComponent implements OnInit {
   clientForm!: FormGroup;
   filterForm !: FormGroup;
   cityForm !: FormGroup;
-  dateRangeForm !: FormGroup;
+  // dateRangeForm !: FormGroup;
 
   isFilterOpen: boolean = false;
   isFilterSpecialistOpen: boolean = false;
   isFilterClientOpen: boolean = false;
+  isCustomDateSelected: boolean = true;
 
   isNewOpen: boolean = false;
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
 
-  geocoder = new google.maps.Geocoder();
+  // geocoder = new google.maps.Geocoder();
 
   
   // phoneInputField: Element = document.querySelector("#phone")!;
@@ -58,6 +56,8 @@ export class SidebarComponent implements OnInit {
       degree: new FormControl(null),
       specialties: new FormControl(null),
       interests: new FormGroup({}),
+      start: new FormControl<Date | null>(null),
+      end: new FormControl<Date | null>(null),
       canMove: new FormControl(null),
     });
 
@@ -77,10 +77,10 @@ export class SidebarComponent implements OnInit {
       city: new FormControl(null)
     })
 
-    this.dateRangeForm = new FormGroup({
-      start: new FormControl<Date | null>(null),
-      end: new FormControl<Date | null>(null),
-    });
+    // this.dateRangeForm = new FormGroup({
+    //   start: new FormControl<Date | null>(null),
+    //   end: new FormControl<Date | null>(null),
+    // });
 
     this.form.addElementToFormGroup(this.specialistForm, 'interests', this.specialArr)
     this.form.addElementToFormGroup(this.filterForm, 'specialties', this.specialArr)
@@ -122,8 +122,8 @@ export class SidebarComponent implements OnInit {
       Studi: val.degree,
       Competenza_Princ: val.specialties,
       Drivers: interestsArr,
-      Disponibilita_dal: "",
-      Preavviso: 0,
+      Disponibilita_dal: this.form.formatDate(val.end),
+      Preavviso: this.form.daysBetween(val.start, val.end),
       Latitude: lat,
       Longitude: lng
     }
@@ -159,26 +159,6 @@ export class SidebarComponent implements OnInit {
   toggleSpecialist(){       this.isSpecialistOpen = !this.isSpecialistOpen}
   toggleClient(){           this.isClientOpen = !this.isClientOpen}
 
-  //       // Create a marker for each place.
-  //       markers.push(
-  //         new google.maps.Marker({
-  //           map,
-  //           icon,
-  //           title: place.name,
-  //           position: place.geometry.location,
-  //         })
-  //       );
-
-  //       if (place.geometry.viewport) {
-  //         // Only geocodes have viewport.
-  //         bounds.union(place.geometry.viewport);
-  //       } else {
-  //         bounds.extend(place.geometry.location);
-  //       }
-  //     });
-  //     map.fitBounds(bounds);
-  //   });
-  // }
 }
 
 

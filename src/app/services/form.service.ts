@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
@@ -13,12 +14,15 @@ export class FormService {
   cities : ICities[] = [] ;
   // apiUrl : string = "";
 
-  constructor(private http: HttpClient) { 
-    // this.http.get('src/assets/istat-cities.json').subscribe(values => {
-    //   this.cities = values as ICities[]})
+  constructor(private datePipe: DatePipe) { 
     this.cities = citiesData as ICities[];
-    // this.apiUrl = "https://nominatim.openstreetmap.org/search?country=Italy,city="
   }
+  // constructor(private http: HttpClient) { 
+  //   // this.http.get('src/assets/istat-cities.json').subscribe(values => {
+  //   //   this.cities = values as ICities[]})
+  //   this.cities = citiesData as ICities[];
+  //   // this.apiUrl = "https://nominatim.openstreetmap.org/search?country=Italy,city="
+  // }
 
   addElementToFormGroup(form: FormGroup, category: string, array: string[]){
     array.forEach(item => {
@@ -51,12 +55,11 @@ export class FormService {
   }
   getAllCities(){
     let result: ICity[] = [];
-    
-    this.cities.map(city=> {
+    this.cities.map(city=> 
       result.push(
         {name: city["Denominazione in italiano"], region: city["Denominazione regione"], country: "Italy"}
         )
-    })
+    )
     return result;
   }
   
@@ -65,4 +68,17 @@ export class FormService {
     return [Number(res?.lat), Number(res?.lng)]
     // this.http.get(`${this.apiUrl}${cityName}`).subscribe(data => console.log("I Am ", data))
   }
+
+  treatAsUTC(date: Date) {
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    return Number(date);
+  }
+  daysBetween(startDate: Date, endDate: Date) {
+      var millisecondsPerDay = 24 * 60 * 60 * 1000;
+      return (this.treatAsUTC(endDate) - this.treatAsUTC(startDate)) / millisecondsPerDay;
+  }
+  formatDate(date: Date): string{
+    return this.datePipe.transform(date,'MM/dd/YYYY')!;
+  }
+  
 }

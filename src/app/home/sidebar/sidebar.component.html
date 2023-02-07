@@ -175,6 +175,40 @@
                     </span>
                 </div>
 
+                <p>Start date and notice period</p>  
+                
+                <!-- <mat-form-field color="accent" appearance="fill" *ngIf="!isCustomDateSelected">
+                    <mat-label>Inherited calendar color</mat-label>
+                    <input matInput [matDatepicker]="picker1">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field> -->
+                <!-- <select name="notice" id="notice" 
+                  class="form-select text-center my-2" 
+                  formControlName = "notice">
+                  <option [ngValue]="null" disabled selected>-- Notice period --</option>
+                  <option value="30"> 1 month </option>
+                  <option value="15"> 2 weeks </option>
+                  <option value="7"> 1 week </option>
+                  <option value="1"> 1 day  </option>
+                  <option value="custom"> Custom select </option>
+                </select> -->   
+
+                <mat-form-field appearance="fill" color="accent" *ngIf="isCustomDateSelected">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [formGroup]="specialistForm" [rangePicker]="picker">
+                      <input matStartDate formControlName="start" placeholder="Start date">
+                      <input matEndDate formControlName="end" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  
+                    <mat-error *ngIf="specialistForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                    <mat-error *ngIf="specialistForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                  </mat-form-field>
+                           
                 <span class="form-check">
                     <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
                     <label class="form-check-label" for="canMove">
@@ -188,65 +222,6 @@
         
     </div>
 
-    <!-- <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker">
-          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-        </mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field> -->
-      
-
-    <mat-form-field appearance="fill">
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Start date">
-          <input matEndDate formControlName="end" placeholder="End date">
-        </mat-date-range-input>
-        <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      
-        <mat-error *ngIf="dateRangeForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
-        <mat-error *ngIf="dateRangeForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
-      </mat-form-field>
-      
-      <p>Selected range: {{dateRangeForm.value | json}}</p>
-      
-
-
-
-
-      <!-- <mat-form-field appearance="fill">
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Start date">
-          <input matEndDate formControlName="end" placeholder="End date">
-        </mat-date-range-input>
-        <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      
-        <mat-error *ngIf="dateRangeForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
-        <mat-error *ngIf="dateRangeForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
-      </mat-form-field>
-      
-      <p>Selected range: {{dateRangeForm.value | json}}</p> -->
-
-
-
-
-
-
-
-
-<!-- <p>{{}}</p> -->
-    <!-- export interface ISpecialist {
-        Disponibilita_dal: string;
-        Preavviso: number;
-      } -->
 
       <!-- <div class="container">
         <form id="login" onsubmit="process(event)">
