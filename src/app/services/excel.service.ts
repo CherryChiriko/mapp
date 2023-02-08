@@ -23,6 +23,15 @@ export class ExcelService {
     this.excelData$.next(value);
     }
 
+    /**
+     * Ci facciamo ritornare il subject excelData$ per poterlo
+     * usare nell'altro service
+     * @returns
+     */
+    public getSubj() {
+      return this.excelData$;
+    }
+
   public loadExcelFile(event : any) {
     const file = event.target.files[0];
     const fileReader = new FileReader();
@@ -33,16 +42,6 @@ export class ExcelService {
       let data = workBook.SheetNames;
       this.excelData = XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]);
     }
-  }
-
-  public getAll() : Observable<ISpecialist[]> {
-    return this.excelData$;
-  }
-
-  public addCity(value : ISpecialist) {
-    this._excelData.push(value);
-    this.excelData = this.excelData;
-    console.log(this.excelData);
   }
 
   public exportExcel() {
@@ -63,4 +62,24 @@ export class ExcelService {
     const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
     this._fileSaver.save(blobData, 'demoFile');
   }
+
+  public getAll() : Observable<ISpecialist[]> {
+    return this.excelData$;
+  }
+
+  public addSpecialist(value : ISpecialist) {
+    this._excelData.push(value);
+    this.excelData = this.excelData;
+    console.log(this.excelData);
+  }
+
+  public removeSpecialist(value : ISpecialist) {
+    let index = this.excelData.indexOf(value);
+    if(index > -1) {
+      this.excelData.splice(index, 1);
+    }
+    this.excelData$.next(this.excelData);
+  }
+
+
 }
