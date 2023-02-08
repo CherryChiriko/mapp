@@ -13,6 +13,17 @@ export interface ISpecialist {
   Longitude: number;
 }
 
+export interface IClient {
+  Nome: string;
+  Città: string;
+  Logo?: string;
+  Disp_Online: boolean;
+  Cerca: string[];
+  Disponibilita_dal: string;
+  Latitude: number;
+  Longitude: number;
+}
+
 export interface ISFilter {
   Nome: string;
   Domicilio: string;

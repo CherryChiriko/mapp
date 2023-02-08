@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import markerData from 'src/assets/data.json';
-import { ISpecialist } from '../interfaces/interfaces';
+import { IClient, ISpecialist } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class MapService {
-  markers = new BehaviorSubject<ISpecialist[]>([])
+  sMarkers = new BehaviorSubject<ISpecialist[]>([]);
+  cMarkers = new BehaviorSubject<IClient[]>([]);
+
   data : ISpecialist[] = markerData;
 
   constructor() {
-    this.markers.next(this.data);
+    this.sMarkers.next(this.data);
   }
 
   distanceCalc(latLng1: google.maps.LatLngLiteral, latLng2: google.maps.LatLngLiteral){
@@ -22,9 +24,10 @@ export class MapService {
       );
     console.log(distance)  // answer is in meters
   }
-  getMarkers(): Observable<ISpecialist[]> { return this.markers}
+  getSMarkers(): Observable<ISpecialist[]> { return this.sMarkers}
+  getCMarkers(): Observable<IClient[]> { return this.cMarkers}
 
-  getMarkerInfo(mark: ISpecialist){
+  getSMarkerInfo(mark: ISpecialist){
     let info = {
       Specialties: mark.Competenza_Princ,
       Degree: mark.Studi,
@@ -36,14 +39,29 @@ export class MapService {
     return info
   }
 
-  addMarker(newSpecialist: ISpecialist){
+  getCMarkerInfo(mark: IClient){
+    let info = {
+      "Looking for": mark.Cerca,
+      City: mark.Città,
+      "Remote": mark.Disp_Online ? 'yes' : 'no',
+      "Available from": mark.Disponibilita_dal,
+    }
+    return info
+  }
+
+  addSMarker(newSpecialist: ISpecialist){
     let newMarkers: ISpecialist[] = []
-    this.markers.subscribe(val=>
-      {
-        newMarkers = [...val, newSpecialist]; 
-      }
+    this.sMarkers.subscribe(val=>
+        newMarkers = [...val, newSpecialist]
       )
-    this.markers.next(newMarkers)}
+    this.sMarkers.next(newMarkers)}
+  
+  addCMarker(newClient: IClient){
+    let newMarkers: IClient[] = []
+    this.cMarkers.subscribe(val=>
+      newMarkers = [...val, newClient]
+      )
+    this.cMarkers.next(newMarkers)}
     
   
 }

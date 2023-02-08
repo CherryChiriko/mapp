@@ -2,7 +2,7 @@ import { KeyValue } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Subscription } from 'rxjs';
-import { ISpecialist } from 'src/app/interfaces/interfaces';
+import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { ExcelService } from 'src/app/services/excel.service';
 import { MapService } from 'src/app/services/map.service';
 
@@ -13,6 +13,7 @@ import { MapService } from 'src/app/services/map.service';
 })
 export class MapComponent implements OnInit{
   specialists: ISpecialist[] =  [];
+  clients: IClient[] =  [];
   markersSubs ?: Subscription;
 
   INITIAL_COORDS = [41.9028, 12.4964]; // Roma
@@ -23,6 +24,10 @@ export class MapComponent implements OnInit{
   lightColor: string = "var(--light-green)";
   darkColor: string = "var(--dark-green)";
 
+  color1: string = "var(--google-blue)";
+  lightColor1: string = "var(--light-blue)";
+  darkColor1: string = "var(--dark-blue)";
+
   contacts: boolean[] = [];
 
   constructor(private map: MapService, private _excel : ExcelService){}
@@ -30,15 +35,18 @@ export class MapComponent implements OnInit{
   ngOnInit(){
      //this.markersSubs = this._excel.getAll().subscribe(
        //value => this.specialists = value);
-    this.markersSubs = this.map.getMarkers().subscribe(
+    this.markersSubs = this.map.getSMarkers().subscribe(
       value => this.specialists = value);
+    this.markersSubs = this.map.getCMarkers().subscribe(
+      value => this.clients = value);
   }
 
 
   originalOrder =
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 
-  markerInfo(mark: ISpecialist){ return this.map.getMarkerInfo(mark)}
+  markerSInfo(mark: ISpecialist){ return this.map.getSMarkerInfo(mark)}
+  markerCInfo(mark: IClient){ return this.map.getCMarkerInfo(mark)}
   
   toggleContacts(i: number){    this.contacts[i] = !this.contacts[i];  }
   setContact(){

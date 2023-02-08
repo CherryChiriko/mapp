@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
 import intlTelInput from 'intl-tel-input';
 import moment from 'moment';
-import { ICity, ISFilter, ISpecialist } from 'src/app/interfaces/interfaces';
+import { ICity, IClient, ISFilter, ISpecialist } from 'src/app/interfaces/interfaces';
 import { MapService } from 'src/app/services/map.service';
 
 import data from 'src/assets/specifics.json';
@@ -26,7 +26,6 @@ export class SidebarComponent implements OnInit {
   clientForm!: FormGroup;
   filterForm !: FormGroup;
   cityForm !: FormGroup;
-  // dateRangeForm !: FormGroup;
 
   isFilterOpen: boolean = false;
   isFilterSpecialistOpen: boolean = false;
@@ -38,13 +37,6 @@ export class SidebarComponent implements OnInit {
   isSpecialistOpen: boolean = false;
 
   // geocoder = new google.maps.Geocoder();
-
-  
-  // phoneInputField: Element = document.querySelector("#phone")!;
-  // phoneInput = window?.intlTelInput(this.phoneInputField, {
-  //   utilsScript:
-  //     "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-  // });
 
   constructor(private _excel : ExcelService, private map: MapService, private form: FormService){}
 
@@ -63,6 +55,9 @@ export class SidebarComponent implements OnInit {
 
     this.clientForm = new FormGroup({ 
       name: new FormControl(null),
+      picture: new FormControl(null),
+      lookFor: new FormGroup({}),
+      online: new FormControl(null),
     });
 
     this.filterForm = new FormGroup({ 
@@ -86,7 +81,7 @@ export class SidebarComponent implements OnInit {
     this.form.addElementToFormGroup(this.filterForm, 'specialties', this.specialArr)
     this.form.addElementToFormGroup(this.filterForm, 'degree', this.degArr)
     this.form.addElementToFormGroup(this.filterForm, 'interests', this.specialArr)
-    
+    this.form.addElementToFormGroup(this.clientForm, 'lookFor', this.specialArr)
   }
   ngAfterViewInit(): void{
     // const searchBox = 
@@ -101,13 +96,29 @@ export class SidebarComponent implements OnInit {
   }
 
   addClient(){
+    const val = this.clientForm.value;
+    
+    const cityInfo: string[] = this.cityForm.value.city.split(",");
+    const [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
 
+    let lookForArr : string[] = this.form.convertToArray(val, "lookFor")
+
+    let newClient: IClient = {
+      Nome: val.name,
+      Città: `${cityInfo.join(", ")}`,
+      Disp_Online: val.online,
+      Cerca: lookForArr,
+      Disponibilita_dal: "",
+      Latitude: lat,
+      Longitude: lng
+    }
+    console.log(newClient)
+    this.map.addCMarker(newClient);
   }
   addSpecialist(){
     const val = this.specialistForm.value;
     
     const cityInfo: string[] = this.cityForm.value.city.split(",");
-    const city: string = cityInfo.join(", ");
     const [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
 
     let interestsArr : string[] = this.form.convertToArray(val, "interests")
@@ -117,7 +128,7 @@ export class SidebarComponent implements OnInit {
       Nome: val.name,
       Email: val.email,
       Telefono: val.phone,
-      Domicilio: `${city}`,
+      Domicilio: `${cityInfo.join(", ")}`,
       Disp_Trasferimento: val.canMove,
       Studi: val.degree,
       Competenza_Princ: val.specialties,
@@ -128,7 +139,7 @@ export class SidebarComponent implements OnInit {
       Longitude: lng
     }
     console.log(newSpecialist)
-    this.map.addMarker(newSpecialist);
+    this.map.addSMarker(newSpecialist);
     // this._excel.addCity(newSpecialist);
   }
   filterSpecialist(){

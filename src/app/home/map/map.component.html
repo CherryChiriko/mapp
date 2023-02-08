@@ -24,7 +24,39 @@
                       <td  class="contacts rounded"><i class="material-symbols-outlined">call</i>
                         {{specialist.Telefono}}</td>
                     </tr>
-                    <tr *ngFor="let item of markerInfo(specialist) | keyvalue: originalOrder">
+                    <tr *ngFor="let item of markerSInfo(specialist) | keyvalue: originalOrder">
+                        <td class="rounded">
+                            {{item.key}} : {{item.value}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </map-info-window>
+        </map-marker>
+        <map-marker #marker="mapMarker" [icon]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'"
+        *ngFor="let client of clients; let i=index" 
+        [position]="{lat: client.Latitude, lng: client.Longitude}"
+        (mapClick)="openInfoWindow(marker, infoWindow)"
+        >
+        <map-info-window #infoWindow="mapInfoWindow">
+            <div class="card text-center rounded" 
+            style="--color: {{color1}}; --lightColor: {{lightColor1}}; --darkColor: {{darkColor1}}">
+                <div id="head" class="card-header text-center rounded">
+                    <div class="row">
+                        <h6 class="col-9">{{client.Nome}}</h6>  
+                        <i (click)="toggleContacts(i)" class="material-symbols-outlined col-1"
+                        id="contact-icon">contact_page</i>
+                    </div>
+                </div>
+                <table class="table" id="body">
+                    <!-- <tr *ngIf="contacts[i]">
+                      <td  class="contacts rounded" ><i class="material-symbols-outlined">mail</i>
+                      {{client.Email}}</td>
+                    <tr *ngIf="contacts[i]">
+                      <td  class="contacts rounded"><i class="material-symbols-outlined">call</i>
+                        {{client.Telefono}}</td>
+                    </tr> -->
+                    <tr *ngFor="let item of markerCInfo(client) | keyvalue: originalOrder">
                         <td class="rounded">
                             {{item.key}} : {{item.value}}
                         </td>
