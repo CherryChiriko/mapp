@@ -87,16 +87,31 @@
                   <label class="btn btn-success special" for="options{{i}}">{{s}}</label>
                   </span>
               </div>
+              
+              <p>Range of starting time</p>
 
-              <mat-form-field color="accent" appearance="fill">
-                <mat-label>From:</mat-label>
-                <input matInput [matDatepicker]="pickerFilter">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="pickerFilter"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFilter></mat-datepicker>
+              <mat-form-field appearance="fill" color="accent" class="my-3">
+                <mat-label>Enter a starting time range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate formControlName="start" placeholder="Start date">
+                  <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              
+                <mat-error *ngIf="filterForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="filterForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
               </mat-form-field>
+                
+              <p>Notice time</p>
 
-                <span class="form-check">
+                <div class="input-group">
+                    <input type="number" class="form-control" formControlName="notice">
+                    <span class="input-group-text">days</span>
+                </div>
+
+                <span class="form-check my-3">
                     <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
                     <label class="form-check-label" for="canMove">
                       Available to move
@@ -123,6 +138,8 @@
                     <option *ngFor="let city of citiesArr" 
                     value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
                 </select>     
+                <small style="color: var(--dark-green)" 
+                *ngIf="(cityForm.get('city')?.errors?.['required']&&cityForm.get('city')?.touched)">** Required field **</small>
             </div>
             
         </form>
@@ -143,7 +160,7 @@
                     <label class="btn btn-primary client" for="client{{i}}">{{s}}</label>
                     </span>  
                 </div>
-                <span class="form-check">
+                <span class="form-check my-3">
                     <input class="form-check-input" type="checkbox" id="online" formControlName = "online">
                     <label class="form-check-label" for="online">
                         Remote option
@@ -204,7 +221,7 @@
                     </span>
                 </div>
 
-                <p>Start date and notice period</p>  
+                <p>Start date</p>  
                 
                 <!-- <mat-form-field color="accent" appearance="fill" *ngIf="!isCustomDateSelected">
                     <mat-label>Inherited calendar color</mat-label>
@@ -237,8 +254,8 @@
                     <mat-error *ngIf="specialistForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
                     <mat-error *ngIf="specialistForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
                   </mat-form-field>
-                           
-                <span class="form-check">
+
+                <span class="form-check my-3">
                     <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
                     <label class="form-check-label" for="canMove">
                       Available to move
@@ -248,36 +265,4 @@
             </form>
         </div>
         </div>
-        
     </div>
-
-    
-
-      <!-- <div class="container">
-        <form id="login" onsubmit="process(event)">
-          <p>Enter your phone number:</p>
-          <input id="phone" type="tel" name="phone" />
-          <input type="submit" class="btn" value="Verify" />
-        </form>
-       </div> -->
-       
-
-
-<!-- <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_4"/> -->
-
-
-<!-- <div class="container">
-    <section>
-        <form [formGroup]="clientForm">
-        <div class="form-width">
-            <mat-form-field appearance="outline">
-            <mat-label>Angular material international phone input</mat-label>
-            <ngx-mat-intl-tel-input formControlName="phone" [enablePlaceholder]="true" [enableSearch]="true" name="phone"
-                #phone>
-            </ngx-mat-intl-tel-input>
-            <mat-hint>eg : {{phone.selectedCountry.placeHolder}}</mat-hint>
-            </mat-form-field>
-        </div>
-        </form>
-    </section>
-    </div> -->

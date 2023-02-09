@@ -37,12 +37,33 @@ export class FilterService implements OnInit {
     return this.filterSubject$;
   }
 
+  dateBuilder(dateString: string){
+    const [day,month,year] = dateString.split('/');
+    return new Date(Number(`20${year}`), Number(month)-1, Number(day));
+  }
+
   sFilter(arr: ISpecialist[], filt: ISFilter) : ISpecialist[]{
   let result = arr;
   for (const [key, value] of Object.entries(filt)) {
     if (value === null) { continue }
     let keyName = key as keyof ISpecialist
     if (Array.isArray(value)) {
+      if (key === 'Disponibilita_dal'){
+                
+        const startDate = this.dateBuilder(value[0]);
+        const endDate = this.dateBuilder(value[1]);
+        let newArr: ISpecialist[] = []
+        result.map( element =>
+        {   
+            const date = this.dateBuilder(element[key]);
+            // if (date >= startDate && date <= endDate){
+            if (date <= endDate) {
+                newArr.push(element);
+            };
+        })
+        result = newArr;
+        continue
+      }
       result = result.filter((element: any) =>
         value.some(el => element[keyName].includes(el)))
       continue
@@ -52,11 +73,11 @@ export class FilterService implements OnInit {
         element.Disp_Trasferimento || element.Domicilio === value)
       continue
     }
-    // if (key === 'notice') {
+    if (key === 'Preavviso') {
     //   result = result.filter(element =>
     //     element.notice > value)
-    //   continue
-    // }
+      continue
+    }
     else {
       result = result.filter(element =>
         element[keyName] === value)

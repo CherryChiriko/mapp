@@ -69,8 +69,7 @@ export class MapComponent implements OnInit{
 
   groupByCity(cityName: string){
     // const cityGroup = this.helper.groupArray<ISpecialist, string>(this.specialists, (p => p.Domicilio));
-    // console.log(this.specialists.filter( specialist => specialist.Domicilio === "Firenze"))
-    // return this.specialists.filter( specialist => specialist.Domicilio === cityName)
+    return this.specialists.filter( specialist => specialist.Domicilio === cityName)
   }
 
 }

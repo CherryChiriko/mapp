@@ -31,7 +31,7 @@ export interface ISFilter {
   Studi : string[];
   Competenza_Princ : string[];
   Drivers : string[];
-  Disponibilita_dal : string;
+  Disponibilita_dal : string[];
   Preavviso : number;
 }
 

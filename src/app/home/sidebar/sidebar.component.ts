@@ -64,7 +64,9 @@ export class SidebarComponent implements OnInit {
       specialties: new FormGroup({}),
       interests: new FormGroup({}),
       canMove: new FormControl(null),
-      from: new FormControl(null),
+      start: new FormControl<Date | null>(null),
+      end: new FormControl<Date | null>(null),
+      notice: new FormControl(null)
     });
 
     // this.filterForm = new FormGroup({ 
@@ -149,7 +151,7 @@ export class SidebarComponent implements OnInit {
     let degreeArr : string[] = this.form.convertToArray(val, "degree");
     let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
     let interestsArr : string[] = this.form.convertToArray(val, "interests");
-
+    
     let specialistFilter: ISFilter = {
       Nome: val.name,
       Domicilio: val.city,
@@ -157,8 +159,8 @@ export class SidebarComponent implements OnInit {
       Studi: degreeArr,
       Competenza_Princ: specialtiesArr,
       Drivers: interestsArr,
-      Disponibilita_dal: "",
-      Preavviso: 0
+      Disponibilita_dal: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
+      Preavviso: val.notice
     }
     console.log(specialistFilter)
     // call service
@@ -170,7 +172,6 @@ export class SidebarComponent implements OnInit {
   toggleNew(){              this.isNewOpen = !this.isNewOpen}
   toggleSpecialist(){       this.isSpecialistOpen = !this.isSpecialistOpen}
   toggleClient(){           this.isClientOpen = !this.isClientOpen}
-
 }
 
 

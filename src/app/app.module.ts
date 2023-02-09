@@ -21,6 +21,12 @@ import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+
 // npm i ngx-mat-intl-tel-input --save
 // npm install libphonenumber-js --save
 
@@ -45,6 +51,11 @@ import { DatePipe } from '@angular/common';
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMatIntlTelInputComponent,
+    MatExpansionModule,
+    MatInputModule,
+    MatIconModule,
+    MatGridListModule,
+    CdkAccordionModule,
 
     BrowserAnimationsModule
   ],
