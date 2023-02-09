@@ -37,13 +37,14 @@ export class FilterService implements OnInit {
     return this.filterSubject$;
   }
 
-  sFilter(arr: ISpecialist[], filt: ISFilter) {
+  sFilter(arr: ISpecialist[], filt: ISFilter) : ISpecialist[]{
   let result = arr;
   for (const [key, value] of Object.entries(filt)) {
     if (value === null) { continue }
+    let keyName = key as keyof ISpecialist
     if (Array.isArray(value)) {
-      // result = result.filter(element =>
-      //   value.some(el => element[key].includes(el)))
+      result = result.filter((element: any) =>
+        value.some(el => element[keyName].includes(el)))
       continue
     };
     if (key === 'Domicilio') {
@@ -57,8 +58,8 @@ export class FilterService implements OnInit {
     //   continue
     // }
     else {
-      // result = result.filter(element =>
-      //   element[key] === value)
+      result = result.filter(element =>
+        element[keyName] === value)
     }
     }
     return result
@@ -66,18 +67,7 @@ export class FilterService implements OnInit {
   
   public filterData() : Observable<ISpecialist[]> {
     return combineLatest([this.specialists$, this.filterSubject$])
-     .pipe(
-     map(([specialist, filterValue]) => {
-       return specialist.filter((spec) => {
-         return(
-           (spec.Nome === filterValue.Nome || !filterValue.Nome) &&
-           (spec.Domicilio === filterValue.Domicilio || !filterValue.Domicilio)
-          // && (spec.Studi === filterValue.Studi || !filterValue.Studi) &&
-          //  (spec.Competenza_Princ === filterValue.Competenza_Princ || !filterValue.Competenza_Princ)
-         );
-       })
-   })
-   )
+     .pipe(map(([specialist, filterValue]) => this.sFilter(specialist, filterValue)))
    }
 
 }
