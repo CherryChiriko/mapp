@@ -29,22 +29,22 @@ export class MapService {
 
   getSMarkerInfo(mark: ISpecialist){
     let info = {
-      Specialties: mark.Competenza_Princ,
-      Degree: mark.Studi,
-      City: mark.Domicilio,
-      "Available to move": mark.Disp_Trasferimento ? 'yes' : 'no',
-      "Available from": mark.Disponibilita_dal,
-      "Notice time" : mark.Preavviso + ' days'
+      Specialties: mark.skill,
+      Degree: mark.degree,
+      City: mark.city,
+      "Available to move": mark.canMove ? 'yes' : 'no',
+      "Available from": mark.available_from,
+      "Notice time" : mark.notice + ' days'
     }
     return info
   }
 
   getCMarkerInfo(mark: IClient){
     let info = {
-      "Looking for": mark.Cerca,
-      City: mark.Città,
-      "Remote": mark.Disp_Online ? 'yes' : 'no',
-      "Available from": mark.Disponibilita_dal,
+      "Looking for": mark.lookFor,
+      City: mark.city,
+      "Remote": mark.remoteOption ? 'yes' : 'no',
+      "Available from": mark.available_from,
     }
     return info
   }

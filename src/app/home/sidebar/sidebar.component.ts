@@ -109,7 +109,7 @@ export class SidebarComponent implements OnInit {
 
     let newClient: IClient = {
       Nome: val.name,
-      Città: `${cityInfo.join(", ")}`,
+      Citta: `${cityInfo.join(", ")}`,
       Disp_Online: val.online,
       Cerca: lookForArr,
       Disponibilita_dal: "",

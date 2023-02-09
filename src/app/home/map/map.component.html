@@ -3,13 +3,52 @@
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker" [icon]="'http://maps.google.com/mapfiles/ms/icons/green-dot.png'"
         *ngFor="let specialist of specialists; let i=index" 
-        [position]="{lat: specialist.Latitude, lng: specialist.Longitude}"
+        [position]="{lat: specialist.latitude, lng: specialist.longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow">
-            <div class="text-center rounded" *ngFor="let el of groupByCity(specialist.Domicilio)"
+            <div class="text-center rounded" *ngFor="let el of sGroupByCity(specialist.city)"
             style="--color: {{color}}; --lightColor: {{lightColor}}; --darkColor: {{darkColor}}">
                 <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header class="text-center rounded header">
+                    <mat-panel-title>
+                        {{el.name}}
+                    </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table class="table">
+                        <tr>
+                            <td class="rounded contacts">
+                            <i (click)="toggleContacts(i)" class="material-symbols-outlined contact-icon">contact_page</i>
+                            <p class="info">Contacts</p></td>
+                        </tr>
+                        <tr *ngIf="contacts[i]">
+                          <td  class="contacts rounded" ><i class="material-symbols-outlined contact-icon">mail</i>
+                          <p class="info">{{el.email}}</p></td>
+                        <tr *ngIf="contacts[i]">
+                          <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">call</i>
+                          <p class="info">{{el.phone}}</p></td>
+                        </tr>
+                        <tr *ngFor="let item of markerSInfo(el) | keyvalue: originalOrder">
+                            <td class="rounded">
+                                {{item.key}} : {{item.value}}
+                            </td>
+                        </tr>
+                    </table>
+                </mat-expansion-panel>
+            </div>
+        </map-info-window>
+        </map-marker>
+
+
+        <map-marker #marker="mapMarker" [icon]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'"
+        *ngFor="let client of clients; let i=index" 
+        [position]="{lat: client.latitude, lng: client.longitude}"
+        (mapClick)="openInfoWindow(marker, infoWindow)"
+        >
+        <map-info-window #infoWindow="mapInfoWindow">
+            <div class="text-center rounded" *ngFor="let el of cGroupByCity(client.city)"
+            style="--color: {{color}}; --lightColor: {{lightColor}}; --darkColor: {{darkColor}}">
+                <!-- <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header class="text-center rounded header">
                     <mat-panel-title>
                         {{el.Nome}}
@@ -34,43 +73,15 @@
                             </td>
                         </tr>
                     </table>
-                </mat-expansion-panel>
-                <!-- <div class="card-header text-center rounded head"> -->
-                    <!-- <div class="row">
-                        <h6 class="col-9"></h6>  
-                        <i (click)="toggleContacts(i)" class="material-symbols-outlined col-1 contact-icon">contact_page</i>
-                    </div> -->
-                <!-- </div> -->
-                <!-- <table class="table body">
-                    <tr *ngIf="contacts[i]">
-                      <td  class="contacts rounded" ><i class="material-symbols-outlined">mail</i>
-                      {{specialist.Email}}</td>
-                    <tr *ngIf="contacts[i]">
-                      <td  class="contacts rounded"><i class="material-symbols-outlined">call</i>
-                        {{specialist.Telefono}}</td>
-                    </tr>
-                    <tr *ngFor="let item of markerSInfo(specialist) | keyvalue: originalOrder">
-                        <td class="rounded">
-                            {{item.key}} : {{item.value}}
-                        </td>
-                    </tr>
-                </table> -->
+                </mat-expansion-panel> -->
             </div>
         </map-info-window>
         </map-marker>
-        <map-marker #marker="mapMarker" [icon]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'"
-        *ngFor="let client of clients; let i=index" 
-        [position]="{lat: client.Latitude, lng: client.Longitude}"
-        (mapClick)="openInfoWindow(marker, infoWindow)"
-        >
-        <map-info-window #infoWindow="mapInfoWindow">
-            <div class="card text-center rounded" 
-            style="--color: {{color1}}; --lightColor: {{lightColor1}}; --darkColor: {{darkColor1}}">
-                <div id="head" class="card-header text-center rounded">
+            <!-- </mat-expansion-panel>
+                <div class="card-header text-center rounded">
                     <div class="row">
                         <h6 class="col-9">{{client.Nome}}</h6>  
-                        <i (click)="toggleContacts(i)" class="material-symbols-outlined col-1"
-                        id="contact-icon">contact_page</i>
+                        <i (click)="toggleContacts(i)" class="material-symbols-outlined contact-icon">contact_page</i>
                     </div>
                 </div>
                 <table class="table" id="body">
@@ -81,15 +92,15 @@
                       <td  class="contacts rounded"><i class="material-symbols-outlined">call</i>
                         {{client.Telefono}}</td>
                     </tr> -->
-                    <tr *ngFor="let item of markerCInfo(client) | keyvalue: originalOrder">
+                    <!-- <tr *ngFor="let item of markerCInfo(client) | keyvalue: originalOrder">
                         <td class="rounded">
                             {{item.key}} : {{item.value}}
                         </td>
                     </tr>
                 </table>
-            </div>
-        </map-info-window>
-        </map-marker>
+            </div> --> 
+        <!-- </map-info-window>
+        </map-marker> -->
     </google-map>
 </div>
 
