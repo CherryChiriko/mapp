@@ -36,8 +36,6 @@ export class SidebarComponent implements OnInit {
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
 
-  // geocoder = new google.maps.Geocoder();
-
   constructor(private _excel : ExcelService, private map: MapService, private form: FormService){}
 
   ngOnInit(): void {
@@ -66,16 +64,20 @@ export class SidebarComponent implements OnInit {
       specialties: new FormGroup({}),
       interests: new FormGroup({}),
       canMove: new FormControl(null),
+      from: new FormControl(null),
     });
 
-    this.cityForm = new FormGroup({
-      city: new FormControl(null)
-    })
-
-    // this.dateRangeForm = new FormGroup({
-    //   start: new FormControl<Date | null>(null),
-    //   end: new FormControl<Date | null>(null),
+    // this.filterForm = new FormGroup({ 
+    //   name: new FormControl(null),
+    //   degree: new FormGroup({}),
+    //   specialties: new FormGroup({}),
+    //   interests: new FormGroup({}),
+    //   canMove: new FormControl(null),
     // });
+
+    this.cityForm = new FormGroup({
+      city: new FormControl(null, [Validators.required])
+    })
 
     this.form.addElementToFormGroup(this.specialistForm, 'interests', this.specialArr)
     this.form.addElementToFormGroup(this.filterForm, 'specialties', this.specialArr)
@@ -123,7 +125,6 @@ export class SidebarComponent implements OnInit {
 
     let interestsArr : string[] = this.form.convertToArray(val, "interests")
 
-    // console.log(this.geocoder.geocode({'address': city[0]}))
     let newSpecialist: ISpecialist = {
       Nome: val.name,
       Email: val.email,

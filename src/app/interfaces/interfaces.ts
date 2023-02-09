@@ -1,16 +1,16 @@
 export interface ISpecialist {
-  Nome ?: string;
-  Email ?: string;
-  Telefono ?: string;
-  Domicilio ?: string;
-  Disp_Trasferimento ?: boolean;
-  Studi ?: string;
-  Competenza_Princ ?: string;
-  Drivers ?: string[];
-  Disponibilita_dal ?: string;
-  Preavviso ?: number;
-  Latitude ?: number;
-  Longitude ?: number;
+  Nome : string;
+  Email : string;
+  Telefono : string;
+  Domicilio : string;
+  Disp_Trasferimento : boolean;
+  Studi : string;
+  Competenza_Princ : string;
+  Drivers : string[];
+  Disponibilita_dal : string;
+  Preavviso : number;
+  Latitude : number;
+  Longitude : number;
 }
 
 export interface IClient {
@@ -25,14 +25,25 @@ export interface IClient {
 }
 
 export interface ISFilter {
-  Nome ?: string;
-  Domicilio ?: string;
-  Disp_Trasferimento ?: boolean;
-  Studi ?: string;
-  Competenza_Princ ?: string;
-  Drivers ?: string[];
-  Disponibilita_dal ?: string;
-  Preavviso ?: number;
+  Nome : string;
+  Domicilio : string;
+  Disp_Trasferimento : boolean;
+  Studi : string[];
+  Competenza_Princ : string[];
+  Drivers : string[];
+  Disponibilita_dal : string;
+  Preavviso : number;
+}
+
+export interface ICFilter {
+  Nome : string;
+  // Domicilio : string;
+  // Disp_Trasferimento : boolean;
+  // Studi : string[];
+  // Competenza_Princ : string[];
+  // Drivers : string[];
+  // Disponibilita_dal : string;
+  // Preavviso : number;
 }
 
 export interface ICities{

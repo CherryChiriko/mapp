@@ -4,6 +4,7 @@ import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Subscription } from 'rxjs';
 import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { ExcelService } from 'src/app/services/excel.service';
+import { HelperService } from 'src/app/services/helper.service';
 import { MapService } from 'src/app/services/map.service';
 
 @Component({
@@ -30,7 +31,7 @@ export class MapComponent implements OnInit{
 
   contacts: boolean[] = [];
 
-  constructor(private map: MapService, private _excel : ExcelService){}
+  constructor(private map: MapService, private _excel : ExcelService, private helper: HelperService){}
 
   ngOnInit(){
      //this.markersSubs = this._excel.getAll().subscribe(
@@ -65,4 +66,11 @@ export class MapComponent implements OnInit{
   ngOnDestroy(){
     this.markersSubs?.unsubscribe();
   }
+
+  groupByCity(cityName: string){
+    // const cityGroup = this.helper.groupArray<ISpecialist, string>(this.specialists, (p => p.Domicilio));
+    // console.log(this.specialists.filter( specialist => specialist.Domicilio === "Firenze"))
+    // return this.specialists.filter( specialist => specialist.Domicilio === cityName)
+  }
+
 }

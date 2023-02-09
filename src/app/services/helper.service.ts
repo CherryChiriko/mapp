@@ -1,0 +1,23 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class HelperService {
+
+  constructor() { }
+
+  groupArray<T, K>(arr: T[], getKey: (el: T) => K): Map<K, T[]> {
+    const map = new Map<K, T[]>;
+    for (const el of arr) {
+      const key: K = getKey(el);
+      let group: T[] | undefined = map.get(key); 
+      if (!group) {
+        group = [];
+      }
+      group.push(el);
+      map.set(key, group);
+    }
+    return map;
+  }
+}

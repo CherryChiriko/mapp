@@ -88,6 +88,14 @@
                   </span>
               </div>
 
+              <mat-form-field color="accent" appearance="fill">
+                <mat-label>From:</mat-label>
+                <input matInput [matDatepicker]="pickerFilter">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFilter"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFilter></mat-datepicker>
+              </mat-form-field>
+
                 <span class="form-check">
                     <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
                     <label class="form-check-label" for="canMove">
