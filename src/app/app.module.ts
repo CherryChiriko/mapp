@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { MatSliderModule } from '@angular/material/slider';
+import { HammerModule} from '@angular/platform-browser';
 
 // npm i ngx-mat-intl-tel-input --save
 // npm install libphonenumber-js --save
@@ -56,6 +58,8 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     MatIconModule,
     MatGridListModule,
     CdkAccordionModule,
+    MatSliderModule,
+    HammerModule,
 
     BrowserAnimationsModule
   ],

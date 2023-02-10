@@ -1,14 +1,15 @@
 import { Injectable, OnInit } from '@angular/core';
 import { combineLatest, map, Observable, ReplaySubject, Subscription } from 'rxjs';
-import { ISFilter, ISpecialist } from '../interfaces/interfaces';
+import { IClient, ISFilter, ISpecialist } from '../interfaces/interfaces';
 import { ExcelService } from './excel.service';
+import { HelperService } from './helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilterService implements OnInit {
 
-  constructor(private _excel : ExcelService) { }
+  constructor(private _excel : ExcelService, private helper: HelperService) { }
 
   public excelData : ISpecialist[] = [];
   public excelDataSubscription !: Subscription;
@@ -42,20 +43,40 @@ export class FilterService implements OnInit {
     return new Date(Number(`20${year}`), Number(month)-1, Number(day));
   }
 
+  filterForCompany(arr: ISpecialist[], company: IClient) : ISpecialist[]{
+    let cityFilter = null;
+    // if (!company.remoteOption){
+    //   const latLng1 = new google.maps.LatLng(company.latitude, company.longitude);
+    //   const latLng2 = new google.maps.LatLng(company.latitude, company.longitude)
+    //   this.helper.distanceCalc(latLng1, latLng2)
+    // }
+    let filt: ISFilter = {
+      name : null,
+      city : cityFilter,
+      canMove : null,
+      degree : [],
+      skill : [],
+      interests : company.lookFor,
+      available_from : ["", company.available_from],
+      notice : company.notice
+    }
+    return this.sFilter(arr, filt);
+  }
+
   sFilter(arr: ISpecialist[], filt: ISFilter) : ISpecialist[]{
   let result = arr;
   for (const [key, value] of Object.entries(filt)) {
     if (value === null) { continue }
     let keyName = key as keyof ISpecialist
     if (Array.isArray(value)) {
-      if (key === 'Disponibilita_dal'){
+      if (key === 'available_from'){
                 
         const startDate = this.dateBuilder(value[0]);
         const endDate = this.dateBuilder(value[1]);
         let newArr: ISpecialist[] = []
-        result.map( element =>
+        result.map( (element: any) =>
         {   
-            const date = this.dateBuilder(element[key]);
+            const date = this.dateBuilder(element[keyName]);
             // if (date >= startDate && date <= endDate){
             if (date <= endDate) {
                 newArr.push(element);
@@ -68,12 +89,12 @@ export class FilterService implements OnInit {
         value.some(el => element[keyName].includes(el)))
       continue
     };
-    if (key === 'Domicilio') {
+    if (key === 'city') {
       result = result.filter(element =>
-        element.Disp_Trasferimento || element.Domicilio === value)
+        element.canMove || element.city === value)
       continue
     }
-    if (key === 'Preavviso') {
+    if (key === 'notice') {
     //   result = result.filter(element =>
     //     element.notice > value)
       continue

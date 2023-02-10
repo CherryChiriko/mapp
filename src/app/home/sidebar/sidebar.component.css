@@ -37,3 +37,15 @@ h4{cursor: pointer;}
     margin: .2rem;
 }
 .client{    margin: .2rem;}
+
+/* .sh-accordion .panel .panel-collapse .panel-body{
+    background-color: #262626;
+} */
+/* mat-expansion-panel , mat-panel-title, mat-expansion-panel-header{
+    margin: 0; padding: 0;
+} */
+.colors {
+    background-color: orange;
+    color: white;
+    text-align: center;
+}

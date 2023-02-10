@@ -1,7 +1,5 @@
 <div id="sidebar-div" class="d-flex flex-column flex-shrink-0 p-3 text-center rounded">
-    <!-- <div id="head">
-    </div> -->
-    <div id="body"> 
+    <div> 
         <h4 (click)="toggleFilter()">Filter</h4>
         <div [hidden]="!isFilterOpen">
             <button class="btn btn-primary m-2" (click)="toggleFilterClient()">Client</button>
@@ -122,13 +120,16 @@
         </div>
         </div>
         <hr>
-        <mat-expansion-panel hideToggle>
+        <!-- <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header class="text-center rounded header">
-            <mat-panel-title class="text-center">
-                <h4>Add New</h4>
-            </mat-panel-title>
-            </mat-expansion-panel-header>
-            <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
+            <mat-panel-title class="colors"> -->
+                <!-- <h4>Add New</h4> -->
+            <!-- </mat-panel-title>
+            </mat-expansion-panel-header> -->
+            <!-- <div class="colors"> -->
+                <h4 (click)="toggleNew()">Add New</h4>
+                <div [hidden]="!isNewOpen"> 
+                <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
             <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
             <form class="row g-3 align-items-center" [formGroup]="cityForm">
                 <div class="col-auto">
@@ -171,9 +172,19 @@
                         <label class="btn btn-primary client" for="client{{i}}">{{s}}</label>
                         </span>  
                     </div>
-    
+
+                    <p>Level</p>
+                    <!-- <label for="customRange3" class="form-label">Level</label>
+                    <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3"> -->
+                    <mat-slider min="0" max="6" step="1" showTickMarks discrete [displayWith]="formatLabel">
+                        <input value="0" matSliderStartThumb>
+                        <input value="5" matSliderEndThumb>
+                    </mat-slider>
+                      
+
+
                     <p>Start date and notice time</p>  
-                    <mat-form-field appearance="fill" color="accent">
+                    <mat-form-field appearance="fill" color="primary">
                         <mat-label>Enter a date range</mat-label>
                         <mat-date-range-input [formGroup]="clientForm" [rangePicker]="pickers">
                           <input matStartDate formControlName="start" placeholder="Start date">
@@ -291,7 +302,9 @@
                     <button class="btn btn-success m-2 mb-4" (click)="addSpecialist()">Add specialist</button>
                 </form>
             </div>
-        </mat-expansion-panel>
+            </div>
+            
+        <!-- </mat-expansion-panel> -->
 
 
 

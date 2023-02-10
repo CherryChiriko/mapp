@@ -53,6 +53,7 @@ export class SidebarComponent implements OnInit {
       website: new FormControl(null),
       picture: new FormControl(null),
       lookFor: new FormGroup({}),
+      level: new FormGroup({}),
       online: new FormControl(null),
       start: new FormControl<Date | null>(null),
       end: new FormControl<Date | null>(null),
@@ -86,6 +87,7 @@ export class SidebarComponent implements OnInit {
     this.form.addElementToFormGroup(this.filterForm, 'degree', this.degArr)
     this.form.addElementToFormGroup(this.filterForm, 'interests', this.specialArr)
     this.form.addElementToFormGroup(this.clientForm, 'lookFor', this.specialArr)
+    this.form.addElementToFormGroup(this.clientForm, 'level', ["No experience","Junior", "Senior"])
   }
   ngAfterViewInit(): void{
     // const searchBox = 
@@ -113,6 +115,7 @@ export class SidebarComponent implements OnInit {
       city: `${cityInfo.join(", ")}`,
       remoteOption: val.online,
       lookFor: lookForArr,
+      level: val.level,
       available_from: this.form.formatDate(val.end),
       notice: this.form.daysBetween(val.start, val.end),
       latitude: lat,
@@ -174,6 +177,19 @@ export class SidebarComponent implements OnInit {
   toggleNew(){              this.isNewOpen = !this.isNewOpen}
   toggleSpecialist(){       this.isSpecialistOpen = !this.isSpecialistOpen}
   toggleClient(){           this.isClientOpen = !this.isClientOpen}
+
+  formatLabel(value: number): string {
+    switch(value){
+      case 0: return "No experience";
+      case 1: return "Some experience";
+      case 2: return "Technical high school";
+      case 3: return "Bachelor degree";
+      case 4: return "Master degree";
+      case 5: return "Ph.D.";
+      case 6: return "Senior developer";
+    }
+    return "";
+  }
 }
 
 

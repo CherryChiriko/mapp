@@ -20,6 +20,7 @@ export interface IClient {
   website: string;
   remoteOption: boolean;
   lookFor: string[];
+  level: string[];
   available_from: string;
   notice: number;
   latitude: number;
@@ -27,25 +28,18 @@ export interface IClient {
 }
 
 export interface ISFilter {
-  name : string;
-  city : string;
-  canMove : boolean;
-  degree : string[];
-  skill : string[];
-  interests : string[];
-  available_from : string[];
-  notice : number;
+  name :           string   | null;
+  city :           string   | null;
+  canMove :        boolean  | null;
+  degree :         string[] | null;
+  skill :          string[] | null;
+  interests :      string[] | null;
+  available_from : string[] | null;
+  notice :         number   | null;
 }
 
 export interface ICFilter {
   name : string;
-  // Domicilio : string;
-  // Disp_Trasferimento : boolean;
-  // Studi : string[];
-  // Competenza_Princ : string[];
-  // Drivers : string[];
-  // Disponibilita_dal : string;
-  // Preavviso : number;
 }
 
 export interface ICities{
