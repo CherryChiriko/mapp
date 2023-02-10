@@ -7,6 +7,14 @@ export class HelperService {
 
   constructor() { }
 
+  distanceCalc(latLng1: google.maps.LatLngLiteral, latLng2: google.maps.LatLngLiteral){
+    var distance = google.maps.geometry.spherical.computeDistanceBetween(
+      latLng1,
+      latLng2
+      );
+    console.log(distance)  // answer is in meters
+  }
+  
   groupArray<T, K>(arr: T[], getKey: (el: T) => K): Map<K, T[]> {
     const map = new Map<K, T[]>;
     for (const el of arr) {

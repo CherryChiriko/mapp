@@ -63,16 +63,16 @@ export class MapComponent implements OnInit{
     infoWindow.open(marker);
   }
 
-  ngOnDestroy(){
-    this.markersSubs?.unsubscribe();
-  }
-
   sGroupByCity(cityName: string){
     // const cityGroup = this.helper.groupArray<ISpecialist, string>(this.specialists, (p => p.Domicilio));
     return this.specialists.filter( specialist => specialist.city === cityName);
   }
   cGroupByCity(cityName: string){
-    return this.specialists.filter( specialist => specialist.city === cityName);
+    return this.clients.filter( client => client.city === cityName);
+  }
+  ngOnDestroy(){
+    this.markersSubs?.unsubscribe();
   }
 
+  filterForCompany(client: IClient){}
 }

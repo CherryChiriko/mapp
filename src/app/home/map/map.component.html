@@ -46,13 +46,59 @@
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow">
-            <div class="text-center rounded" *ngFor="let el of cGroupByCity(client.city)"
-            style="--color: {{color}}; --lightColor: {{lightColor}}; --darkColor: {{darkColor}}">
-                <!-- <mat-expansion-panel hideToggle>
+        <div class="text-center rounded" *ngFor="let el of cGroupByCity(client.city)"
+            style="--color: {{color1}}; --lightColor: {{lightColor1}}; --darkColor: {{darkColor1}}">
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header class="text-center rounded header">
+                <mat-panel-title>
+                    {{el.name}}
+                </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table class="table">
+                    <tr>
+                        <td class="rounded contacts">
+                        <i (click)="toggleContacts(i)" class="material-symbols-outlined contact-icon">contact_page</i>
+                        <p class="info">Contacts</p></td>
+                    </tr>
+                    <tr *ngIf="contacts[i] && el.logo !== null">
+                      <td> <img class="info" src="src/assets/img/ima_logo.png"></td>
+                    <tr *ngIf="contacts[i]">
+                      <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">language</i>
+                      <a class="info" href="`${el.website}`" target="blank">{{el.website}}</a></td>
+                    </tr>
+                    <tr *ngFor="let item of markerCInfo(el) | keyvalue: originalOrder">
+                        <td class="rounded">
+                            {{item.key}} : {{item.value}}
+                        </td>
+                    </tr>
+                    <tr><td><button class="btn btn-primary" (click)="filterForCompany(el)">Matches for this company</button></td></tr>
+                </table>
+            </mat-expansion-panel>
+        </div>
+        </map-info-window>
+        </map-marker>
+    </google-map>
+</div>
+<img class="info" src="src/assets/img/ima_logo.png">
+<!-- [icon]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'" -->
+
+<!-- [icon]="'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'" -->
+
+
+
+<!-- not working:
+[icon]="'src/assets/img/google_marker_green.jpg'" -->
+
+
+
+<!-- <div class="text-center rounded" *ngFor="let el of cGroupByCity(client.city)"
+            style="--color: {{color1}}; --lightColor: {{lightColor1}}; --darkColor: {{darkColor1}}">
+                <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header class="text-center rounded header">
                     <mat-panel-title>
-                        {{el.Nome}}
-                    </mat-panel-title>
+                            {{el.name}}
+                            <!-- <img src="src/assets/img/ima_logo.png"> -->
+                    <!-- </mat-panel-title>
                     </mat-expansion-panel-header>
                     <table class="table">
                         <tr>
@@ -62,10 +108,10 @@
                         </tr>
                         <tr *ngIf="contacts[i]">
                           <td  class="contacts rounded" ><i class="material-symbols-outlined contact-icon">mail</i>
-                          <p class="info">{{el.Email}}</p></td>
+                          <p class="info">{{el.email}}</p></td>
                         <tr *ngIf="contacts[i]">
                           <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">call</i>
-                          <p class="info">{{el.Telefono}}</p></td>
+                          <p class="info">{{el.phone}}</p></td>
                         </tr>
                         <tr *ngFor="let item of markerSInfo(el) | keyvalue: originalOrder">
                             <td class="rounded">
@@ -73,42 +119,5 @@
                             </td>
                         </tr>
                     </table>
-                </mat-expansion-panel> -->
-            </div>
-        </map-info-window>
-        </map-marker>
-            <!-- </mat-expansion-panel>
-                <div class="card-header text-center rounded">
-                    <div class="row">
-                        <h6 class="col-9">{{client.Nome}}</h6>  
-                        <i (click)="toggleContacts(i)" class="material-symbols-outlined contact-icon">contact_page</i>
-                    </div>
-                </div>
-                <table class="table" id="body">
-                    <!-- <tr *ngIf="contacts[i]">
-                      <td  class="contacts rounded" ><i class="material-symbols-outlined">mail</i>
-                      {{client.Email}}</td>
-                    <tr *ngIf="contacts[i]">
-                      <td  class="contacts rounded"><i class="material-symbols-outlined">call</i>
-                        {{client.Telefono}}</td>
-                    </tr> -->
-                    <!-- <tr *ngFor="let item of markerCInfo(client) | keyvalue: originalOrder">
-                        <td class="rounded">
-                            {{item.key}} : {{item.value}}
-                        </td>
-                    </tr>
-                </table>
+                </mat-expansion-panel>
             </div> --> 
-        <!-- </map-info-window>
-        </map-marker> -->
-    </google-map>
-</div>
-
-<!-- [icon]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'" -->
-
-<!-- [icon]="'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'" -->
-
-
-
-<!-- not working:
-[icon]="'src/assets/img/google_marker_green.jpg'" -->

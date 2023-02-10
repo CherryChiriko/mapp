@@ -17,13 +17,6 @@ export class MapService {
     this.sMarkers.next(this.data);
   }
 
-  distanceCalc(latLng1: google.maps.LatLngLiteral, latLng2: google.maps.LatLngLiteral){
-    var distance = google.maps.geometry.spherical.computeDistanceBetween(
-      latLng1,
-      latLng2
-      );
-    console.log(distance)  // answer is in meters
-  }
   getSMarkers(): Observable<ISpecialist[]> { return this.sMarkers}
   getCMarkers(): Observable<IClient[]> { return this.cMarkers}
 
@@ -45,6 +38,7 @@ export class MapService {
       City: mark.city,
       "Remote": mark.remoteOption ? 'yes' : 'no',
       "Available from": mark.available_from,
+      "Notice time" : mark.notice + ' days'
     }
     return info
   }

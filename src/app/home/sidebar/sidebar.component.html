@@ -122,147 +122,192 @@
         </div>
         </div>
         <hr>
-        <h4 (click)="toggleNew()">Add New</h4>
-        <div [hidden]="!isNewOpen">    
-        <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
-        <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
-        <form class="row g-3 align-items-center" [formGroup]="cityForm">
-            <div class="col-auto">
-              <label for="city" class="col-form-label">Where?</label>
-            </div>
-            <div class="col-auto">
-                <select type="search" name="city" id="city"
-                class="form-control rounded text-center my-2" id="search-bar"
-                formControlName="city">
-                    <option disabled selected [ngValue]="null">-- City --</option>
-                    <option *ngFor="let city of citiesArr" 
-                    value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
-                </select>     
-                <small style="color: var(--dark-green)" 
-                *ngIf="(cityForm.get('city')?.errors?.['required']&&cityForm.get('city')?.touched)">** Required field **</small>
-            </div>
-            
-        </form>
-        <div class="container form-div client rounded" *ngIf="isClientOpen">
-            <form [formGroup]="clientForm" class="my-3 pt-3" >
-                <input type="text" name="name" 
-                class="form-control text-center my-2" placeholder="Name"
-                formControlName = "name">
-                <input type="text" name="picture" id="picture" 
-                class="form-control text-center my-2" placeholder="Picture file name (include extension)"
-                formControlName = "picture">
-                <p>Looking for</p>
-                <div class="form-check" id="lookFor">
-                    <span *ngFor="let s of specialArr; let i=index" formArrayName="lookFor">
-                    <input type="checkbox" class="btn-check" autocomplete="off"
-                    name="lookFor" id= "client{{i}}" value="{{s}}"
-                    formControlName="{{s}}">
-                    <label class="btn btn-primary client" for="client{{i}}">{{s}}</label>
-                    </span>  
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header class="text-center rounded header">
+            <mat-panel-title class="text-center">
+                <h4>Add New</h4>
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
+            <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
+            <form class="row g-3 align-items-center" [formGroup]="cityForm">
+                <div class="col-auto">
+                  <label for="city" class="col-form-label">Where?</label>
                 </div>
-                <span class="form-check my-3">
+                <div class="col-auto">
+                    <select type="search" name="city" id="city"
+                    class="form-control rounded text-center my-2" id="search-bar"
+                    formControlName="city">
+                        <option disabled selected [ngValue]="null">-- City --</option>
+                        <option *ngFor="let city of citiesArr" 
+                        value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
+                    </select>     
+                    <small style="color: var(--dark-green)" 
+                    *ngIf="(cityForm.get('city')?.errors?.['required']&&cityForm.get('city')?.touched)">** Required field **</small>
+                </div>
+                
+            </form>
+            <div class="container form-div client rounded" *ngIf="isClientOpen">
+                <form [formGroup]="clientForm" class="my-3 pt-3" >
+    
+                    <input type="text" name="name" 
+                    class="form-control text-center my-2" placeholder="Name"
+                    formControlName = "name">
+    
+                    <input type="text" name="website" 
+                    class="form-control text-center my-2" placeholder="Website"
+                    formControlName = "website">
+    
+                    <input type="text" name="picture" id="picture" 
+                    class="form-control text-center my-2" placeholder="Picture file name (include extension)"
+                    formControlName = "picture">
+    
+                    <p>Looking for</p>
+                    <div class="form-check" id="lookFor">
+                        <span *ngFor="let s of specialArr; let i=index" formArrayName="lookFor">
+                        <input type="checkbox" class="btn-check" autocomplete="off"
+                        name="lookFor" id= "client{{i}}" value="{{s}}"
+                        formControlName="{{s}}">
+                        <label class="btn btn-primary client" for="client{{i}}">{{s}}</label>
+                        </span>  
+                    </div>
+    
+                    <p>Start date and notice time</p>  
+                    <mat-form-field appearance="fill" color="accent">
+                        <mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [formGroup]="clientForm" [rangePicker]="pickers">
+                          <input matStartDate formControlName="start" placeholder="Start date">
+                          <input matEndDate formControlName="end" placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="pickers"></mat-datepicker-toggle>
+                        <mat-date-range-picker #pickers></mat-date-range-picker>
+                      
+                        <mat-error *ngIf="clientForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                        <mat-error *ngIf="clientForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                    </mat-form-field>
+    
+                    <span class="form-check my-3">
                     <input class="form-check-input" type="checkbox" id="online" formControlName = "online">
                     <label class="form-check-label" for="online">
                         Remote option
                     </label>
-                </span>
-                <button class="btn btn-primary m-2 mb-4" (click)="addClient()">Add client</button>
-            </form>
-        </div>
-        <div class="container form-div specialist rounded" *ngIf="isSpecialistOpen">
-            <form [formGroup]="specialistForm" class="my-3 pt-3" >
-                <input type="text" name="name" 
-                    class="form-control text-center my-2" placeholder="Name"
-                    formControlName = "name">
-                <input type="email" name="email" 
-                    class="form-control text-center my-2" placeholder="Email"
-                    formControlName = "email">
-                <small class="text-danger" *ngIf="specialistForm.get('email')?.errors?.['pattern']">Enter a valid email address</small> 
-                
-                <mat-form-field appearance="outline" class="mt-3">
-                <mat-label>Phone number</mat-label>
-                <ngx-mat-intl-tel-input formControlName="phone" 
-                    [enablePlaceholder]="true" [enableSearch]="true" 
-                    name="phone" #phone>
-                </ngx-mat-intl-tel-input>
-                <!-- <mat-hint>eg : {{phone.selectedCountry.placeHolder}}</mat-hint> -->
-                </mat-form-field>
-                        
-                    
-                <select name="degree" id="degree" 
-                    class="form-select text-center my-2" 
-                    formControlName = "degree">
-                    <option [ngValue]="null" disabled selected>Highest degree</option>
-                    <option value="Ph.D.">              Ph.D.           </option>
-                    <option value="Master">             Master          </option>
-                    <option value="Bachelor">           Bachelor        </option>
-                    <option value="Technical school">   Technical school</option>
-                    <option value="High School">        High School     </option>
-                    <option value="No degree">          No degree       </option>
-                  </select>
-                
-                <p>Specialty</p>
-                <div class="form-check" id="specialties">
-                    <span *ngFor="let s of specialArr; let i=index">
-                    <input type="radio" class="btn-check" autocomplete="off"
-                    name="specialties" id= "option{{i}}" value="{{s}}"
-                    formControlName = "specialties">
-                    <label class="btn btn-success special" for="option{{i}}">{{s}}</label>
-                    </span>  
-                </div>
-
-                <p>Interests</p>                
-                <div class="form-check" id="interests">
-                    <span *ngFor="let s of specialArr; let i=index" formArrayName="interests">
-                    <input type="checkbox" class="btn-check" autocomplete="off"
-                    name="interests" id= "options{{i}}" value="{{s}}"
-                    formControlName="{{s}}">
-                    <label class="btn btn-success special" for="options{{i}}">{{s}}</label>
                     </span>
-                </div>
+                    <button class="btn btn-primary m-2 mb-4" (click)="addClient()">Add client</button>
+                </form>
+            </div>
+            <div class="container form-div specialist rounded" *ngIf="isSpecialistOpen">
+                <form [formGroup]="specialistForm" class="my-3 pt-3" >
+                    <input type="text" name="name" 
+                        class="form-control text-center my-2" placeholder="Name"
+                        formControlName = "name">
+                    <input type="email" name="email" 
+                        class="form-control text-center my-2" placeholder="Email"
+                        formControlName = "email">
+                    <small class="text-danger" *ngIf="specialistForm.get('email')?.errors?.['pattern']">Enter a valid email address</small> 
+                    
+                    <mat-form-field appearance="outline" class="mt-3">
+                    <mat-label>Phone number</mat-label>
+                    <ngx-mat-intl-tel-input formControlName="phone" 
+                        [enablePlaceholder]="true" [enableSearch]="true" 
+                        name="phone" #phone>
+                    </ngx-mat-intl-tel-input>
+                    <!-- <mat-hint>eg : {{phone.selectedCountry.placeHolder}}</mat-hint> -->
+                    </mat-form-field>
+                            
+                        
+                    <select name="degree" id="degree" 
+                        class="form-select text-center my-2" 
+                        formControlName = "degree">
+                        <option [ngValue]="null" disabled selected>Highest degree</option>
+                        <option value="Ph.D.">              Ph.D.           </option>
+                        <option value="Master">             Master          </option>
+                        <option value="Bachelor">           Bachelor        </option>
+                        <option value="Technical school">   Technical school</option>
+                        <option value="High School">        High School     </option>
+                        <option value="No degree">          No degree       </option>
+                      </select>
+                    
+                    <p>Specialty</p>
+                    <div class="form-check" id="specialties">
+                        <span *ngFor="let s of specialArr; let i=index">
+                        <input type="radio" class="btn-check" autocomplete="off"
+                        name="specialties" id= "option{{i}}" value="{{s}}"
+                        formControlName = "specialties">
+                        <label class="btn btn-success special" for="option{{i}}">{{s}}</label>
+                        </span>  
+                    </div>
+    
+                    <p>Interests</p>                
+                    <div class="form-check" id="interests">
+                        <span *ngFor="let s of specialArr; let i=index" formArrayName="interests">
+                        <input type="checkbox" class="btn-check" autocomplete="off"
+                        name="interests" id= "options{{i}}" value="{{s}}"
+                        formControlName="{{s}}">
+                        <label class="btn btn-success special" for="options{{i}}">{{s}}</label>
+                        </span>
+                    </div>
+    
+                    <p>Start date</p>  
+                    
+                    <!-- <mat-form-field color="accent" appearance="fill" *ngIf="!isCustomDateSelected">
+                        <mat-label>Inherited calendar color</mat-label>
+                        <input matInput [matDatepicker]="picker1">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field> -->
+                    <!-- <select name="notice" id="notice" 
+                      class="form-select text-center my-2" 
+                      formControlName = "notice">
+                      <option [ngValue]="null" disabled selected>-- Notice period --</option>
+                      <option value="30"> 1 month </option>
+                      <option value="15"> 2 weeks </option>
+                      <option value="7"> 1 week </option>
+                      <option value="1"> 1 day  </option>
+                      <option value="custom"> Custom select </option>
+                    </select> -->   
+    
+                    <mat-form-field appearance="fill" color="accent" *ngIf="isCustomDateSelected">
+                        <mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [formGroup]="specialistForm" [rangePicker]="picker">
+                          <input matStartDate formControlName="start" placeholder="Start date">
+                          <input matEndDate formControlName="end" placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                      
+                        <mat-error *ngIf="specialistForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                        <mat-error *ngIf="specialistForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                      </mat-form-field>
+    
+                    <span class="form-check my-3">
+                        <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
+                        <label class="form-check-label" for="canMove">
+                          Available to move
+                        </label>
+                    </span>
+                    <button class="btn btn-success m-2 mb-4" (click)="addSpecialist()">Add specialist</button>
+                </form>
+            </div>
+        </mat-expansion-panel>
 
-                <p>Start date</p>  
-                
-                <!-- <mat-form-field color="accent" appearance="fill" *ngIf="!isCustomDateSelected">
-                    <mat-label>Inherited calendar color</mat-label>
-                    <input matInput [matDatepicker]="picker1">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
-                  </mat-form-field> -->
-                <!-- <select name="notice" id="notice" 
-                  class="form-select text-center my-2" 
-                  formControlName = "notice">
-                  <option [ngValue]="null" disabled selected>-- Notice period --</option>
-                  <option value="30"> 1 month </option>
-                  <option value="15"> 2 weeks </option>
-                  <option value="7"> 1 week </option>
-                  <option value="1"> 1 day  </option>
-                  <option value="custom"> Custom select </option>
-                </select> -->   
 
-                <mat-form-field appearance="fill" color="accent" *ngIf="isCustomDateSelected">
-                    <mat-label>Enter a date range</mat-label>
-                    <mat-date-range-input [formGroup]="specialistForm" [rangePicker]="picker">
-                      <input matStartDate formControlName="start" placeholder="Start date">
-                      <input matEndDate formControlName="end" placeholder="End date">
-                    </mat-date-range-input>
-                    <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-                  
-                    <mat-error *ngIf="specialistForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
-                    <mat-error *ngIf="specialistForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
-                  </mat-form-field>
 
-                <span class="form-check my-3">
-                    <input class="form-check-input" type="checkbox" id="canMove" formControlName = "canMove">
-                    <label class="form-check-label" for="canMove">
-                      Available to move
-                    </label>
-                </span>
-                <button class="btn btn-success m-2 mb-4" (click)="addSpecialist()">Add specialist</button>
-            </form>
-        </div>
-        </div>
+
+        <!-- <h4 (click)="toggleNew()">Add New</h4>
+        <div [hidden]="!isNewOpen">    
+        
+        
+        </div> -->
     </div>
+
+
+    <!-- <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header class="text-center rounded header">
+        <mat-panel-title>
+        </mat-panel-title>
+        </mat-expansion-panel-header>
+        
+    </mat-expansion-panel> -->

@@ -1,11 +1,21 @@
-.mat-expansion-panel-header,
-.mat-expansion-panel-header.mat-collapsed,
-.mat-expansion-panel-header.mat-collapsed:hover,
-.mat-expansion-panel-header.mat-expanded,
+
 .mat-expansion-panel-header.mat-expanded:hover {
     background-color: var(--color);
     color: white;
 }
+.mat-expansion-panel-header.mat-expanded{
+    background-color: var(--color);
+    color: white;
+}
+.mat-expansion-panel-header, .mat-focus-indicator  {
+    background-color: var(--color);
+    color: white;
+}
+.header{
+    background-color: var(--color);
+    color: white;
+}
+/* .header .ng-tns-c55-11 .ng-tns-c53-10 .ng-star-inserted */
 
 .contact-icon {
     justify-self: baseline;

@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExcelService } from 'src/app/services/excel.service';
-import intlTelInput from 'intl-tel-input';
-import moment from 'moment';
 import { ICity, IClient, ISFilter, ISpecialist } from 'src/app/interfaces/interfaces';
 import { MapService } from 'src/app/services/map.service';
 
 import data from 'src/assets/specifics.json';
 import { FormService } from 'src/app/services/form.service';
-import { GoogleMap } from '@angular/google-maps';
 
 @Component({
   selector: 'app-sidebar',
@@ -53,9 +50,12 @@ export class SidebarComponent implements OnInit {
 
     this.clientForm = new FormGroup({ 
       name: new FormControl(null),
+      website: new FormControl(null),
       picture: new FormControl(null),
       lookFor: new FormGroup({}),
       online: new FormControl(null),
+      start: new FormControl<Date | null>(null),
+      end: new FormControl<Date | null>(null),
     });
 
     this.filterForm = new FormGroup({ 
@@ -108,13 +108,15 @@ export class SidebarComponent implements OnInit {
     let lookForArr : string[] = this.form.convertToArray(val, "lookFor")
 
     let newClient: IClient = {
-      Nome: val.name,
-      Citta: `${cityInfo.join(", ")}`,
-      Disp_Online: val.online,
-      Cerca: lookForArr,
-      Disponibilita_dal: "",
-      Latitude: lat,
-      Longitude: lng
+      name: val.name,
+      website: val.website,
+      city: `${cityInfo.join(", ")}`,
+      remoteOption: val.online,
+      lookFor: lookForArr,
+      available_from: this.form.formatDate(val.end),
+      notice: this.form.daysBetween(val.start, val.end),
+      latitude: lat,
+      longitude: lng
     }
     console.log(newClient)
     this.map.addCMarker(newClient);
@@ -128,18 +130,18 @@ export class SidebarComponent implements OnInit {
     let interestsArr : string[] = this.form.convertToArray(val, "interests")
 
     let newSpecialist: ISpecialist = {
-      Nome: val.name,
-      Email: val.email,
-      Telefono: val.phone,
-      Domicilio: `${cityInfo.join(", ")}`,
-      Disp_Trasferimento: val.canMove,
-      Studi: val.degree,
-      Competenza_Princ: val.specialties,
-      Drivers: interestsArr,
-      Disponibilita_dal: this.form.formatDate(val.end),
-      Preavviso: this.form.daysBetween(val.start, val.end),
-      Latitude: lat,
-      Longitude: lng
+      name: val.name,
+      email: val.email,
+      phone: val.phone,
+      city: `${cityInfo.join(", ")}`,
+      canMove: val.canMove,
+      degree: val.degree,
+      skill: val.specialties,
+      interests: interestsArr,
+      available_from: this.form.formatDate(val.end),
+      notice: this.form.daysBetween(val.start, val.end),
+      latitude: lat,
+      longitude: lng
     }
     console.log(newSpecialist)
     this.map.addSMarker(newSpecialist);
@@ -153,14 +155,14 @@ export class SidebarComponent implements OnInit {
     let interestsArr : string[] = this.form.convertToArray(val, "interests");
     
     let specialistFilter: ISFilter = {
-      Nome: val.name,
-      Domicilio: val.city,
-      Disp_Trasferimento: val.canMove,
-      Studi: degreeArr,
-      Competenza_Princ: specialtiesArr,
-      Drivers: interestsArr,
-      Disponibilita_dal: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
-      Preavviso: val.notice
+      name: val.name,
+      city: val.city,
+      canMove: val.canMove,
+      degree: degreeArr,
+      skill: specialtiesArr,
+      interests: interestsArr,
+      available_from: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
+      notice: val.notice
     }
     console.log(specialistFilter)
     // call service

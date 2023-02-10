@@ -17,9 +17,11 @@ export interface IClient {
   name: string;
   city: string;
   logo?: string;
+  website: string;
   remoteOption: boolean;
   lookFor: string[];
   available_from: string;
+  notice: number;
   latitude: number;
   longitude: number;
 }
