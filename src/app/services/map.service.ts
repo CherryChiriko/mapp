@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import markerData from 'src/assets/data.json';
+import sData from 'src/assets/data.json';
+import cData from 'src/assets/clients.json';
 import { IClient, ISpecialist } from '../interfaces/interfaces';
 
 @Injectable({
@@ -11,10 +12,12 @@ export class MapService {
   sMarkers = new BehaviorSubject<ISpecialist[]>([]);
   cMarkers = new BehaviorSubject<IClient[]>([]);
 
-  data : ISpecialist[] = markerData;
+  sData : ISpecialist[] = sData;
+  cData : IClient[] = cData;
 
   constructor() {
-    this.sMarkers.next(this.data);
+    this.sMarkers.next(this.sData);
+    this.cMarkers.next(this.cData);
   }
 
   getSMarkers(): Observable<ISpecialist[]> { return this.sMarkers}
@@ -35,7 +38,7 @@ export class MapService {
   getCMarkerInfo(mark: IClient){
     let info = {
       "Looking for": mark.lookFor,
-      City: mark.city,
+      "City": mark.city,
       "Remote": mark.remoteOption ? 'yes' : 'no',
       "Available from": mark.available_from,
       "Notice time" : mark.notice + ' days'

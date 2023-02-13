@@ -60,8 +60,8 @@
                         <i (click)="toggleContacts(i)" class="material-symbols-outlined contact-icon">contact_page</i>
                         <p class="info">Contacts</p></td>
                     </tr>
-                    <tr *ngIf="contacts[i] && el.logo !== null">
-                      <td> <img class="info" src="src/assets/img/ima_logo.png"></td>
+                    <!-- <tr *ngIf="contacts[i] && el.logo !== null"> -->
+                      <!-- <td> <img class="info" src="src/assets/img/ima_logo.png"></td></tr> -->
                     <tr *ngIf="contacts[i]">
                       <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">language</i>
                       <a class="info" href="`${el.website}`" target="blank">{{el.website}}</a></td>
@@ -71,7 +71,9 @@
                             {{item.key}} : {{item.value}}
                         </td>
                     </tr>
-                    <tr><td><button class="btn btn-primary" (click)="filterForCompany(el)">Matches for this company</button></td></tr>
+                    <tr>
+                        <td class="borderless">
+                            <button class="btn btn-primary" (click)="filterForCompany(el)">Matches for this company</button></td></tr>
                 </table>
             </mat-expansion-panel>
         </div>
@@ -79,7 +81,6 @@
         </map-marker>
     </google-map>
 </div>
-<img class="info" src="src/assets/img/ima_logo.png">
 <!-- [icon]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'" -->
 
 <!-- [icon]="'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'" -->

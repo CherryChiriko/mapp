@@ -53,7 +53,7 @@ export class SidebarComponent implements OnInit {
       website: new FormControl(null),
       picture: new FormControl(null),
       lookFor: new FormGroup({}),
-      level: new FormGroup({}),
+      // level: new FormGroup(null),
       online: new FormControl(null),
       start: new FormControl<Date | null>(null),
       end: new FormControl<Date | null>(null),
@@ -87,7 +87,6 @@ export class SidebarComponent implements OnInit {
     this.form.addElementToFormGroup(this.filterForm, 'degree', this.degArr)
     this.form.addElementToFormGroup(this.filterForm, 'interests', this.specialArr)
     this.form.addElementToFormGroup(this.clientForm, 'lookFor', this.specialArr)
-    this.form.addElementToFormGroup(this.clientForm, 'level', ["No experience","Junior", "Senior"])
   }
   ngAfterViewInit(): void{
     // const searchBox = 
@@ -103,11 +102,12 @@ export class SidebarComponent implements OnInit {
 
   addClient(){
     const val = this.clientForm.value;
-    
+    // console.log(val.level)
     const cityInfo: string[] = this.cityForm.value.city.split(",");
     const [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
 
-    let lookForArr : string[] = this.form.convertToArray(val, "lookFor")
+    let lookForArr : string[] = this.form.convertToArray(val, "lookFor");
+    // let level : string[] = this.formatLabel(val.level)
 
     let newClient: IClient = {
       name: val.name,
@@ -115,7 +115,8 @@ export class SidebarComponent implements OnInit {
       city: `${cityInfo.join(", ")}`,
       remoteOption: val.online,
       lookFor: lookForArr,
-      level: val.level,
+      level: [""],
+      // level: val.level,
       available_from: this.form.formatDate(val.end),
       notice: this.form.daysBetween(val.start, val.end),
       latitude: lat,

@@ -1,0 +1,15 @@
+[
+  {
+      "name": "IMA Life",
+      "website": "https://ima.it/pharma/brands/ima-life",
+      "logo": "src/assets/img/ima_logo.png",
+      "city": "Bologna",
+      "remoteOption": false,
+      "lookFor": ["Embedded", "Frontend"],
+      "level": ["Bachelor", "Master"],
+      "available_from": "20/02/2023",
+      "notice": 10,
+      "latitude": 44.5075,
+      "longitude": 11.3514
+  }
+]

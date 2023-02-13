@@ -127,10 +127,10 @@
             <!-- </mat-panel-title>
             </mat-expansion-panel-header> -->
             <!-- <div class="colors"> -->
-                <h4 (click)="toggleNew()">Add New</h4>
-                <div [hidden]="!isNewOpen"> 
-                <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
-            <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
+        <h4 (click)="toggleNew()">Add New</h4>
+        <div [hidden]="!isNewOpen"> 
+        <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
+        <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
             <form class="row g-3 align-items-center" [formGroup]="cityForm">
                 <div class="col-auto">
                   <label for="city" class="col-form-label">Where?</label>
@@ -145,8 +145,7 @@
                     </select>     
                     <small style="color: var(--dark-green)" 
                     *ngIf="(cityForm.get('city')?.errors?.['required']&&cityForm.get('city')?.touched)">** Required field **</small>
-                </div>
-                
+                </div>  
             </form>
             <div class="container form-div client rounded" *ngIf="isClientOpen">
                 <form [formGroup]="clientForm" class="my-3 pt-3" >
@@ -176,10 +175,10 @@
                     <p>Level</p>
                     <!-- <label for="customRange3" class="form-label">Level</label>
                     <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3"> -->
-                    <mat-slider min="0" max="6" step="1" showTickMarks discrete [displayWith]="formatLabel">
+                    <!-- <mat-slider min="0" max="6" step="1" showTickMarks discrete [displayWith]="formatLabel">
                         <input value="0" matSliderStartThumb>
                         <input value="5" matSliderEndThumb>
-                    </mat-slider>
+                    </mat-slider> -->
                       
 
 
@@ -302,7 +301,7 @@
                     <button class="btn btn-success m-2 mb-4" (click)="addSpecialist()">Add specialist</button>
                 </form>
             </div>
-            </div>
+        </div>
             
         <!-- </mat-expansion-panel> -->
 
