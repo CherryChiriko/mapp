@@ -8,16 +8,16 @@
         >
         <map-info-window #infoWindow="mapInfoWindow">
             <div class="text-center rounded"
-            style="--color: {{getColorScheme(isClient(mark)).color}}; 
-            --lightColor: {{getColorScheme(isClient(mark)).lightColor}}; 
-            --darkColor: {{getColorScheme(isClient(mark)).darkColor}}"
+            style="--color: {{getColorScheme(isClient(el)).color}}; 
+            --lightColor: {{getColorScheme(isClient(el)).lightColor}}; 
+            --darkColor: {{getColorScheme(isClient(el)).darkColor}}"
             *ngFor="let el of groupByCity(mark.city)">
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header class="text-center rounded header">
                 <mat-panel-title>
-                    <p>{{isClient(el)}}</p>
-                    <!-- <p>`My color: ${getColorScheme(isClient(mark)).dot}`</p> -->
-                    {{el.name}}
+                    <div class="row">
+                            <div class="col">{{el.name}}</div>
+                            <div class="col-2"><img class="logo" src="{{el.logo}}" *ngIf="isClient(el) && el.logo !== null"></div></div>
                 </mat-panel-title>
                 </mat-expansion-panel-header>
                 <table class="table">

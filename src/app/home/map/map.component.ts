@@ -1,11 +1,13 @@
 import { KeyValue } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Subscription } from 'rxjs';
 import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { ExcelService } from 'src/app/services/excel.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { MapService } from 'src/app/services/map.service';
+
+const INITIAL_COORDS = [41.9028, 12.4964]; // Roma
 
 @Component({
   selector: 'app-map',
@@ -18,12 +20,12 @@ export class MapComponent implements OnInit{
   allMarkers: any[] = [];
   markersSubs ?: Subscription;
 
-  INITIAL_COORDS = [41.9028, 12.4964]; // Roma
-  center: google.maps.LatLngLiteral = { lat: this.INITIAL_COORDS[0], lng: this.INITIAL_COORDS[1]};
+ 
+  center: google.maps.LatLngLiteral = { lat: INITIAL_COORDS[0], lng: INITIAL_COORDS[1]};
   zoom = 5;
 
   contacts: boolean[] = [];
-  isMixed : boolean = false;
+  // isMixed : boolean = false;
 
   constructor(private map: MapService, private _excel : ExcelService, private helper: HelperService){}
 
@@ -52,15 +54,18 @@ export class MapComponent implements OnInit{
     this.setContact();
     infoWindow.open(marker);
   }
+  closeInfoWindow(infoWindow: MapInfoWindow) {
+    infoWindow.close();
+  }
 
   isClient(element: IClient | ISpecialist){    return element.hasOwnProperty('website') ?  true : false  }
 
-  filterByCity(arr: any[], cityName: string){ return arr.filter(element => element.city === cityName)}
+  filterByCity(arr: any[], cityName: string){  return arr.filter(element => element.city === cityName)}
   groupByCity(cityName: string): any[]  { 
-    this.isMixed = false;
+    // this.isMixed = false;
     let sGroup = this.filterByCity(this.specialists, cityName); 
     let cGroup = this.filterByCity(this.clients, cityName);
-    if (sGroup.length > 0 && cGroup.length > 0 ){ this.isMixed = true}
+    // if (sGroup.length > 0 && cGroup.length > 0 ){ this.isMixed = true}
     return [...cGroup, ...sGroup]
   }
 
@@ -76,9 +81,9 @@ export class MapComponent implements OnInit{
     } 
   }
   getIcon(condition: boolean){
-    console.log(this.isMixed)
     const url = "http://maps.google.com/mapfiles/ms/icons/";
-    const dotColor = this.isMixed ? 'red' : this.getColorScheme(condition).dot
+    // const dotColor = this.isMixed ? 'red' : this.getColorScheme(condition).dot
+    const dotColor = this.getColorScheme(condition).dot
     return `${url}${dotColor}-dot.png`;
   }
 

@@ -2,7 +2,7 @@
   {
       "name": "IMA Life",
       "website": "https://ima.it/pharma/brands/ima-life",
-      "logo": "src/assets/img/ima_logo.png",
+      "logo": "https://ima.it/pharma/wp-content/uploads/sites/2/2016/12/ima_logo-300x118.png",
       "city": "Bologna",
       "remoteOption": false,
       "lookFor": ["Embedded", "Frontend"],
@@ -15,7 +15,7 @@
   {
     "name": "Loccioni",
     "website": "https://www.loccioni.com/it",
-    "logo": "src/assets/img/ima_logo.png",
+    "logo": "https://www.loccioni.com/wp-content/themes/bst-master/img/loccioni_w.svg",
     "city": "Ancona",
     "remoteOption": true,
     "lookFor": ["Embedded", "Frontend"],

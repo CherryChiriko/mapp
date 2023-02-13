@@ -35,7 +35,10 @@ td{
 .borderless{
     border: transparent;
 }
-
+.logo{
+    /* margin-left: 5rem; */
+    max-width: 3rem;
+}
 @media screen and (max-width: 1000px) {
     /* google-map{
         height: 200px; width: 375px;
