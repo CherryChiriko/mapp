@@ -144,7 +144,7 @@
                         value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
                     </select>     
                     <small style="color: var(--dark-green)" 
-                    *ngIf="(cityForm.get('city')?.errors?.['required']&&cityForm.get('city')?.touched)">** Required field **</small>
+                    *ngIf="(cityForm.get('city')?.errors?.['required'] && cityForm.get('city')?.touched)">** Required field **</small>
                 </div>  
             </form>
             <div class="container form-div client rounded" *ngIf="isClientOpen">

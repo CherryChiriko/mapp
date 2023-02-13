@@ -50,7 +50,7 @@ export class SidebarComponent implements OnInit {
 
     this.clientForm = new FormGroup({ 
       name: new FormControl(null),
-      website: new FormControl(null),
+      website: new FormControl(""),
       picture: new FormControl(null),
       lookFor: new FormGroup({}),
       // level: new FormGroup(null),

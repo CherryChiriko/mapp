@@ -15,21 +15,15 @@ import { MapService } from 'src/app/services/map.service';
 export class MapComponent implements OnInit{
   specialists: ISpecialist[] =  [];
   clients: IClient[] =  [];
+  allMarkers: any[] = [];
   markersSubs ?: Subscription;
 
   INITIAL_COORDS = [41.9028, 12.4964]; // Roma
   center: google.maps.LatLngLiteral = { lat: this.INITIAL_COORDS[0], lng: this.INITIAL_COORDS[1]};
   zoom = 5;
 
-  color: string = "var(--google-green)";
-  lightColor: string = "var(--light-green)";
-  darkColor: string = "var(--dark-green)";
-
-  color1: string = "var(--google-blue)";
-  lightColor1: string = "var(--light-blue)";
-  darkColor1: string = "var(--dark-blue)";
-
   contacts: boolean[] = [];
+  isMixed : boolean = false;
 
   constructor(private map: MapService, private _excel : ExcelService, private helper: HelperService){}
 
@@ -40,14 +34,11 @@ export class MapComponent implements OnInit{
       value => this.specialists = value);
     this.markersSubs = this.map.getCMarkers().subscribe(
       value => this.clients = value);
+    this.allMarkers = [...this.clients, ...this.specialists];
   }
-
 
   originalOrder =
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
-
-  markerSInfo(mark: ISpecialist){ return this.map.getSMarkerInfo(mark)}
-  markerCInfo(mark: IClient){ return this.map.getCMarkerInfo(mark)}
   
   toggleContacts(i: number){    this.contacts[i] = !this.contacts[i];  }
   setContact(){
@@ -55,7 +46,6 @@ export class MapComponent implements OnInit{
     for (let i = 0; i<this.specialists.length; i++){
       this.contacts.push(false);
     }}
-    else {      this.contacts.map( contact => contact = false)    }
   }
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
@@ -63,13 +53,36 @@ export class MapComponent implements OnInit{
     infoWindow.open(marker);
   }
 
-  sGroupByCity(cityName: string){
-    // const cityGroup = this.helper.groupArray<ISpecialist, string>(this.specialists, (p => p.Domicilio));
-    return this.specialists.filter( specialist => specialist.city === cityName);
+  isClient(element: IClient | ISpecialist){    return element.hasOwnProperty('website') ?  true : false  }
+
+  filterByCity(arr: any[], cityName: string){ return arr.filter(element => element.city === cityName)}
+  groupByCity(cityName: string): any[]  { 
+    this.isMixed = false;
+    let sGroup = this.filterByCity(this.specialists, cityName); 
+    let cGroup = this.filterByCity(this.clients, cityName);
+    if (sGroup.length > 0 && cGroup.length > 0 ){ this.isMixed = true}
+    return [...cGroup, ...sGroup]
   }
-  cGroupByCity(cityName: string){
-    return this.clients.filter( client => client.city === cityName);
+
+  markerInfo(condition: boolean, mark: any){ return condition? this.map.getCMarkerInfo(mark): this.map.getSMarkerInfo(mark)}
+
+  getColorScheme(condition: boolean){
+    let color = condition? 'blue': 'green';
+    return {
+      color:      `var(--google-${color})`,
+      lightColor: `var(--light-${color})`,
+      darkColor:  `var(--dark-${color})`,
+      dot: `${color}`
+    } 
   }
+  getIcon(condition: boolean){
+    console.log(this.isMixed)
+    const url = "http://maps.google.com/mapfiles/ms/icons/";
+    const dotColor = this.isMixed ? 'red' : this.getColorScheme(condition).dot
+    return `${url}${dotColor}-dot.png`;
+  }
+
+
   ngOnDestroy(){
     this.markersSubs?.unsubscribe();
   }

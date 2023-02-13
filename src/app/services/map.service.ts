@@ -22,7 +22,7 @@ export class MapService {
 
   getSMarkers(): Observable<ISpecialist[]> { return this.sMarkers}
   getCMarkers(): Observable<IClient[]> { return this.cMarkers}
-
+  
   getSMarkerInfo(mark: ISpecialist){
     let info = {
       Specialties: mark.skill,
