@@ -71,19 +71,11 @@ export class MapComponent implements OnInit{
 
   markerInfo(condition: boolean, mark: any){ return condition? this.map.getCMarkerInfo(mark): this.map.getSMarkerInfo(mark)}
 
-  getColorScheme(condition: boolean){
-    let color = condition? 'blue': 'green';
-    return {
-      color:      `var(--google-${color})`,
-      lightColor: `var(--light-${color})`,
-      darkColor:  `var(--dark-${color})`,
-      dot: `${color}`
-    } 
-  }
+  getColor(condition: boolean){return this.helper.getColorScheme(condition)}
   getIcon(condition: boolean){
     const url = "http://maps.google.com/mapfiles/ms/icons/";
     // const dotColor = this.isMixed ? 'red' : this.getColorScheme(condition).dot
-    const dotColor = this.getColorScheme(condition).dot
+    const dotColor = this.getColor(condition).dot
     return `${url}${dotColor}-dot.png`;
   }
 
