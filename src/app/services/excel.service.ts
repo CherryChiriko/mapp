@@ -2,53 +2,104 @@ import { Injectable } from '@angular/core';
 import { FileSaverService } from 'ngx-filesaver';
 import { Observable, ReplaySubject } from 'rxjs';
 import * as XLSX from 'xlsx';
-import { ISpecialist } from '../interfaces/interfaces';
+import { IClient, ISpecialist } from '../interfaces/interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExcelService {
+  constructor(private _fileSaver: FileSaverService) {}
 
-  constructor(private _fileSaver : FileSaverService) { }
+  //---------------------------------------------------------------------------Specialisti
+  private _specialistArray: ISpecialist[] = [];
+  private specialistSubject$ = new ReplaySubject<ISpecialist[]>(1);
 
-  public _excelData : ISpecialist[] = [];
-  private excelData$ = new ReplaySubject<ISpecialist[]>(1);
-
-  private get excelData() {
-    return this._excelData;
+  private get specialistArray() {
+    return this._specialistArray;
   }
 
-  private set excelData(value : ISpecialist[]) {
-    this._excelData = value;
-    this.excelData$.next(value);
-    }
+  private set specialistArray(value: ISpecialist[]) {
+    this._specialistArray = value;
+    this.specialistSubject$.next(value);
+  }
+  //-----------------------------------------------------------------------------
 
-    /**
-     * Ci facciamo ritornare il subject excelData$ per poterlo
-     * usare nell'altro service
-     * @returns
-     */
-    public getSubj() {
-      return this.excelData$;
-    }
+  //---------------------------------------------------------------------------Clienti
+  private _clientArray: IClient[] = [];
+  private clientSubject$ = new ReplaySubject<IClient[]>(1);
 
-  public loadExcelFile(event : any) {
+  public get clientArray() {
+    return this._clientArray;
+  }
+
+  public set clientArray(value: IClient[]) {
+    this._clientArray = value;
+    this.clientSubject$.next(value);
+  }
+  //----------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------Metodi Specialisti
+  public importSpecialists(event: any) {
     const file = event.target.files[0];
     const fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
     fileReader.onload = (e) => {
-      //console.log(e);
-      let workBook = XLSX.read(fileReader.result, {type: 'binary'});
+      let workBook = XLSX.read(fileReader.result, { type: 'binary' });
       let data = workBook.SheetNames;
-      this.excelData = XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]);
-    }
+      this.specialistArray = XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]);
+    };
   }
 
-  public exportExcel() {
+  public exportSpecialists() {
     const EXCEL_TYPE =
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     //custom code
-    const worksheet = XLSX.utils.json_to_sheet(this.excelData);
+    const worksheet = XLSX.utils.json_to_sheet(this.specialistArray);
+    const workbook = {
+      Sheets: {
+        testingSheet: worksheet,
+      },
+      SheetNames: ['testingSheet'],
+    };
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
+    this._fileSaver.save(blobData, 'specialistFile');
+  }
+
+  public getAllSpecialists(): Observable<ISpecialist[]> {
+    return this.specialistSubject$;
+  }
+
+  /**
+   * Ci facciamo ritornare il subject specialistSubscription per poterlo
+   * usare nell'altro service
+   * @returns
+   */
+  public getSpecialistsSubject() {
+    return this.specialistSubject$;
+  }
+  //--------------------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------------------Metodi Clienti
+  public importClients(event: any) {
+    const file = event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsBinaryString(file);
+    fileReader.onload = (e) => {
+      let workBook = XLSX.read(fileReader.result, { type: 'binary' });
+      let data = workBook.SheetNames;
+      this.clientArray = XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]);
+    };
+  }
+
+  public exportClients() {
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+    //custom code
+    const worksheet = XLSX.utils.json_to_sheet(this.clientArray);
     const workbook = {
       Sheets: {
         testingSheet: worksheet,
@@ -63,22 +114,12 @@ export class ExcelService {
     this._fileSaver.save(blobData, 'demoFile');
   }
 
-  public getAll() : Observable<ISpecialist[]> {
-    return this.excelData$;
+  public getAllClients(): Observable<IClient[]> {
+    return this.clientSubject$;
   }
 
-  public addSpecialist(value : ISpecialist) {
-    this._excelData.push(value);
-    this.excelData = this.excelData;
-    console.log(this.excelData);
-  }
-
-  public removeSpecialist(value : ISpecialist) {
-    let index = this.excelData.indexOf(value);
-    if(index > -1) {
-      this.excelData.splice(index, 1);
-    }
-    this.excelData$.next(this.excelData);
+  public getClientSubject() {
+    return this.clientSubject$;
   }
 
 
