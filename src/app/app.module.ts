@@ -28,6 +28,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MatSliderModule } from '@angular/material/slider';
 import { HammerModule} from '@angular/platform-browser';
+import { AddNewComponent } from './home/sidebar/add-new/add-new.component';
+import { FilterComponent } from './home/sidebar/filter/filter.component';
 
 // npm i ngx-mat-intl-tel-input --save
 // npm install libphonenumber-js --save
@@ -39,6 +41,8 @@ import { HammerModule} from '@angular/platform-browser';
     SidebarComponent,
     HeaderComponent,
     HomeComponent,
+    AddNewComponent,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,

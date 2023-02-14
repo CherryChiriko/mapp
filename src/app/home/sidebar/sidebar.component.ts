@@ -6,6 +6,7 @@ import { MapService } from 'src/app/services/map.service';
 
 import data from 'src/assets/specifics.json';
 import { FormService } from 'src/app/services/form.service';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,7 +14,7 @@ import { FormService } from 'src/app/services/form.service';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  @ViewChild('mapSearchField', { static: true }) searchField: any;
+  // @ViewChild('mapSearchField', { static: true }) searchField: any;
 
   specialArr: string[] = data.specialties;
   degArr: string[] = data.degrees;
@@ -35,7 +36,7 @@ export class SidebarComponent implements OnInit {
 
   formError: boolean = false;
 
-  constructor(private _excel : ExcelService, private map: MapService, private form: FormService){}
+  constructor(private _excel : ExcelService, private map: MapService, private form: FormService, private helper: HelperService){}
 
   ngOnInit(): void {
     this.specialistForm = new FormGroup({
@@ -43,7 +44,7 @@ export class SidebarComponent implements OnInit {
       email: new FormControl(null, [Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]),
       phone: new FormControl(null),
       degree: new FormControl(null),
-      specialties: new FormControl(null),
+      // specialties: new FormControl(null),
       interests: new FormGroup({}),
       start: new FormControl<Date | null>(null),
       end: new FormControl<Date | null>(null),
@@ -102,65 +103,7 @@ export class SidebarComponent implements OnInit {
     // })
   }
 
-  addClient(){
-    const val = this.clientForm.value;
-    let cityInfo: string[];
-    let lat: number; let lng: number;
-    // console.log(val.level)
-    try{
-      cityInfo = this.cityForm.value.city.split(",");
-      [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);}
-    catch{
-      this.formError = true; return;
-    }
-    // const cityInfo: string[] = ["ci", "ty"];
-    // const [lat, lng] = [0,0];
 
-    let lookForArr : string[] = this.form.convertToArray(val, "lookFor");
-    // let level : string[] = this.formatLabel(val.level)
-
-    let newClient: IClient = {
-      name: val.name,
-      website: val.website,
-      city: `${cityInfo.join(", ")}`,
-      remoteOption: val.online,
-      lookFor: lookForArr,
-      level: [""],
-      // level: val.level,
-      available_from: this.form.formatDate(val.end),
-      notice: this.form.daysBetween(val.start, val.end),
-      latitude: lat,
-      longitude: lng
-    }
-    console.log(newClient)
-    this.map.addCMarker(newClient);
-  }
-  addSpecialist(){
-    const val = this.specialistForm.value;
-    
-    const cityInfo: string[] = this.cityForm.value.city.split(",");
-    const [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
-
-    let interestsArr : string[] = this.form.convertToArray(val, "interests")
-
-    let newSpecialist: ISpecialist = {
-      name: val.name,
-      email: val.email,
-      phone: val.phone,
-      city: `${cityInfo.join(", ")}`,
-      canMove: val.canMove,
-      degree: val.degree,
-      skill: val.specialties,
-      interests: interestsArr,
-      available_from: this.form.formatDate(val.end),
-      notice: this.form.daysBetween(val.start, val.end),
-      latitude: lat,
-      longitude: lng
-    }
-    console.log(newSpecialist)
-    this.map.addSMarker(newSpecialist);
-    // this._excel.addCity(newSpecialist);
-  }
   filterSpecialist(){
     const val = this.filterForm.value;
     
@@ -173,7 +116,7 @@ export class SidebarComponent implements OnInit {
       city: val.city,
       canMove: val.canMove,
       degree: degreeArr,
-      skill: specialtiesArr,
+      skills: specialtiesArr,
       interests: interestsArr,
       available_from: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
       notice: val.notice
@@ -201,7 +144,7 @@ export class SidebarComponent implements OnInit {
     }
     return "";
   }
-
+  getColor(condition: boolean){return this.helper.getColorScheme(condition)}
   // isClient(element: IClient | ISpecialist){    return element.hasOwnProperty('website') ?  true : false  }
 }
 

@@ -25,7 +25,7 @@ export class MapService {
   
   getSMarkerInfo(mark: ISpecialist){
     let info = {
-      Specialties: mark.skill,
+      Specialties: mark.skills,
       Degree: mark.degree,
       City: mark.city,
       "Available to move": mark.canMove ? 'yes' : 'no',

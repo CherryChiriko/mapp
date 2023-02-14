@@ -1,0 +1,40 @@
+
+.mySlider {
+    width: 90% !important;
+  }
+  .mySlider
+    .mdc-slider__thumb--with-indicator
+    .mdc-slider__value-indicator-container
+    .mdc-slider__value-indicator {
+    width: 200px;
+  }
+  .mySlider
+    .mdc-slider__thumb--with-indicator[ng-reflect-thumb-position='1']
+    .mdc-slider__value-indicator-container
+    .mdc-slider__value-indicator {
+    background-color: red !important;
+  }
+  .mySlider
+    .mdc-slider__thumb--with-indicator[ng-reflect-thumb-position='2']
+    .mdc-slider__value-indicator-container
+    .mdc-slider__value-indicator {
+    background-color: green !important;
+  }
+.box{
+    background-color: var(--lightColor);
+    color: var(--darkColor);
+}
+p{
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+.box .form-check-input:checked {
+    background-color: var(--color);
+    border-color: var(--color);
+}
+.specialties{
+    color: var(--darkColor);
+    background-color: var(--lightColor);
+    border-color: var(--bs-btn-active-border-color);
+    margin: .2rem;
+}

@@ -5,7 +5,7 @@ export interface ISpecialist {
   city: string;
   canMove: boolean;
   degree: string;
-  skill: string;
+  skills: string[];
   interests: string[];
   available_from: string;
   notice: number;
@@ -32,7 +32,7 @@ export interface ISFilter {
   city: string | null;
   canMove: boolean | null;
   degree: string[] | null;
-  skill: string[] | null;
+  skills: string[] | null;
   interests: string[] | null;
   available_from: string[] | null;
   notice: number | null;
