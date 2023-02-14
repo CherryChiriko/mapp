@@ -146,8 +146,8 @@ export class AddNewComponent {
       case 2: return "Technical high school";
       case 3: return "Bachelor degree";
       case 4: return "Master degree";
-      case 5: return "Mid developer";
-      case 6: return "Senior developer";
+      case 5: return "Mid";
+      case 6: return "Senior";
     }
     return "";
   }

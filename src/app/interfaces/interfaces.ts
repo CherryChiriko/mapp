@@ -39,7 +39,8 @@ export interface ISFilter {
 }
 
 export interface ICFilter {
-  name: string;
+  name: string | null;
+  online: boolean | null;
 }
 
 export interface ICities {

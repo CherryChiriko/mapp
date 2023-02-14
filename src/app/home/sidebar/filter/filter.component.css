@@ -1,0 +1,19 @@
+.box{
+    background-color: var(--lightColor);
+    color: var(--darkColor);
+}
+p{
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+.box .form-check-input:checked {
+    background-color: var(--color);
+    border-color: var(--color);
+}
+.specialties{
+    color: var(--darkColor);
+    background-color: var(--lightColor);
+    border-color: var(--bs-btn-active-border-color);
+    margin: .2rem;
+}
+
