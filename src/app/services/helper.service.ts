@@ -14,7 +14,15 @@ export class HelperService {
       );
     console.log(distance)  // answer is in meters
   }
-  
+  getColorScheme(condition: boolean){
+    let color = condition? 'blue': 'green';
+    return {
+      color:      `var(--google-${color})`,
+      lightColor: `var(--light-${color})`,
+      darkColor:  `var(--dark-${color})`,
+      dot: `${color}`
+    } 
+  }
   groupArray<T, K>(arr: T[], getKey: (el: T) => K): Map<K, T[]> {
     const map = new Map<K, T[]>;
     for (const el of arr) {

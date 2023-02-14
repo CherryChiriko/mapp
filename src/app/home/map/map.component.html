@@ -8,9 +8,9 @@
         >
         <map-info-window #infoWindow="mapInfoWindow">
             <div class="text-center rounded"
-            style="--color: {{getColorScheme(isClient(el)).color}}; 
-            --lightColor: {{getColorScheme(isClient(el)).lightColor}}; 
-            --darkColor: {{getColorScheme(isClient(el)).darkColor}}"
+            style="--color: {{getColor(isClient(el)).color}}; 
+            --lightColor: {{getColor(isClient(el)).lightColor}}; 
+            --darkColor: {{getColor(isClient(el)).darkColor}}"
             *ngFor="let el of groupByCity(mark.city)">
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header class="text-center rounded header">

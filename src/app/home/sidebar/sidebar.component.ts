@@ -33,6 +33,8 @@ export class SidebarComponent implements OnInit {
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
 
+  formError: boolean = false;
+
   constructor(private _excel : ExcelService, private map: MapService, private form: FormService){}
 
   ngOnInit(): void {
@@ -102,9 +104,17 @@ export class SidebarComponent implements OnInit {
 
   addClient(){
     const val = this.clientForm.value;
+    let cityInfo: string[];
+    let lat: number; let lng: number;
     // console.log(val.level)
-    const cityInfo: string[] = this.cityForm.value.city.split(",");
-    const [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
+    try{
+      cityInfo = this.cityForm.value.city.split(",");
+      [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);}
+    catch{
+      this.formError = true; return;
+    }
+    // const cityInfo: string[] = ["ci", "ty"];
+    // const [lat, lng] = [0,0];
 
     let lookForArr : string[] = this.form.convertToArray(val, "lookFor");
     // let level : string[] = this.formatLabel(val.level)
@@ -191,6 +201,8 @@ export class SidebarComponent implements OnInit {
     }
     return "";
   }
+
+  // isClient(element: IClient | ISpecialist){    return element.hasOwnProperty('website') ?  true : false  }
 }
 
 
