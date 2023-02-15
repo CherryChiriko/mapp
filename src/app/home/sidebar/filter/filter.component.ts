@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ICFilter, ISFilter } from 'src/app/interfaces/interfaces';
+import { ICFilter, ICity, ISFilter } from 'src/app/interfaces/interfaces';
 import { ExcelService } from 'src/app/services/excel.service';
 import { FormService } from 'src/app/services/form.service';
 
@@ -16,7 +16,7 @@ export class FilterComponent {
   
   specialArr: string[] = data.specialties;
   degArr: string[] = data.degrees;
-  // citiesArr: ICity[] = this.form.getAllCities();
+  citiesArr: ICity[] = this.form.getAllCities();
   
   sFilterForm !: FormGroup;
   cFilterForm !: FormGroup;
@@ -28,6 +28,7 @@ export class FilterComponent {
 
     this.sFilterForm = new FormGroup({ 
       name: new FormControl(null),
+      city: new FormControl(null),
       degree: new FormGroup({}),
       specialties: new FormGroup({}),
       interests: new FormGroup({}),
@@ -39,6 +40,7 @@ export class FilterComponent {
 
     this.cFilterForm = new FormGroup({ 
       name: new FormControl(null),
+      city: new FormControl(null),
       degree: new FormGroup({}),
       specialties: new FormGroup({}),
       interests: new FormGroup({}),
@@ -48,6 +50,7 @@ export class FilterComponent {
     this.form.addElementToFormGroup(this.sFilterForm, 'specialties', this.specialArr)
     this.form.addElementToFormGroup(this.sFilterForm, 'degree', this.degArr)
     this.form.addElementToFormGroup(this.sFilterForm, 'interests', this.specialArr)
+
     this.form.addElementToFormGroup(this.cFilterForm, 'specialties', this.specialArr)
     this.form.addElementToFormGroup(this.cFilterForm, 'degree', this.degArr)
     this.form.addElementToFormGroup(this.cFilterForm, 'interests', this.specialArr)
@@ -60,6 +63,8 @@ export class FilterComponent {
     let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
     let interestsArr : string[] = this.form.convertToArray(val, "interests");
     
+    console.log("City ", val.city)
+
     let specialistFilter: ISFilter = {
       name: val.name,
       city: val.city,
@@ -87,7 +92,7 @@ export class FilterComponent {
       // city: val.city,
       // canMove: val.canMove,
       // degree: degreeArr,
-      // skills: specialtiesArr,
+      skills: specialtiesArr,
       // interests: interestsArr,
       // available_from: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
       // notice: val.notice

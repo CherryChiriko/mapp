@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Subscription } from 'rxjs';
 import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
-import { ExcelService } from 'src/app/services/excel.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { MapService } from 'src/app/services/map.service';
 
@@ -27,16 +27,19 @@ export class MapComponent implements OnInit{
   contacts: boolean[] = [];
   // isMixed : boolean = false;
 
-  constructor(private map: MapService, private _excel : ExcelService, private helper: HelperService){}
+  constructor(private map: MapService, private filter : FilterService, private helper: HelperService){}
 
   ngOnInit(){
-     //this.markersSubs = this._excel.getAll().subscribe(
-       //value => this.specialists = value);
-    this.markersSubs = this.map.getSMarkers().subscribe(
+    // this.markersSubs = this.map.getSMarkers().subscribe(
+    //   value => this.specialists = value);
+    // this.markersSubs = this.map.getCMarkers().subscribe(
+    //   value => this.clients = value);
+    this.markersSubs = this.filter.sFilterData().subscribe(
       value => this.specialists = value);
-    this.markersSubs = this.map.getCMarkers().subscribe(
+    this.markersSubs = this.filter.cFilterData().subscribe(
       value => this.clients = value);
     this.allMarkers = [...this.clients, ...this.specialists];
+    // console.log(this.allMarkers)
   }
 
   originalOrder =

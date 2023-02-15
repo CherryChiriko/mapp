@@ -4,15 +4,16 @@
         <div [hidden]="!isFilterOpen">
             <button class="btn btn-primary m-2" (click)="toggleFilterClient()">Client</button>
             <button class="btn btn-success m-2" (click)="toggleFilterSpecialist()">Specialist</button>    
-            <app-filter *ngIf="isFilterClientOpen"
+            <app-filter *ngIf="isFilterClientOpen" [isClient]="true"
             style="--color: {{getColor(true).color}}; 
            --lightColor: {{getColor(true).lightColor}}; 
-           --darkColor: {{getColor(true).darkColor}}"></app-filter>
-            <app-filter *ngIf="isFilterSpecialistOpen"
+           --darkColor: {{getColor(true).darkColor}}"></app-filter>        
+            <app-filter *ngIf="isFilterSpecialistOpen" [isClient]="false"
             style="--color: {{getColor(false).color}}; 
            --lightColor: {{getColor(false).lightColor}}; 
            --darkColor: {{getColor(false).darkColor}}"></app-filter>
         </div>
+        <hr>
         <!-- <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header class="text-center rounded header">
             <mat-panel-title class="colors"> -->

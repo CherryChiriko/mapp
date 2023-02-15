@@ -41,6 +41,7 @@ export interface ISFilter {
 export interface ICFilter {
   name: string | null;
   online: boolean | null;
+  skills: string[] | null;
 }
 
 export interface ICities {

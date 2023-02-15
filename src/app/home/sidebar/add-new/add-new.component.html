@@ -18,6 +18,17 @@
 <div class="container form-div box rounded">
     <form [formGroup]="isClient? clientForm: specialistForm" class="my-3 pt-3" >
 
+        <select type="search" name="city" id="{{isClient? 'ccity': 'scity'}}"
+            class="form-control rounded text-center my-2"
+            formControlName="city">
+            <option disabled selected [ngValue]="null">-- City --</option>
+            <option *ngFor="let city of citiesArr" 
+            value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
+        </select>   
+        <small style="color: var(--darkColor)" 
+        *ngIf="clientForm?.errors?.['required'] &&
+        clientForm?.get('city')?.touched">** Required field **</small>            
+        
         <input type="text" name="name" 
         class="form-control text-center my-2" placeholder="Name"
         formControlName = "name">

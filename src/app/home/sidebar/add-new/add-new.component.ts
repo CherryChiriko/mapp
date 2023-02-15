@@ -20,7 +20,7 @@ export class AddNewComponent {
   degArr: string[] = data.degrees;
   citiesArr: ICity[] = this.form.getAllCities();
   
-  cityForm !: FormGroup;
+  // cityForm !: FormGroup;
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
   
@@ -31,11 +31,12 @@ export class AddNewComponent {
   constructor(private _excel : ExcelService, private map: MapService, private form: FormService){}
 
   ngOnInit(): void {
-    this.cityForm = new FormGroup({
-      city: new FormControl(null, [Validators.required])
-    })
+    // this.cityForm = new FormGroup({
+    //   city: new FormControl(null, [Validators.required])
+    // })
 
     this.clientForm = new FormGroup({ 
+      city: new FormControl(null, [Validators.required]),
       name: new FormControl(null),
       website: new FormControl("", [Validators.pattern("https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}")]),
       picture: new FormControl(null),
@@ -47,6 +48,7 @@ export class AddNewComponent {
     });
 
     this.specialistForm = new FormGroup({
+      city: new FormControl(null, [Validators.required]),
       name: new FormControl(null),
       email: new FormControl(null, [Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]),
       phone: new FormControl(null),
@@ -66,17 +68,20 @@ export class AddNewComponent {
 
   addClient(){
     const val = this.clientForm.value;
-    let cityInfo: string[];
-    let lat: number; let lng: number;
-    console.log(val.level)
-    try{
-      cityInfo = this.cityForm.value.city.split(",");
-      [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);}
-    catch{
-      // this.formError = true; return;
-    }
-    cityInfo = ["ci", "ty"];
-    [lat, lng] = [0,0];
+    // let cityInfo: string[];
+    // let lat: number; let lng: number;
+    // console.log(val.level)
+    // try{
+    //   cityInfo = this.cityForm.value.city.split(",");
+    //   [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);}
+    // catch{
+    //   // this.formError = true; return;
+    // }
+    // cityInfo = ["ci", "ty"];
+    // [lat, lng] = [0,0];
+
+    let cityInfo: string[] = val.city.split(",");
+    let [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
 
     const lookForArr : string[] = this.form.convertToArray(val, "lookFor");
     // let level : string[] = this.formatLabel(val.level)
@@ -102,17 +107,20 @@ export class AddNewComponent {
   addSpecialist(){
     const val = this.specialistForm.value;
     
-    let cityInfo: string[];
-    let lat: number; let lng: number;
-    try{
-      cityInfo = this.cityForm.value.city.split(",");
-      [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);}
-    catch{
-      // this.formError = true; return;
-    }
-    cityInfo = ["ci", "ty"];
-    [lat, lng] = [0,0];
+    // let cityInfo: string[];
+    // let lat: number; let lng: number;
+    // try{
+    //   cityInfo = this.cityForm.value.city.split(",");
+    //   [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);}
+    // catch{
+    //   // this.formError = true; return;
+    // }
+    // cityInfo = ["ci", "ty"];
+    // [lat, lng] = [0,0];
 
+    let cityInfo: string[] = val.city.split(",");
+    let [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
+    
     const date : Date = val.end? val.end : new Date();
     this.dateError = val.end ? false : true;
 
