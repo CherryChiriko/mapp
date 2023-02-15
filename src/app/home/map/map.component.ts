@@ -92,6 +92,8 @@ export class MapComponent implements OnInit{
     return `${url}${dotColor}-dot.png`;
   }
 
+  deleteElement(element: any){
+    this.isClient(element) ? this.filter.removeClient(element) : this.filter.removeSpecialist(element) }
 
   ngOnDestroy(){
     this.sMarkersSubs?.unsubscribe();

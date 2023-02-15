@@ -44,6 +44,7 @@
                     <tr *ngIf="isClient(el)"><td class="borderless">
                         <button class="btn btn-primary" (click)="filterForCompany(el)">Matches for this company</button></td></tr>
                 </table>
+                <button class="btn btn-danger" (click)="deleteElement(el)">Delete</button>
             </mat-expansion-panel>
             </div>
         </map-info-window>

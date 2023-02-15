@@ -4,7 +4,7 @@ import { ICFilter, IClient, ISFilter, ISpecialist } from '../interfaces/interfac
 import { ExcelService } from './excel.service';
 import { HelperService } from './helper.service';
 
-import sData from 'src/assets/data.json';
+import sData from 'src/assets/specialists.json';
 import cData from 'src/assets/clients.json';
 
 @Injectable({
@@ -77,10 +77,15 @@ export class FilterService {
     this.specialists$.next(this.specialistArray);
   }
 
-  removeClient(value : IClient) {
-    let index = this.clientArray.indexOf(value);
+  removeClient(client : IClient) {
+    let index = this.clientArray.indexOf(client);
     if(index > -1) {      this.clientArray.splice(index, 1);    }
     this.clients$.next(this.clientArray);
+  }
+  removeSpecialist(specialist : ISpecialist) {
+    let index = this.specialistArray.indexOf(specialist);
+    if(index > -1) {      this.specialistArray.splice(index, 1);    }
+    this.specialists$.next(this.specialistArray);
   }
 
   setSFilter(filt: ISFilter) {    this.sFilterSubj$.next(filt);  }
@@ -126,40 +131,72 @@ export class FilterService {
     
   }
 
-  sFilterLogic(arr: ISpecialist[], filt?: ISFilter): ISpecialist[] {
-    if (!filt) { return arr;}
+  // sFilterLogic(arr: ISpecialist[], filt?: ISFilter): ISpecialist[] {
+  //   if (!filt) { return arr;}
+  //   let result = arr;
+  //   console.log(result, arr)
+  //   for (const [key, value] of Object.entries(filt)) {
+  //     if (value === null) {   continue;    }            // if the entry in the filter is null, don't check for this
+  //     let keyName = key as keyof ISpecialist;           // without this it doesn't work in TS (it does in standard JS)
+  //     if (Array.isArray(value)) {                       // if it's an array
+  //       // if (key === 'available_from') {
+  //       //   // const startDate = this.helper.dateBuilder(value[0]);
+  //       //   const endDate = this.helper.dateBuilder(value[1]);
+  //       //   let newArr: ISpecialist[] = [];
+  //       //   result.map((element: any) => {
+  //       //     const date = this.helper.dateBuilder(element[keyName]);
+  //       //     // if (date >= startDate && date <= endDate){
+  //       //     if (date <= endDate) {
+  //       //       newArr.push(element);
+  //       //     }
+  //       //   });
+  //       //   result = newArr;
+  //       //   continue;
+  //       // }
+  //       result = result.filter((element: any) =>
+  //         value.some((el) => element[keyName].includes(el))
+  //       );
+  //       continue;
+  //     }
+  //     else {
+  //       let reg = new RegExp(value, "i");
+  //       result = result.filter(
+  //           (element: any) => reg.test(element[keyName])
+  //           )
+  //     continue;
+  //     }
+  //   }
+  //   console.log("I am the filter ", filt)
+  //   console.log("I am the original ", arr)
+  //   console.log("I am filtered ", result)
+  //   return result;
+  // }
+
+  sFilterLogic(arr: ISpecialist[], filt: ISFilter): ISpecialist[] {
+    if (!filt) { return arr; }
     let result = arr;
-    console.log(result, arr)
     for (const [key, value] of Object.entries(filt)) {
-      if (value === null) {   continue;    }            // if the entry in the filter is null, don't check for this
-      let keyName = key as keyof ISpecialist;           // without this it doesn't work in TS (it does in standard JS)
-      if (Array.isArray(value)) {                       // if it's an array
-        if (key === 'available_from') {
-          // const startDate = this.helper.dateBuilder(value[0]);
-          const endDate = this.helper.dateBuilder(value[1]);
-          let newArr: ISpecialist[] = [];
-          result.map((element: any) => {
-            const date = this.helper.dateBuilder(element[keyName]);
-            // if (date >= startDate && date <= endDate){
-            if (date <= endDate) {
-              newArr.push(element);
-            }
-          });
-          result = newArr;
-          continue;
-        }
+      if (value === null) { continue; }
+      let keyName = key as keyof ISpecialist;
+      console.log("I am the result so far", result, keyName)
+      if (Array.isArray(value)) {
+        if (!value.length){ continue; }
         result = result.filter((element: any) =>
           value.some((el) => element[keyName].includes(el))
         );
         continue;
-      }
-      if (key === 'name') {
+      } else {
+        let reg = new RegExp(value, "i");
         result = result.filter(
-          (element) => element.name || element.name === value
+          (element: any) => reg.test(element[keyName])
         );
+        console.log("and I am the result ", result)
         continue;
       }
     }
+    console.log("I am the filter ", filt)
+    console.log("I am the original ", arr.map(el => el.name))
+    console.log("I am filtered ", result.map(el => el.name))
     return result;
   }
 

@@ -58,13 +58,12 @@ export class FilterComponent {
   filterSpecialist(){
     const val = this.sFilterForm.value;
 
-    const cityName: string = val.city.split(",")[0];
-    
     let degreeArr : string[] = this.form.convertToArray(val, "degree");
     let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
     let interestsArr : string[] = this.form.convertToArray(val, "interests");
-    
-    console.log("City ", val.city)
+
+    let cityName = val.city? val.city.split(",")[0]: null;
+    let date = val.end? [this.form.formatDate(val.start),this.form.formatDate(val.end)]: null;
 
     let specialistFilter: ISFilter = {
       name: val.name,
@@ -73,21 +72,22 @@ export class FilterComponent {
       degree: degreeArr,
       skills: specialtiesArr,
       interests: interestsArr,
-      available_from: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
+      available_from: date,
       notice: val.notice
     }
-    console.log(specialistFilter)
+    // console.log(specialistFilter)
     this.filter.setSFilter(specialistFilter);
   }
 
   filterClient(){
     const val = this.cFilterForm.value;    
-    
-    const cityName: string = val.city.split(",")[0];
 
     let degreeArr : string[] = this.form.convertToArray(val, "degree");
     let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
     // let interestsArr : string[] = this.form.convertToArray(val, "interests");
+
+    let cityName = val.city? val.city.split(",")[0]: null;
+    let date = val.end? [this.form.formatDate(val.start),this.form.formatDate(val.end)]: null;
     
     let clientFilter: ICFilter = {
       name: val.name,
@@ -96,10 +96,10 @@ export class FilterComponent {
       experience: degreeArr,
       skills: specialtiesArr,
       // interests: interestsArr,
-      available_from: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
+      available_from: date,
       notice: val.notice
     }
-    console.log(clientFilter)
+    // console.log(clientFilter)
     this.filter.setCFilter(clientFilter);
   }
   
