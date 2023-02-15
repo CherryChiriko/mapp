@@ -15,33 +15,41 @@ export class FilterService {
   clientArray : IClient[] = [];
   specialistArray: ISpecialist[] = [];
 
-  clientSubscription !: Subscription;
-  specialistSubscription!: Subscription;
+  clientSubs !: Subscription;
+  specialistSubs!: Subscription;
 
   clients$ = this._excel.getClientSubject();
   specialists$ = this._excel.getSpecialistsSubject();
 
-  cFilterSub$ = new ReplaySubject<ICFilter>(1);
-  sFilterSub$ = new ReplaySubject<ISFilter>(1);
+  cFilterSubj$ = new ReplaySubject<ICFilter>(1);
+  sFilterSubj$ = new ReplaySubject<ISFilter>(1);
 
   constructor(private _excel : ExcelService, private helper : HelperService) {
-    // this.clientSubscription = this._excel.getAllClients().subscribe((val) =>
+    // this.specialistSubs = this._excel.getAllSpecialists().subscribe((val) =>
+    //   this.specialistArray = val
+    // );
+    // this.clientSubs = this._excel.getAllClients().subscribe((val) =>
     //   this.clientArray = val
     // );
+
     this.clientArray = cData;
     this.clients$.next(this.clientArray);
     this.specialistArray = sData;
     this.specialists$.next(this.specialistArray);
+
     this.resetAllFilters();
     
   }
-
 
   resetCFilter(){
     const emptyFilter = {
       name: null,
       online: null,
+      city: null,
+      experience: null,
       skills: null,
+      available_from: null,
+      notice: null
     }
     this.setCFilter(emptyFilter);
   }
@@ -59,34 +67,28 @@ export class FilterService {
     this.setSFilter(emptyFilter);
   }
   resetAllFilters(){ this.resetCFilter(); this.resetSFilter();}
-  
-   addClient(value : IClient) {
-    this.clientArray.push(value);
-    this.clients$.next(this.clientArray);
-    console.log(this.clientArray);
-   }
 
-   removeClient(value : IClient) {
+  addClient(newClient : IClient) {
+    this.clientArray.push(newClient);
+    this.clients$.next(this.clientArray);
+  }
+  addSpecialist(newSpecialist : ISpecialist) {
+    this.specialistArray.push(newSpecialist);
+    this.specialists$.next(this.specialistArray);
+  }
+
+  removeClient(value : IClient) {
     let index = this.clientArray.indexOf(value);
-    if(index > -1) {
-      this.clientArray.splice(index, 1);
-    }
+    if(index > -1) {      this.clientArray.splice(index, 1);    }
     this.clients$.next(this.clientArray);
-   }
+  }
 
-   /**
-   * Metodo per settare il filterSubject(cioè il filtro)
-   * @param filterJson
-   */
-
-  setSFilter(filt: ISFilter) {    this.sFilterSub$.next(filt);  }
-  setCFilter(filt: ICFilter) {    this.cFilterSub$.next(filt);  }
+  setSFilter(filt: ISFilter) {    this.sFilterSubj$.next(filt);  }
+  setCFilter(filt: ICFilter) {    this.cFilterSubj$.next(filt);  }
 
   //                 Filter logic
   cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
-    console.log("Im")
     let result = arr;
-    console.log(arr, result)
     for (const [key, value] of Object.entries(filt)) {
       if (value === null) {
         continue;
@@ -119,14 +121,15 @@ export class FilterService {
         continue;
       }
     }
-    
+    // console.log(result)
     return result;
     
   }
 
   sFilterLogic(arr: ISpecialist[], filt?: ISFilter): ISpecialist[] {
-    if (!filt) {  return arr;}
+    if (!filt) { return arr;}
     let result = arr;
+    console.log(result, arr)
     for (const [key, value] of Object.entries(filt)) {
       if (value === null) {   continue;    }            // if the entry in the filter is null, don't check for this
       let keyName = key as keyof ISpecialist;           // without this it doesn't work in TS (it does in standard JS)
@@ -163,14 +166,19 @@ export class FilterService {
   //                 Return filter
 
   cFilterData(): Observable<IClient[]> {
-    return combineLatest([this.clients$, this.cFilterSub$]).pipe(
+    return combineLatest([this.clients$, this.cFilterSubj$]).pipe(
       map(([client, filterValue]) => this.cFilterLogic(client, filterValue))
     );
   }
 
   sFilterData(): Observable<ISpecialist[]> {
-    return combineLatest([this.specialists$, this.sFilterSub$]).pipe(
+    return combineLatest([this.specialists$, this.sFilterSubj$]).pipe(
       map(([specialist, filterValue]) => this.sFilterLogic(specialist, filterValue))
     )
+  }
+
+  ngOnDestroy(){
+    this.clientSubs?.unsubscribe();
+    this.specialistSubs?.unsubscribe();
   }
 }

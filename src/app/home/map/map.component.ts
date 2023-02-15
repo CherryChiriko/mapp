@@ -1,7 +1,7 @@
 import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { FilterService } from 'src/app/services/filter.service';
 import { HelperService } from 'src/app/services/helper.service';
@@ -18,8 +18,14 @@ export class MapComponent implements OnInit{
   specialists: ISpecialist[] =  [];
   clients: IClient[] =  [];
   allMarkers: any[] = [];
-  markersSubs ?: Subscription;
 
+  sMarkersSubs ?: Subscription;
+  cMarkersSubs ?: Subscription;
+  allMarkersSubs ?: Subscription;
+
+  // _clients: IClient[] = [];
+  // get clients() { return this._clients;}
+  // set clients(value) {console.log(value);this._clients = value;}
  
   center: google.maps.LatLngLiteral = { lat: INITIAL_COORDS[0], lng: INITIAL_COORDS[1]};
   zoom = 5;
@@ -34,12 +40,16 @@ export class MapComponent implements OnInit{
     //   value => this.specialists = value);
     // this.markersSubs = this.map.getCMarkers().subscribe(
     //   value => this.clients = value);
-    this.markersSubs = this.filter.sFilterData().subscribe(
+
+    this.sMarkersSubs = this.filter.sFilterData().subscribe(
       value => this.specialists = value);
-    this.markersSubs = this.filter.cFilterData().subscribe(
+    this.cMarkersSubs = this.filter.cFilterData().subscribe(
       value => this.clients = value);
-    this.allMarkers = [...this.clients, ...this.specialists];
+    // this.allMarkers = [...this.clients, ...this.specialists];
     // console.log(this.allMarkers)
+    this.allMarkersSubs = 
+    combineLatest([this.filter.sFilterData(), this.filter.cFilterData()])
+    .subscribe(([specialists, clients]) => this.allMarkers = [...clients,...specialists])
   }
 
   originalOrder =
@@ -84,7 +94,9 @@ export class MapComponent implements OnInit{
 
 
   ngOnDestroy(){
-    this.markersSubs?.unsubscribe();
+    this.sMarkersSubs?.unsubscribe();
+    this.cMarkersSubs?.unsubscribe();
+    this.allMarkersSubs?.unsubscribe();
   }
 
   filterForCompany(client: IClient){}

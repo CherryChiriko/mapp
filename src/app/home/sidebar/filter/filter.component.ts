@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ICFilter, ICity, ISFilter } from 'src/app/interfaces/interfaces';
-import { ExcelService } from 'src/app/services/excel.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { FormService } from 'src/app/services/form.service';
 
 import data from 'src/assets/specifics.json';
@@ -20,9 +20,8 @@ export class FilterComponent {
   
   sFilterForm !: FormGroup;
   cFilterForm !: FormGroup;
-  // cityForm !: FormGroup;
 
-  constructor(private form: FormService){}
+  constructor(private form: FormService, private filter: FilterService){}
 
   ngOnInit(): void {
 
@@ -58,6 +57,8 @@ export class FilterComponent {
 
   filterSpecialist(){
     const val = this.sFilterForm.value;
+
+    const cityName: string = val.city.split(",")[0];
     
     let degreeArr : string[] = this.form.convertToArray(val, "degree");
     let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
@@ -67,7 +68,7 @@ export class FilterComponent {
 
     let specialistFilter: ISFilter = {
       name: val.name,
-      city: val.city,
+      city: cityName,
       canMove: val.canMove,
       degree: degreeArr,
       skills: specialtiesArr,
@@ -76,29 +77,30 @@ export class FilterComponent {
       notice: val.notice
     }
     console.log(specialistFilter)
-    // call service
+    this.filter.setSFilter(specialistFilter);
   }
 
   filterClient(){
-    const val = this.cFilterForm.value;
+    const val = this.cFilterForm.value;    
     
+    const cityName: string = val.city.split(",")[0];
+
     let degreeArr : string[] = this.form.convertToArray(val, "degree");
     let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
-    let interestsArr : string[] = this.form.convertToArray(val, "interests");
+    // let interestsArr : string[] = this.form.convertToArray(val, "interests");
     
     let clientFilter: ICFilter = {
       name: val.name,
       online: val.online,
-      // city: val.city,
-      // canMove: val.canMove,
-      // degree: degreeArr,
+      city: cityName,
+      experience: degreeArr,
       skills: specialtiesArr,
       // interests: interestsArr,
-      // available_from: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
-      // notice: val.notice
+      available_from: [this.form.formatDate(val.start),this.form.formatDate(val.end)],
+      notice: val.notice
     }
     console.log(clientFilter)
-    // call service
+    this.filter.setCFilter(clientFilter);
   }
   
 }

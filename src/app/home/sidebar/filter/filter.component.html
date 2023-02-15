@@ -1,10 +1,11 @@
 <div class="container form-div box rounded">
     <form [formGroup]="isClient? cFilterForm: sFilterForm" class="my-3 pt-3" >
+    <!-- <form [formGroup]="cFilterForm" class="my-3 pt-3" > -->
         <input type="text" name="name" 
             class="form-control text-center my-2" placeholder="Name"
             formControlName = "name">
 
-        <select type="search" name="city" id="{{isClient? 'ccity': 'scity'}}"
+        <select type="search" name="city" id="{{isClient? 'c-city': 's-city'}}"
             class="form-control rounded text-center my-2"
             formControlName="city">
             <option disabled selected [ngValue]="null">-- City --</option>
@@ -72,7 +73,8 @@
                 {{isClient? 'Remote option': 'Available to move'}}
             </label>
         </span>
-        <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary': 'btn-success'" (click)="filterSpecialist()">Filter</button>
+        <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary': 'btn-success'" 
+        (click)="isClient? filterClient(): filterSpecialist()">Filter</button>
     </form>
 </div>
 <!-- <div class="container form-div specialist rounded"> -->

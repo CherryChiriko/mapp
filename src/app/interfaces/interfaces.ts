@@ -40,8 +40,12 @@ export interface ISFilter {
 
 export interface ICFilter {
   name: string | null;
+  city: string | null;
   online: boolean | null;
+  experience: string[] | null;
   skills: string[] | null;
+  available_from: string[] | null;
+  notice: number | null;
 }
 
 export interface ICities {

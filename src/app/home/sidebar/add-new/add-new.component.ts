@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICity, IClient, ISpecialist } from 'src/app/interfaces/interfaces';
-import { ExcelService } from 'src/app/services/excel.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { FormService } from 'src/app/services/form.service';
 import { MapService } from 'src/app/services/map.service';
 
@@ -20,7 +20,6 @@ export class AddNewComponent {
   degArr: string[] = data.degrees;
   citiesArr: ICity[] = this.form.getAllCities();
   
-  // cityForm !: FormGroup;
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
   
@@ -28,13 +27,9 @@ export class AddNewComponent {
   dateError: boolean = false;
   
 
-  constructor(private _excel : ExcelService, private map: MapService, private form: FormService){}
+  constructor(private filter : FilterService, private form: FormService){}
 
   ngOnInit(): void {
-    // this.cityForm = new FormGroup({
-    //   city: new FormControl(null, [Validators.required])
-    // })
-
     this.clientForm = new FormGroup({ 
       city: new FormControl(null, [Validators.required]),
       name: new FormControl(null),
@@ -68,17 +63,6 @@ export class AddNewComponent {
 
   addClient(){
     const val = this.clientForm.value;
-    // let cityInfo: string[];
-    // let lat: number; let lng: number;
-    // console.log(val.level)
-    // try{
-    //   cityInfo = this.cityForm.value.city.split(",");
-    //   [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);}
-    // catch{
-    //   // this.formError = true; return;
-    // }
-    // cityInfo = ["ci", "ty"];
-    // [lat, lng] = [0,0];
 
     let cityInfo: string[] = val.city.split(",");
     let [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
@@ -102,21 +86,10 @@ export class AddNewComponent {
       longitude: lng
     }
     console.log(newClient)
-    this.map.addCMarker(newClient);
+    this.filter.addClient(newClient);
   }
   addSpecialist(){
     const val = this.specialistForm.value;
-    
-    // let cityInfo: string[];
-    // let lat: number; let lng: number;
-    // try{
-    //   cityInfo = this.cityForm.value.city.split(",");
-    //   [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);}
-    // catch{
-    //   // this.formError = true; return;
-    // }
-    // cityInfo = ["ci", "ty"];
-    // [lat, lng] = [0,0];
 
     let cityInfo: string[] = val.city.split(",");
     let [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
@@ -136,15 +109,15 @@ export class AddNewComponent {
       degree: val.degree,
       skills: specialtiesArr,
       interests: interestsArr,
-      available_from: this.form.formatDate(val.end),
-      notice: this.form.daysBetween(val.start, val.end),
+      available_from: this.form.formatDate(date),
+      notice: val.end? this.form.daysBetween(val.start, date): 0,
       latitude: lat,
       longitude: lng
     }
     console.log(newSpecialist)
-    this.map.addSMarker(newSpecialist);
-    // this._excel.addCity(newSpecialist);
+    this.filter.addSpecialist(newSpecialist);
   }
+
   add(){    this.isClient? this.addClient() : this.addSpecialist()}
 
   formatLabel(value: number): string {
