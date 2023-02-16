@@ -120,22 +120,17 @@ export class FilterService {
   }
 
   //                 Filter logic
+
   cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
 
-    if (!filt) {
-      return arr;
-    }
+    if (!filt) {      return arr;    }
     let result = arr;
     for (const [key, value] of Object.entries(filt)) {
-      if (value === null) {
-        continue;
-      }
-      let keyName = key as keyof ISpecialist;
+      if (value === null) {        continue;      }
+      let keyName = key as keyof IClient;
       console.log('I am the result so far', result, keyName);
-      if (Array.isArray(value)) {
-        if (!value.length) {
-          continue;
-        }
+      if (Array.isArray(value)) {        
+        if (!value.length) {          continue;        }
         result = result.filter((element: any) =>
           value.some((el) => element[keyName].includes(el))
         );
@@ -148,14 +143,8 @@ export class FilterService {
       }
     }
     console.log('I am the filter ', filt);
-    console.log(
-      'I am the original ',
-      arr.map((el) => el.name)
-    );
-    console.log(
-      'I am filtered ',
-      result.map((el) => el.name)
-    );
+    console.log(      'I am the original ',      arr.map((el) => el.name)    );
+    console.log(      'I am filtered ',      result.map((el) => el.name)    );
     return result;
   }
 
@@ -201,20 +190,14 @@ export class FilterService {
   // }
 
   sFilterLogic(arr: ISpecialist[], filt: ISFilter): ISpecialist[] {
-    if (!filt) {
-      return arr;
-    }
+    if (!filt) {      return arr;    }
     let result = arr;
     for (const [key, value] of Object.entries(filt)) {
-      if (value === null) {
-        continue;
-      }
+      if (value === null) {        continue;      }
       let keyName = key as keyof ISpecialist;
-      console.log('I am the result so far', result, keyName);
+      // console.log('I am the result so far', result, keyName);
       if (Array.isArray(value)) {
-        if (!value.length) {
-          continue;
-        }
+        if (!value.length) { continue; }
         result = result.filter((element: any) =>
           value.some((el) => element[keyName].includes(el))
         );
@@ -222,19 +205,13 @@ export class FilterService {
       } else {
         let reg = new RegExp(value, 'i');
         result = result.filter((element: any) => reg.test(element[keyName]));
-        console.log('and I am the result ', result);
+        if (keyName === 'city'){  result = [...result, ...arr.filter(element => element.canMove)]  }
         continue;
       }
     }
     console.log('I am the filter ', filt);
-    console.log(
-      'I am the original ',
-      arr.map((el) => el.name)
-    );
-    console.log(
-      'I am filtered ',
-      result.map((el) => el.name)
-    );
+    console.log(      'I am the original ',      arr.map((el) => el.name)    );
+    console.log(      'I am filtered ',      result.map((el) => el.name)    );
     return result;
   }
 
