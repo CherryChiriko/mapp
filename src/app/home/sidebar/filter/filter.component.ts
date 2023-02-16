@@ -94,7 +94,7 @@ export class FilterComponent {
       online: val.online,
       city: cityName,
       experience: degreeArr,
-      skills: specialtiesArr,
+      lookFor: specialtiesArr,
       // interests: interestsArr,
       available_from: date,
       notice: val.notice
