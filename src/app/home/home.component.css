@@ -1,7 +1,13 @@
-.sidebar{
-    width:30%;
+.left-aligned{
+    width: 30%;
     position: absolute;
     right: 0;
+}
+.sidebar, .excel {    width: 100%;}
+.excel{
+    background-color: var(--grey);
+    /* color: var(--dark-color-black); */
+    align-content: center;
 }
 /* *{
     border: 1px solid red;
@@ -11,7 +17,7 @@
     .sidebar {
       background-color: blue;
     }
-    .map{
+    /* .map{
         width: 300px;
-    }
+    } */
 }

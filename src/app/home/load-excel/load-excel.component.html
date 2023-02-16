@@ -1,0 +1,6 @@
+<div class="row excel-s rounded mx-auto my-3 p-2">
+    <label class="col-form-label" for="excel-s">Load {{isClient? 'Client': 'Specialist'}} Excel File (.xlsx)</label>
+    <input class="form-control mt-2" type="file" id="excel-s"(change)="isClient? loadClients($event) : loadSpecialists($event)" >
+</div>
+<button class="btn mb-2" [ngClass]="isClient? 'btn-primary': 'btn-success'"
+(click)="saveSpecialists()">save file</button>

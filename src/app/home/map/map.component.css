@@ -40,9 +40,9 @@ td{
     max-width: 3rem;
 }
 @media screen and (max-width: 1000px) {
-    /* google-map{
+    google-map{
         height: 200px; width: 375px;
-    } */
+    }
     
 }
 /* *{
@@ -59,3 +59,7 @@ mat-expansion-panel-header{
     padding: 0 !important; margin: .25rem !important;
 
 }
+
+/* google-map{
+    height: 40px; width:60px
+} */

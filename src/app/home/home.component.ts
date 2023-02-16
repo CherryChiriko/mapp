@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExcelService } from '../services/excel.service';
+import { HelperService } from '../services/helper.service';
 
 @Component({
   selector: 'app-home',
@@ -9,22 +10,7 @@ import { ExcelService } from '../services/excel.service';
 export class HomeComponent implements OnInit {
   ngOnInit() {}
 
-  constructor(private _excel: ExcelService) {}
-  public loadSpecialists(event: any) {
-    this._excel.importSpecialists(event);
-    console.log('File consulent open with success');
-  }
+  constructor(private helper: HelperService) {}
 
-  public saveSpecialists() {
-    this._excel.exportSpecialists();
-  }
-
-  public loadClients(event: any) {
-    this._excel.importClients(event);
-    console.log('File client open with success');
-  }
-
-  public saveClients() {
-    this._excel.exportClients();
-  }
+  getColor(condition: boolean){return this.helper.getColorScheme(condition)}
 }

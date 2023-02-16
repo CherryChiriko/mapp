@@ -1,0 +1,7 @@
+
+.excel-s{
+    width: 90%;
+    background-color: var(--lightColor);
+    color: var(--darkColor);
+    border: 1px solid var(--darkColor);
+}
