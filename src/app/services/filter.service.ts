@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, map, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { ICFilter, IClient, ISFilter, ISpecialist } from '../interfaces/interfaces';
 import { ExcelService } from './excel.service';
 import { HelperService } from './helper.service';
@@ -18,27 +18,33 @@ export class FilterService {
   clientSubs !: Subscription;
   specialistSubs!: Subscription;
 
-  clients$ = this._excel.getClientSubject();
-  specialists$ = this._excel.getSpecialistsSubject();
+  //clients$ = this._excel.getClientSubject();
+  //specialists$ = this._excel.getSpecialistsSubject();
+  clients$ = new BehaviorSubject<IClient[]>([]);
+  specialists$ = new BehaviorSubject<ISpecialist[]>([]);
 
   cFilterSubj$ = new ReplaySubject<ICFilter>(1);
   sFilterSubj$ = new ReplaySubject<ISFilter>(1);
 
   constructor(private _excel : ExcelService, private helper : HelperService) {
-    // this.specialistSubs = this._excel.getAllSpecialists().subscribe((val) =>
-    //   this.specialistArray = val
-    // );
-    // this.clientSubs = this._excel.getAllClients().subscribe((val) =>
-    //   this.clientArray = val
-    // );
+     this.specialistSubs = this._excel.getAllSpecialists().subscribe((val) => {
+       this.specialistArray = val;
+       this.specialists$.next(this.specialistArray);
+  });
+     this.clientSubs = this._excel.getAllClients().subscribe((val) => {
+       this.clientArray = val;
+       this.clients$.next(this.clientArray);
+  });
+     this.resetAllFilters();
 
+    /*
     this.clientArray = cData;
     this.clients$.next(this.clientArray);
     this.specialistArray = sData;
     this.specialists$.next(this.specialistArray);
 
     this.resetAllFilters();
-    
+     */
   }
 
   resetCFilter(){
@@ -128,7 +134,7 @@ export class FilterService {
     }
     // console.log(result)
     return result;
-    
+
   }
 
   // sFilterLogic(arr: ISpecialist[], filt?: ISFilter): ISpecialist[] {

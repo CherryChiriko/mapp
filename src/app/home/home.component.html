@@ -1,5 +1,13 @@
 <div class="container">
-  <!-- <input type="file" (change)="loadFile($event)" > -->
+
+   <input type="file" (change)="loadSpecialists($event)" >
+   <button (click)="saveSpecialists()">save file</button>
+
+   <br><br>
+
+   <input type="file" (change)="loadClients($event)" >
+   <button (click)="saveClients()">save file</button>
+
     <div class="modal-body row">
   <div class="col-lg-6 map">
     <app-map></app-map>
