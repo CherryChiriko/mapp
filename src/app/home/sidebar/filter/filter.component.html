@@ -73,8 +73,12 @@
                 {{isClient? 'Remote option': 'Available to move'}}
             </label>
         </span>
-        <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary': 'btn-success'" 
+        <span>
+            <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary': 'btn-success'" 
         (click)="isClient? filterClient(): filterSpecialist()">Filter</button>
+        <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary-outline': 'btn-success-outline'" 
+        (click)="isClient? clearCFilter(): clearSFilter()">Clear</button>
+        </span>
     </form>
 </div>
 <!-- <div class="container form-div specialist rounded"> -->

@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExcelService } from 'src/app/services/excel.service';
-import { MapService } from 'src/app/services/map.service';
-
-import { FormService } from 'src/app/services/form.service';
 import { HelperService } from 'src/app/services/helper.service';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +12,6 @@ export class SidebarComponent implements OnInit {
   isFilterOpen: boolean = false;
   isFilterSpecialistOpen: boolean = false;
   isFilterClientOpen: boolean = false;
-  // isCustomDateSelected: boolean = true;
 
   isNewOpen: boolean = false;
   isClientOpen: boolean = false;
@@ -23,7 +19,7 @@ export class SidebarComponent implements OnInit {
 
   formError: boolean = false;
 
-  constructor(private helper: HelperService){}
+  constructor(private helper: HelperService, private filter: FilterService){}
 
   ngOnInit(): void {}
 
@@ -35,6 +31,8 @@ export class SidebarComponent implements OnInit {
   toggleClient(){           this.isClientOpen = !this.isClientOpen}
 
   getColor(condition: boolean){return this.helper.getColorScheme(condition)}
+
+  clearFilter(){ this.filter.resetAllFilters();}
 }
 
 
