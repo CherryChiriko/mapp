@@ -3,4 +3,4 @@
     <input class="form-control mt-2" type="file" id="excel-s"(change)="isClient? loadClients($event) : loadSpecialists($event)" >
 </div>
 <button class="btn mb-2" [ngClass]="isClient? 'btn-primary': 'btn-success'"
-(click)="saveSpecialists()">save file</button>
+(click)="isClient? saveClients() : saveSpecialists()">save file</button>

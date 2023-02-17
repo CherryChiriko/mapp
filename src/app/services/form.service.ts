@@ -78,7 +78,7 @@ export class FormService {
       return (this.treatAsUTC(endDate) - this.treatAsUTC(startDate)) / millisecondsPerDay;
   }
   formatDate(date: Date): string{
-    return this.datePipe.transform(date,'MM/dd/YYYY')!;
+    return this.datePipe.transform(date,'dd/MM/YYYY')!;
   }
   
 }

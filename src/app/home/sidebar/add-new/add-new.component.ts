@@ -87,6 +87,7 @@ export class AddNewComponent {
     }
     console.log(newClient)
     this.filter.addClient(newClient);
+    this.clientForm.reset();
   }
   addSpecialist(){
     const val = this.specialistForm.value;
@@ -116,6 +117,7 @@ export class AddNewComponent {
     }
     console.log(newSpecialist)
     this.filter.addSpecialist(newSpecialist);
+    this.specialistForm.reset();
   }
 
   add(){    this.isClient? this.addClient() : this.addSpecialist()}

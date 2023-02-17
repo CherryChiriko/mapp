@@ -64,7 +64,7 @@ export class FilterService {
       online: null,
       city: null,
       experience: null,
-      skills: null,
+      lookFor: null,
       available_from: null,
       notice: null,
     };

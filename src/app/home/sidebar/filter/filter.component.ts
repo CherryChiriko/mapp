@@ -77,6 +77,7 @@ export class FilterComponent {
     }
     // console.log(specialistFilter)
     this.filter.setSFilter(specialistFilter);
+    this.sFilterForm.reset();
   }
 
   filterClient(){
@@ -94,13 +95,19 @@ export class FilterComponent {
       online: val.online,
       city: cityName,
       experience: degreeArr,
-      skills: specialtiesArr,
+      lookFor: specialtiesArr,
       // interests: interestsArr,
       available_from: date,
       notice: val.notice
     }
     // console.log(clientFilter)
     this.filter.setCFilter(clientFilter);
+    this.cFilterForm.reset();
   }
+
+  clearSFilter(){ 
+    this.cFilterForm.reset(); this.filter.resetSFilter()};
+  clearCFilter(){ 
+    this.cFilterForm.reset(); this.filter.resetCFilter()};
   
 }
