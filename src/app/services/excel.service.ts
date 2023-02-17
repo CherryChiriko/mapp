@@ -89,7 +89,7 @@ export class ExcelService {
     const fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
     fileReader.onload = (e) => {
-      let workBook = XLSX.read(fileReader.result, { type: 'binary' });
+      let workBook = XLSX.read(fileReader.result, { type: 'binary'});
       let data = workBook.SheetNames;
       this.clientArray = XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]);
     };
@@ -111,7 +111,7 @@ export class ExcelService {
       type: 'array',
     });
     const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
-    this._fileSaver.save(blobData, 'demoFile');
+    this._fileSaver.save(blobData, 'clientFile');
   }
 
   public getAllClients(): Observable<IClient[]> {
