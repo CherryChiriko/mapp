@@ -43,7 +43,7 @@ export interface ICFilter {
   city: string | null;
   online: boolean | null;
   experience: string[] | null;
-  skills: string[] | null;
+  lookFor: string[] | null;
   available_from: string[] | null;
   notice: number | null;
 }

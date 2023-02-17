@@ -10,14 +10,14 @@ import { ICities, ICity } from '../interfaces/interfaces';
   providedIn: 'root'
 })
 export class FormService {
-  
+
   cities : ICities[] = [] ;
   // apiUrl : string = "";
 
-  constructor(private datePipe: DatePipe) { 
+  constructor(private datePipe: DatePipe) {
     this.cities = citiesData as ICities[];
   }
-  // constructor(private http: HttpClient) { 
+  // constructor(private http: HttpClient) {
   //   // this.http.get('src/assets/istat-cities.json').subscribe(values => {
   //   //   this.cities = values as ICities[]})
   //   this.cities = citiesData as ICities[];
@@ -55,14 +55,14 @@ export class FormService {
   }
   getAllCities(){
     let result: ICity[] = [];
-    this.cities.map(city=> 
+    this.cities.map(city=>
       result.push(
         {name: city["Denominazione in italiano"], region: city["Denominazione regione"], country: "Italy"}
         )
     )
     return result;
   }
-  
+
   getCityCoordinates(cityName : string){
     const res = geoData?.find( element => element.comune === cityName);
     return [Number(res?.lat), Number(res?.lng)]
@@ -78,7 +78,7 @@ export class FormService {
       return (this.treatAsUTC(endDate) - this.treatAsUTC(startDate)) / millisecondsPerDay;
   }
   formatDate(date: Date): string{
-    return this.datePipe.transform(date,'MM/dd/YYYY')!;
+    return this.datePipe.transform(date,'dd/MM/YYYY')!;
   }
-  
+
 }

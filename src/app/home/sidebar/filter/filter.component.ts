@@ -13,11 +13,11 @@ import data from 'src/assets/specifics.json';
 })
 export class FilterComponent {
   @Input() isClient!: boolean;
-  
+
   specialArr: string[] = data.specialties;
   degArr: string[] = data.degrees;
   citiesArr: ICity[] = this.form.getAllCities();
-  
+
   sFilterForm !: FormGroup;
   cFilterForm !: FormGroup;
 
@@ -25,7 +25,7 @@ export class FilterComponent {
 
   ngOnInit(): void {
 
-    this.sFilterForm = new FormGroup({ 
+    this.sFilterForm = new FormGroup({
       name: new FormControl(null),
       city: new FormControl(null),
       degree: new FormGroup({}),
@@ -37,7 +37,7 @@ export class FilterComponent {
       notice: new FormControl(null)
     });
 
-    this.cFilterForm = new FormGroup({ 
+    this.cFilterForm = new FormGroup({
       name: new FormControl(null),
       city: new FormControl(null),
       degree: new FormGroup({}),
@@ -80,7 +80,7 @@ export class FilterComponent {
   }
 
   filterClient(){
-    const val = this.cFilterForm.value;    
+    const val = this.cFilterForm.value;
 
     let degreeArr : string[] = this.form.convertToArray(val, "degree");
     let specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
@@ -88,13 +88,13 @@ export class FilterComponent {
 
     let cityName = val.city? val.city.split(",")[0]: null;
     let date = val.end? [this.form.formatDate(val.start),this.form.formatDate(val.end)]: null;
-    
+
     let clientFilter: ICFilter = {
       name: val.name,
       online: val.online,
       city: cityName,
       experience: degreeArr,
-      skills: specialtiesArr,
+      lookFor: specialtiesArr,
       // interests: interestsArr,
       available_from: date,
       notice: val.notice
@@ -102,5 +102,5 @@ export class FilterComponent {
     // console.log(clientFilter)
     this.filter.setCFilter(clientFilter);
   }
-  
+
 }

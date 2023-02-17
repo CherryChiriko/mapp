@@ -64,7 +64,7 @@ export class FilterService {
       online: null,
       city: null,
       experience: null,
-      skills: null,
+      lookFor: null,
       available_from: null,
       notice: null,
     };
@@ -129,7 +129,7 @@ export class FilterService {
       if (value === null) {        continue;      }
       let keyName = key as keyof IClient;
       console.log('I am the result so far', result, keyName);
-      if (Array.isArray(value)) {        
+      if (Array.isArray(value)) {
         if (!value.length) {          continue;        }
         result = result.filter((element: any) =>
           value.some((el) => element[keyName].includes(el))
