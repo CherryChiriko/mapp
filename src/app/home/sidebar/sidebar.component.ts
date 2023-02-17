@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
   isClientOpen: boolean = false;
   isSpecialistOpen: boolean = false;
 
-  formError: boolean = false;
+  isFilterOn: boolean = true;
 
   constructor(private helper: HelperService, private filter: FilterService){}
 
@@ -29,7 +29,8 @@ export class SidebarComponent implements OnInit {
   toggleNew(){              this.isNewOpen = !this.isNewOpen}
   toggleSpecialist(){       this.isSpecialistOpen = !this.isSpecialistOpen}
   toggleClient(){           this.isClientOpen = !this.isClientOpen}
-
+  toggleOnOff(){            this.isFilterOn = !this.isFilterOn}
+  
   getColor(condition: boolean){return this.helper.getColorScheme(condition)}
 
   clearFilter(){ this.filter.resetAllFilters();}

@@ -10,42 +10,7 @@ hr { color: var(--dark-color-black)}
     background-color: var(--dark-color-black);
     color: orange;
 }
-.client{
-    background-color: var(--light-blue);
-    color: var(--dark-blue);
-}
-.specialist{
-    background-color: var(--light-green);
-    color: var(--dark-green);
-}
 
-p{
-    font-size: 1.1rem;
-    margin-top: 1rem;
-}
 h4{cursor: pointer;}
 
-.specialist .form-check-input:checked {
-    background-color: var(--google-green);
-    border-color: var(--google-green);
-}
 
-.special{
-    color: var(--dark-green);
-    background-color: var(--light-green);
-    border-color: var(--bs-btn-active-border-color);
-    margin: .2rem;
-}
-.client{    margin: .2rem;}
-
-/* .sh-accordion .panel .panel-collapse .panel-body{
-    background-color: #262626;
-} */
-/* mat-expansion-panel , mat-panel-title, mat-expansion-panel-header{
-    margin: 0; padding: 0;
-} */
-.colors {
-    background-color: orange;
-    color: white;
-    text-align: center;
-}
