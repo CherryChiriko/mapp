@@ -14,8 +14,8 @@
 } */
 
 @media screen and (max-width: 1000px) {
-    .sidebar {
-      background-color: blue;
+    .left-aligned {
+      width:40%;
     }
     /* .map{
         width: 300px;

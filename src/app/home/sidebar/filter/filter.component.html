@@ -3,24 +3,35 @@
         <input type="text" name="name" 
             class="form-control text-center my-2" placeholder="Name"
             formControlName = "name">
-            
+
         <p> Regions </p>
         <div>
         <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions" 
         formArrayName="regions">
             <mat-expansion-panel-header class="rounded">
                 <mat-panel-title class="rounded ">
-                {{ macroregion.name }}
+                    {{ macroregion.name }}                
                 </mat-panel-title>
             </mat-expansion-panel-header>
+            <input type="checkbox" class="form-check-input" id="all-{{macroregion}}"
+            (click)="selects()">
+            <!-- (checked)="checkAll('nort')"> -->
+            <!-- (checked)="checkAll(macroregion.name)"> -->
+            <label class="form-check-label all" for="all-{{macroregion}}">
+                All
+            </label>
+            <hr>
+            <!-- [ngClass]="macroregion.name" -->
             <span *ngFor="let region of macroregion.regions; let i=index">
-                <input type="checkbox" class="btn-check" autocomplete="off" 
+                <input type="checkbox" class="btn-check" autocomplete="off" name="nort"
+                
                 id="{{isClient ? 'c' : 's'}}-region-{{i}}" value="{{region}}"
                 formControlName="{{region}}">
                 <label class="btn specialties" [ngClass]="isClient ? 'btn-primary' : 'btn-success'" for="{{isClient ? 'c' : 's'}}-region-{{i}}">
                 {{ region }}
                 </label>
             </span>
+                       
             </mat-expansion-panel>
         </div>
           

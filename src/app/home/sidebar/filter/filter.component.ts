@@ -108,4 +108,20 @@ export class FilterComponent {
 
   clearFilter(isClient: boolean){isClient? this.clearCFilter(): this.clearSFilter();}
   
+  checkAll(macro: string){
+    $(".nort").prop('checked', $(this).prop('checked'))
+    // $(`.${macro}`).prop('checked', $(this).prop('checked'));
+  }
+
+  selects(){  
+    console.log("HERE");
+    const ele: any = document.getElementsByName('nort');  
+    console.log(ele);
+    for(var i=0; i<ele.length; i++){  
+        if(ele[i].type=='checkbox')  {
+          ele[i].checked=true;  console.log("really")
+        }
+            
+    }  
+  }  
 }
