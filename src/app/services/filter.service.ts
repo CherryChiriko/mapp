@@ -29,8 +29,6 @@ export class FilterService {
   clientSubs!: Subscription;
   specialistSubs!: Subscription;
 
-  //clients$ = this._excel.getClientSubject();
-  //specialists$ = this._excel.getSpecialistsSubject();
   clients$ = new BehaviorSubject<IClient[]>([]);
   specialists$ = new BehaviorSubject<ISpecialist[]>([]);
 
@@ -61,8 +59,7 @@ export class FilterService {
   resetCFilter() {
     const emptyFilter = {
       name: null,
-      online: null,
-      city: null,
+      region: null,
       experience: null,
       lookFor: null,
       available_from: null,
@@ -73,8 +70,8 @@ export class FilterService {
   resetSFilter() {
     const emptyFilter = {
       name: null,
-      city: null,
-      canMove: null,
+      region: null,
+      mobility: null,
       degree: null,
       skills: null,
       interests: null,
@@ -121,7 +118,39 @@ export class FilterService {
 
   //                 Filter logic
 
+  // cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
+
+  //   if (!filt) {      return arr;    }
+  //   let result = arr;
+  //   for (const [key, value] of Object.entries(filt)) {
+  //     if (value === null) {        continue;      }
+  //     let keyName = key as keyof IClient;
+  //     // console.log('I am the result so far', result, keyName);
+  //     if (Array.isArray(value)) {
+  //       if (!value.length) {          continue;        }
+  //       result = result.filter((element: any) =>
+  //         value.some((el) => element[keyName].includes(el))
+  //       );
+  //       continue;
+  //     } else {
+  //       let reg = new RegExp(value, 'i');
+  //       result = result.filter((element: any) => reg.test(element[keyName]));
+  //       // console.log('and I am the result ', result);
+  //       continue;
+  //     }
+  //   }
+  //   // console.log('I am the filter ', filt);
+  //   // console.log(      'I am the original ',      arr.map((el) => el.name)    );
+  //   // console.log(      'I am filtered ',      result.map((el) => el.name)    );
+  //   return result;
+  // }
+
   cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
+    // arr.map( el => {
+    //   let newEl: any = el;
+    //   newEl.region = el.city[1]
+    // } )
+
 
     if (!filt) {      return arr;    }
     let result = arr;
@@ -148,46 +177,6 @@ export class FilterService {
     return result;
   }
 
-  // sFilterLogic(arr: ISpecialist[], filt?: ISFilter): ISpecialist[] {
-  //   if (!filt) { return arr;}
-  //   let result = arr;
-  //   console.log(result, arr)
-  //   for (const [key, value] of Object.entries(filt)) {
-  //     if (value === null) {   continue;    }            // if the entry in the filter is null, don't check for this
-  //     let keyName = key as keyof ISpecialist;           // without this it doesn't work in TS (it does in standard JS)
-  //     if (Array.isArray(value)) {                       // if it's an array
-  //       // if (key === 'available_from') {
-  //       //   // const startDate = this.helper.dateBuilder(value[0]);
-  //       //   const endDate = this.helper.dateBuilder(value[1]);
-  //       //   let newArr: ISpecialist[] = [];
-  //       //   result.map((element: any) => {
-  //       //     const date = this.helper.dateBuilder(element[keyName]);
-  //       //     // if (date >= startDate && date <= endDate){
-  //       //     if (date <= endDate) {
-  //       //       newArr.push(element);
-  //       //     }
-  //       //   });
-  //       //   result = newArr;
-  //       //   continue;
-  //       // }
-  //       result = result.filter((element: any) =>
-  //         value.some((el) => element[keyName].includes(el))
-  //       );
-  //       continue;
-  //     }
-  //     else {
-  //       let reg = new RegExp(value, "i");
-  //       result = result.filter(
-  //           (element: any) => reg.test(element[keyName])
-  //           )
-  //     continue;
-  //     }
-  //   }
-  //   console.log("I am the filter ", filt)
-  //   console.log("I am the original ", arr)
-  //   console.log("I am filtered ", result)
-  //   return result;
-  // }
 
   sFilterLogic(arr: ISpecialist[], filt: ISFilter): ISpecialist[] {
     if (!filt) {      return arr;    }
@@ -209,9 +198,9 @@ export class FilterService {
         continue;
       }
     }
-    console.log('I am the filter ', filt);
-    console.log(      'I am the original ',      arr.map((el) => el.name)    );
-    console.log(      'I am filtered ',      result.map((el) => el.name)    );
+    // console.log('I am the filter ', filt);
+    // console.log(      'I am the original ',      arr.map((el) => el.name)    );
+    // console.log(      'I am filtered ',      result.map((el) => el.name)    );
     return result;
   }
 
@@ -226,8 +215,7 @@ export class FilterService {
   sFilterData(): Observable<ISpecialist[]> {
     return combineLatest([this.specialists$, this.sFilterSubj$]).pipe(
       map(([specialist, filterValue]) =>
-        this.sFilterLogic(specialist, filterValue)
-      )
+        this.sFilterLogic(specialist, filterValue))
     );
   }
 

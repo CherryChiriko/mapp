@@ -22,7 +22,6 @@ export class MapService {
     let info = {
       "Looking for": mark.lookFor,
       "City": mark.city,
-      "Remote": mark.remoteOption ? 'yes' : 'no',
       "Available from": mark.available_from,
       "Notice time" : mark.notice + ' days'
     }

@@ -1,4 +1,10 @@
 {
     "specialties": ["Backend", "Frontend", "Fullstack", "Embedded", "Mobile"],
-    "degrees": ["Ph.D.", "Master", "Bachelor", "High School", "Technical School", "No degree"]
+    "degrees": ["Ph.D.", "Master", "Bachelor", "High School", "Technical School", "No degree"],
+    "macro-regions": [
+        {"name": "North", "regions": ["Trentino-Alto Adige", "Lombardia", "Emilia-Romagna", "Piemonte", "Liguria", "Friuli-Venezia Giulia", "Valle d'Aosta", "Veneto"]},
+        {"name": "Centre", "regions": ["Marche", "Abruzzo", "Lazio", "Molise", "Umbria", "Toscana"]},
+        {"name":"South", "regions":["Campania", "Basilicata", "Calabria", "Puglia", "Sicilia", "Sardegna"]}
+    ]
+
 }

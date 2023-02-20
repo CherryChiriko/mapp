@@ -13,9 +13,17 @@
     --google-yellow: #F4B400;
 
     --grey: #d2d2d2;
+
+    --alten-red: #e11f26;
+    --alten-black: #160f0e;
+    --alten-blue: #1b90be;
+    --alten-yellow: #faf109;
 }
 
 
     /* --less-dark-blue: #0d5bdd; */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+

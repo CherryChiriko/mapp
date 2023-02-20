@@ -3,6 +3,8 @@ export interface ISpecialist {
   email: string;
   phone: string;
   city: string;
+  region: string;
+  avatar?: string;
   canMove: boolean;
   degree: string;
   skills: string[];
@@ -15,10 +17,10 @@ export interface ISpecialist {
 
 export interface IClient {
   name: string;
-  city: string;
+  city: string;  
+  region: string;
   logo?: string;
   website: string;
-  remoteOption: boolean;
   lookFor: string[];
   level: string[];
   available_from: string;
@@ -29,8 +31,8 @@ export interface IClient {
 
 export interface ISFilter {
   name: string | null;
-  city: string | null;
-  canMove: boolean | null;
+  region: string[] | null;
+  mobility: boolean | null;
   degree: string[] | null;
   skills: string[] | null;
   interests: string[] | null;
@@ -40,8 +42,7 @@ export interface ISFilter {
 
 export interface ICFilter {
   name: string | null;
-  city: string | null;
-  online: boolean | null;
+  region: string[] | null;
   experience: string[] | null;
   lookFor: string[] | null;
   available_from: string[] | null;

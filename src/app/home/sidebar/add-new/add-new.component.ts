@@ -76,7 +76,7 @@ export class AddNewComponent {
       name: val.name,
       website: val.website,
       city: `${cityInfo.join(", ")}`,
-      remoteOption: val.online,
+      region: cityInfo[1],
       lookFor: lookForArr,
       level: [""],
       // level: val.level,
@@ -106,14 +106,15 @@ export class AddNewComponent {
       email: val.email,
       phone: val.phone,
       city: `${cityInfo.join(", ")}`,
-      canMove: val.canMove,
+      region: cityInfo[1],
       degree: val.degree,
       skills: specialtiesArr,
       interests: interestsArr,
       available_from: this.form.formatDate(date),
-      notice: val.end? this.form.daysBetween(val.start, date): 0,
+      notice: val.end ? this.form.daysBetween(val.start, date) : 0,
       latitude: lat,
-      longitude: lng
+      longitude: lng,
+      canMove: false
     }
     console.log(newSpecialist)
     this.filter.addSpecialist(newSpecialist);

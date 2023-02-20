@@ -1,17 +1,41 @@
 <div class="container form-div box rounded">
     <form [formGroup]="isClient? cFilterForm: sFilterForm" class="my-3 pt-3" >
-    <!-- <form [formGroup]="cFilterForm" class="my-3 pt-3" > -->
         <input type="text" name="name" 
             class="form-control text-center my-2" placeholder="Name"
             formControlName = "name">
+            
+        <p> Regions </p>
+        <div>
+        <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions" 
+        formArrayName="regions">
+            <mat-expansion-panel-header class="rounded">
+                <mat-panel-title class="rounded ">
+                {{ macroregion.name }}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <span *ngFor="let region of macroregion.regions; let i=index">
+                <input type="checkbox" class="btn-check" autocomplete="off" 
+                id="{{isClient ? 'c' : 's'}}-region-{{i}}" value="{{region}}"
+                formControlName="{{region}}">
+                <label class="btn specialties" [ngClass]="isClient ? 'btn-primary' : 'btn-success'" for="{{isClient ? 'c' : 's'}}-region-{{i}}">
+                {{ region }}
+                </label>
+            </span>
+            </mat-expansion-panel>
+        </div>
+          
+          
+          
 
-        <select type="search" name="city" id="{{isClient? 'c-city': 's-city'}}"
+        <!-- <select type="search" name="region" id="{{isClient? 'c-region': 's-region'}}"
             class="form-control rounded text-center my-2"
-            formControlName="city">
-            <option disabled selected [ngValue]="null">-- City --</option>
-            <option *ngFor="let city of citiesArr" 
-            value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
-        </select>
+            formControlName="region">
+            <option disabled selected [ngValue]="null">-- Region --</option> -->
+            <!-- <option *ngFor="let region of [macroregion]" 
+            value="{{[city.name, city.region, city.country]}}">{{city.name}}</option> -->
+        <!-- </select> -->
+
+
         <!-- <p>Degree</p>
         <div class="form-check" id="degree">
             <span *ngFor="let d of degArr; let i=index" formArrayName="degree">
@@ -75,9 +99,9 @@
         </span>
         <span>
             <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary': 'btn-success'" 
-        (click)="isClient? filterClient(): filterSpecialist()">Filter</button>
+        (click)="createFilter(isClient)">Filter</button>
         <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary-outline': 'btn-success-outline'" 
-        (click)="isClient? clearCFilter(): clearSFilter()">Clear</button>
+        (click)="clearFilter(isClient)">Clear</button>
         </span>
     </form>
 </div>

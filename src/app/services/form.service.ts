@@ -12,17 +12,10 @@ import { ICities, ICity } from '../interfaces/interfaces';
 export class FormService {
 
   cities : ICities[] = [] ;
-  // apiUrl : string = "";
 
   constructor(private datePipe: DatePipe) {
     this.cities = citiesData as ICities[];
   }
-  // constructor(private http: HttpClient) {
-  //   // this.http.get('src/assets/istat-cities.json').subscribe(values => {
-  //   //   this.cities = values as ICities[]})
-  //   this.cities = citiesData as ICities[];
-  //   // this.apiUrl = "https://nominatim.openstreetmap.org/search?country=Italy,city="
-  // }
 
   addElementToFormGroup(form: FormGroup, category: string, array: string[]){
     array.forEach(item => {
@@ -79,6 +72,15 @@ export class FormService {
   }
   formatDate(date: Date): string{
     return this.datePipe.transform(date,'dd/MM/YYYY')!;
+  }
+
+  getRegions(arr: any){
+    let regionArr: string[] = [];
+    arr.map((macroregion: any) => {
+      let regions = macroregion.regions
+      regions.map( (region: string) => regionArr.push(region))
+    })
+    return regionArr;
   }
 
 }
