@@ -10,8 +10,8 @@
         </div>
         
         <div [hidden]="!isFilterOpen">
-            <button class="btn btn-primary m-2" (click)="toggleFilterClient()">Client</button>
-            <button class="btn btn-success m-2" (click)="toggleFilterSpecialist()">Specialist</button>    
+            <button class="btn m-2" [ngClass]="getButton(true)" (click)="toggleFilterClient()">Client</button>
+            <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleFilterSpecialist()">Consultant</button>    
             
             <app-filter *ngIf="isFilterClientOpen" [isClient]="true"
             style="--color: {{getColor(true).color}}; 
@@ -40,8 +40,8 @@
             <!-- <div class="colors"> -->
         <h4 (click)="toggleNew()">Add New</h4>
         <div [hidden]="!isNewOpen"> 
-        <button class="btn btn-primary m-2" (click)="toggleClient()">Client</button>
-        <button class="btn btn-success m-2" (click)="toggleSpecialist()">Specialist</button>
+        <button class="btn m-2" [ngClass]="getButton(true)" (click)="toggleClient()">Client</button>
+        <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleSpecialist()">Consultant</button>    
            <app-add-new [isClient]="true" *ngIf="isClientOpen"
            style="--color: {{getColor(true).color}}; 
            --lightColor: {{getColor(true).lightColor}}; 

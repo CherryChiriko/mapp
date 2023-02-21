@@ -29,7 +29,8 @@
     --light-alten-yellow: #fcf089;
     --dark-alten-yellow: #96870c;
 
-
+    --main: orange;
+    /* --main: var(--better-alten-yellow) */
 }
 
 

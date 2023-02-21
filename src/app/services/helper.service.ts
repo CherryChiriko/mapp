@@ -30,8 +30,9 @@ export class HelperService {
     const dotColor = this.getColorScheme(condition).dot
     return `${url}${dotColor}-dot.png`;
   }
-  getButton(condition:boolean){
-    return `btn-${this.getColorScheme(condition).button}`
+  getButton(condition:boolean, outline: boolean = false){
+    const base = `btn-${this.getColorScheme(condition).button}`
+    return outline? `${base}-outline`: base;
   }
   // groupArray<T, K>(arr: T[], getKey: (el: T) => K): Map<K, T[]> {
   //   const map = new Map<K, T[]>;

@@ -65,7 +65,7 @@
             <input type="checkbox" class="btn-check" autocomplete="off"
             name="{{isClient? 'lookFor': 'specialties'}}" id= "option{{isClient? 's': ''}}{{i}}" value="{{s}}"
             formControlName="{{s}}">
-            <label class="btn specialties" [ngClass]="isClient? 'btn-primary': 'btn-success'" for="option{{isClient? 's': ''}}{{i}}">{{s}}</label>
+            <label class="btn specialties" [ngClass]="getButton(isClient)" for="option{{isClient? 's': ''}}{{i}}">{{s}}</label>
             </span>  
         </div>
 
@@ -106,7 +106,7 @@
             {{isClient? 'Remote option': 'Available to move'}}
         </label>
         </span> -->
-        <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary': 'btn-success'" 
+        <button class="btn m-2 mb-4" [ngClass]="getButton(isClient)" 
         (click)="add()">Add {{isClient? "client": "specialist"}}</button>
     </form>
 </div>
