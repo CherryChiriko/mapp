@@ -30,6 +30,9 @@ export class MapComponent implements OnInit{
   center: google.maps.LatLngLiteral = { lat: INITIAL_COORDS[0], lng: INITIAL_COORDS[1]};
   zoom = 5;
 
+  public height = 450;
+  public width = 750;
+
   contacts: boolean[] = [];
   // isMixed : boolean = false;
 
@@ -61,6 +64,16 @@ export class MapComponent implements OnInit{
     for (let i = 0; i<this.specialists.length; i++){
       this.contacts.push(false);
     }}
+  }
+
+  public addPixel(){
+    this.height += 50;
+    this.width += 100;
+  }
+
+  public reducePixel(){
+    this.height -= 50;
+    this.width -= 100;
   }
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
