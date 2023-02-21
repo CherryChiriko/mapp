@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit {
   isSpecialistOpen: boolean = false;
 
   isFilterOn: boolean = true;
+  CFilt: any;  SFilt: any;
 
   constructor(private helper: HelperService, private filter: FilterService){}
 
@@ -35,38 +36,17 @@ export class SidebarComponent implements OnInit {
 
   clearFilter(){ this.filter.resetAllFilters();}
 
-  // sFormCheck :any  = '' ;
-  // cFormCheck :any  = '' ;
-
-  CFilt: any;
-  SFilt: any;
-
   onOffFilter(){
     this.toggleOnOff();
+
     this.isFilterOn? 
-    this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter()
-  }
-
-  onCFormGroupChangeEvent(event: any) {
-    // this.cFormCheck = _event;
-    console.log(event)
-
-    this.CFilt = event;
-
-    // this.isFilterOn? 
-    // this.filter.createFilter(_event, true): this.filter.resetCFilter()
-
-    // console.log(_event, this.cFormCheck['controls'])
-    // console.log(_event)
-  }
-
-  onSFormGroupChangeEvent(_event: any) {
-    // this.sFormCheck = _event;
+    this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
     this.isFilterOn? 
-    this.filter.createFilter(_event, true): this.filter.resetCFilter()
-    // console.log(_event, this.sFormCheck['controls'])
-    // console.log(_event)
+    this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter()
   }
+
+  onCFormGroupChangeEvent(event: any) {   this.CFilt = event;  }
+  onSFormGroupChangeEvent(event: any) {   this.SFilt = event;  }
   
 }
 

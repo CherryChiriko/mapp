@@ -38,24 +38,24 @@ export class FilterService {
   sFilterSubj$ = new ReplaySubject<ISFilter>(1);
 
   constructor(private _excel: ExcelService, private helper: HelperService, private form: FormService) {
-    this.specialistSubs = this._excel.getAllSpecialists().subscribe((val) => {
-      this.specialistArray = val;
-      this.specialists$.next(this.specialistArray);
-    });
-    this.clientSubs = this._excel.getAllClients().subscribe((val) => {
-      this.clientArray = val;
-      this.clients$.next(this.clientArray);
-    });
-    this.resetAllFilters();
+    // this.specialistSubs = this._excel.getAllSpecialists().subscribe((val) => {
+    //   this.specialistArray = val;
+    //   this.specialists$.next(this.specialistArray);
+    // });
+    // this.clientSubs = this._excel.getAllClients().subscribe((val) => {
+    //   this.clientArray = val;
+    //   this.clients$.next(this.clientArray);
+    // });
+    // this.resetAllFilters();
 
-    /*
+    
     this.clientArray = cData;
     this.clients$.next(this.clientArray);
     this.specialistArray = sData;
     this.specialists$.next(this.specialistArray);
 
     this.resetAllFilters();
-     */
+    
   }
 
   resetCFilter() {
@@ -118,8 +118,8 @@ export class FilterService {
     this.cFilterSubj$.next(filt);
   }
 
-  createFilter(formG: any, isClient: boolean){
-    const val = formG;
+  createFilter(filter: any, isClient: boolean){
+    const val = filter;
     const degreeArr : string[] = this.form.convertToArray(val, "degree");
     const specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
     const interestsArr : string[] = this.form.convertToArray(val, "interests");
@@ -143,7 +143,6 @@ export class FilterService {
       let specialistFilter: ISFilter = {
         name: val.name,
         region: regionsArr,
-        // regions: val.regions,
         mobility: null,
         degree: degreeArr,
         skills: specialtiesArr,
@@ -158,39 +157,11 @@ export class FilterService {
 
   //                 Filter logic
 
-  // cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
-
-  //   if (!filt) {      return arr;    }
-  //   let result = arr;
-  //   for (const [key, value] of Object.entries(filt)) {
-  //     if (value === null) {        continue;      }
-  //     let keyName = key as keyof IClient;
-  //     // console.log('I am the result so far', result, keyName);
-  //     if (Array.isArray(value)) {
-  //       if (!value.length) {          continue;        }
-  //       result = result.filter((element: any) =>
-  //         value.some((el) => element[keyName].includes(el))
-  //       );
-  //       continue;
-  //     } else {
-  //       let reg = new RegExp(value, 'i');
-  //       result = result.filter((element: any) => reg.test(element[keyName]));
-  //       // console.log('and I am the result ', result);
-  //       continue;
-  //     }
-  //   }
-  //   // console.log('I am the filter ', filt);
-  //   // console.log(      'I am the original ',      arr.map((el) => el.name)    );
-  //   // console.log(      'I am filtered ',      result.map((el) => el.name)    );
-  //   return result;
-  // }
-
   cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
     // arr.map( el => {
     //   let newEl: any = el;
     //   newEl.region = el.city[1]
     // } )
-
 
     if (!filt) {      return arr;    }
     let result = arr;
@@ -234,7 +205,7 @@ export class FilterService {
       } else {
         let reg = new RegExp(value, 'i');
         result = result.filter((element: any) => reg.test(element[keyName]));
-        if (keyName === 'city'){  result = [...result, ...arr.filter(element => element.canMove)]  }
+        // if (keyName === 'city'){  result = [...result, ...arr.filter(element => element.canMove)]  }
         continue;
       }
     }

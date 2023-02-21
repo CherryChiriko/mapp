@@ -1,33 +1,34 @@
-export interface ISpecialist {
-  name: string;
-  email: string;
-  phone: string;
-  city: string;
-  region: string;
-  avatar?: string;
-  canMove: boolean;
-  degree: string;
-  skills: string[];
-  interests: string[];
-  available_from: string;
-  notice: number;
-  latitude: number;
-  longitude: number;
-}
-
 export interface IClient {
   name: string;
   city: string;  
   region: string;
   logo?: string;
-  website: string;
-  lookFor: string[];
-  level: string[];
-  available_from: string;
-  notice: number;
+  activities: string[];
+  need: string[];
   latitude: number;
   longitude: number;
 }
+
+export interface ISpecialist {
+  name: string;
+  id: string;
+  email: string;
+  phone: string;
+  website?: string;
+  city: string;
+  region: string;
+  avatar?: string;
+  experience: number;
+  degree: string[];
+  mobility: string[];
+  interests: string[];
+  available_from?: string;
+  notice?: number;
+  latitude: number;
+  longitude: number;
+}
+
+
 
 export interface ISFilter {
   name: string | null;

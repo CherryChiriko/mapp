@@ -1,27 +1,21 @@
 [
   {
       "name": "IMA Life",
-      "website": "https://ima.it/pharma/brands/ima-life",
       "logo": "https://ima.it/pharma/wp-content/uploads/sites/2/2016/12/ima_logo-300x118.png",
       "city": "Bologna",
-      "remoteOption": false,
-      "lookFor": ["Embedded", "Frontend"],
-      "level": ["Bachelor", "Master"],
-      "available_from": "20/02/2023",
-      "notice": 10,
+      "region": "Emilia-Romagna",
+      "activities": ["Embedded", "Frontend"],
+      "need": ["Embedded"],
       "latitude": 44.5075,
       "longitude": 11.3514
   },
   {
     "name": "Loccioni",
-    "website": "https://www.loccioni.com/it",
     "logo": "https://www.loccioni.com/wp-content/themes/bst-master/img/loccioni_w.svg",
     "city": "Ancona",
-    "remoteOption": true,
-    "lookFor": ["Embedded", "Frontend"],
-    "level": ["Bachelor", "Master"],
-    "available_from": "25/03/2023",
-    "notice": 21,
+    "region": "Marche",
+    "activities": ["Embedded", "Frontend"],
+    "need": ["Embedded", "Frontend"],
     "latitude": 43.6158,
     "longitude": 13.5189
 }
