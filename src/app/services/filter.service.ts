@@ -88,13 +88,17 @@ export class FilterService {
   }
 
   addClient(newClient: IClient) {
-    this.clientArray.push(newClient);
-    this.clients$.next(this.clientArray);
+    if(this.checkClient(newClient.name, newClient.city)){
+      alert("Errore, cliente gia presente")
+    }else{
+      this.clientArray.push(newClient);
+      this.clients$.next(this.clientArray);
+    }
   }
 
   addSpecialist(newSpecialist: ISpecialist) {
     if(this.checkSpecialist(newSpecialist.name, newSpecialist.email)){
-      alert("specialista gia esistente")
+      alert("Errore, specialista gia presente")
     }else{
     this.specialistArray.push(newSpecialist);
     this.specialists$.next(this.specialistArray);
@@ -104,6 +108,15 @@ export class FilterService {
   checkSpecialist(name : string , email : string) : boolean{
     let matchUser = this.specialistArray.find((spec) => name === spec.name);
     if(matchUser?.email === email) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  checkClient(name : string, city : string) : boolean{
+    let matchClient = this.clientArray.find((client) => name === client.name);
+    if(matchClient?.city === city){
       return true;
     }else{
       return false;
