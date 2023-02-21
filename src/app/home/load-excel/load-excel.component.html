@@ -1,6 +1,12 @@
-<div class="row excel-s rounded mx-auto my-3 p-2">
-    <label class="col-form-label" for="excel-s">Load {{isClient? 'Client': 'Specialist'}} Excel File (.xlsx)</label>
-    <input class="form-control mt-2" type="file" id="excel-s"(change)="isClient? loadClients($event) : loadSpecialists($event)" >
+<div class="row excel-s rounded mx-auto my-3 p-2" [hidden]="isClient? isCLoaded : isSLoaded">
+    <label class="col-form-label" for="excel-s" >Load {{isClient? 'Client': 'Consultant'}} Excel File (.xlsx)</label>
+    <input class="form-control mt-2" type="file"
+    (change)="load($event)" >
 </div>
-<button class="btn mb-2" [ngClass]="isClient? 'btn-primary': 'btn-success'"
-(click)="isClient? saveClients() : saveSpecialists()">save file</button>
+<div class="row excel-s rounded mx-auto my-3 p-2" [hidden]="isClient? !isCLoaded : !isSLoaded">
+    <button class="btn mx-auto my-auto col-5" [ngClass]="getButton()" (click)="loadNew()">
+        Load new</button>
+    <button class="btn mx-auto my-auto col-5" [ngClass]="getButton()" (click)="save()">
+        Save copy</button>
+</div>
+

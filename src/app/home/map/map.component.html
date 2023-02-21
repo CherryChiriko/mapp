@@ -2,11 +2,27 @@
 <div class="container mt-5">
     <!-- <button (click)="addPixel()">+</button>
     <button (click)="reducePixel()">-</button> -->
+    <div class="row">
+        <div class="col-1 mb-2"><img src="{{getIcon(true)}}"></div>
+        <div class="form-check form-switch col">
+            <!-- <img src="assets/img/ima_logo.png"> -->
+            <input class="form-check-input" (click)="cToggleOnOff()"
+            type="checkbox" role="switch" id="cOnOff" checked>
+            <label class="form-check-label" for="cOnOff">{{showClients? 'On' : 'Off'}}</label>
+        </div>
+        <div class="col-1 mb-2"><img src="{{getIcon(false)}}"></div>
+        <div class="form-check form-switch col">
+            <input class="form-check-input" (click)="sToggleOnOff()"
+            type="checkbox" role="switch" id="sOnOff" checked>
+            <label class="form-check-label" for="sOnOff">{{showSpecialists? 'On' : 'Off'}}</label>
+        </div>
+    </div>
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark))"
         *ngFor="let mark of allMarkers; let i=index" 
         [position]="{lat: mark.latitude, lng: mark.longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
+        [visible]="showClients"
         >
         <map-info-window #infoWindow="mapInfoWindow">
             <div class="text-center rounded"
@@ -31,14 +47,14 @@
                             <i (click)="toggleContacts(i)" class="material-symbols-outlined contact-icon">contact_page</i>
                             <p class="info">Contacts</p></td>
                         </tr>
-                        <tr *ngIf="contacts[i] && !isClient(el)">
+                        <tr *ngIf="contacts[i]">
                             <td  class="contacts rounded" ><i class="material-symbols-outlined contact-icon">mail</i>
                             <p class="info">{{el.email}}</p></td></tr>
-                        <tr *ngIf="contacts[i] && !isClient(el)">
+                        <tr *ngIf="contacts[i]">
                             <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">call</i>
                             <p class="info">{{el.phone}}</p></td>
                         </tr>
-                        <tr *ngIf="contacts[i] && !isClient(el)">
+                        <tr *ngIf="contacts[i] && el.website">
                             <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">language</i>
                             <a class="info" href="`${el.website}`" target="blank">{{el.website}}</a></td></tr>
                     </thead>
@@ -48,8 +64,9 @@
                             {{item.key}} : {{item.value}}
                         </td>
                     </tr>
-                    <tr *ngIf="isClient(el)"><td class="borderless">
-                        <button class="btn btn-primary" (click)="filterForCompany(el)">Matches for this company</button></td></tr>
+                    <tr><td class="borderless">
+                        <button class="btn btn-primary" (click)="isClient(el)? filterForCompany(el): filterForSpecialist(el)">
+                            Matches for this {{isClient(el) ? "company": "consultant"}}</button></td></tr>
                 </table>
                 <button class="btn btn-danger" (click)="deleteElement(el)">Delete</button>
             </mat-expansion-panel>

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ExcelService } from 'src/app/services/excel.service';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-load-excel',
@@ -8,22 +9,18 @@ import { ExcelService } from 'src/app/services/excel.service';
 })
 export class LoadExcelComponent {
   @Input() isClient!: boolean;
-  
-  constructor(private _excel: ExcelService) {}
+  isCLoaded: boolean = false;
+  isSLoaded: boolean = false;
 
-  public loadSpecialists(event: any) {
-    this._excel.importSpecialists(event);
-  }
+  constructor(private _excel: ExcelService, private helper: HelperService) {}
 
-  public saveSpecialists() {
-    this._excel.exportSpecialists();
+  load(event: any){ 
+    this.isClient? this._excel.importClients(event) : this._excel.importSpecialists(event);
+    this.isClient? this.isCLoaded = true : this.isSLoaded = true;
   }
-
-  public loadClients(event: any) {
-    this._excel.importClients(event);
+  save(){
+    this.isClient? this._excel.exportClients() : this._excel.exportSpecialists();
   }
-
-  public saveClients() {
-    this._excel.exportClients();
-  }
+  loadNew(){ this.isClient? this.isCLoaded = false : this.isSLoaded = false}  
+  getButton(){ return this.helper.getButton(this.isClient)}
 }
