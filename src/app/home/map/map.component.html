@@ -4,21 +4,21 @@
     <button (click)="reducePixel()">-</button> -->
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark))"
-        *ngFor="let mark of allMarkers; let i=index" 
+        *ngFor="let mark of allMarkers; let i=index"
         [position]="{lat: mark.latitude, lng: mark.longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow">
             <div class="text-center rounded"
-            style="--color: {{getColor(isClient(el)).color}}; 
-            --lightColor: {{getColor(isClient(el)).lightColor}}; 
+            style="--color: {{getColor(isClient(el)).color}};
+            --lightColor: {{getColor(isClient(el)).lightColor}};
             --darkColor: {{getColor(isClient(el)).darkColor}}"
             *ngFor="let el of groupByCity(mark.city)">
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header class="text-center rounded header">
                 <mat-panel-title>
                     <div class="row tag">
-                        <div class="col-2"><img class="logo" src="{{el.logo}}" *ngIf="isClient(el) && el.logo !== null"></div>    
+                        <div class="col-2"><img class="logo" src="{{el.logo}}" *ngIf="isClient(el) && el.logo !== null"></div>
                         <div class="col">{{el.name}}</div>
                         <div class="col-2"><i class="material-symbols-outlined">expand_more</i></div>
                     </div>
@@ -42,7 +42,7 @@
                             <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">language</i>
                             <a class="info" href="`${el.website}`" target="blank">{{el.website}}</a></td></tr>
                     </thead>
-                    
+
                     <tr *ngFor="let item of markerInfo(isClient(el), el) | keyvalue: originalOrder">
                         <td class="rounded">
                             {{item.key}} : {{item.value}}

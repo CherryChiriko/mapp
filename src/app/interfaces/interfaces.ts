@@ -1,6 +1,8 @@
+import { Observable } from "rxjs";
+
 export interface IClient {
   name: string;
-  city: string;  
+  city: string;
   region: string;
   logo?: string;
   activities: string[];
@@ -83,3 +85,5 @@ export interface ICity {
   region: string;
   country: string;
 }
+
+

@@ -24,12 +24,10 @@ import { FormService } from './form.service';
 @Injectable({
   providedIn: 'root',
 })
-export class FilterService {
+export class FilterService{
   clientArray: IClient[] = [];
   specialistArray: ISpecialist[] = [];
 
-  clientSubs!: Subscription;
-  specialistSubs!: Subscription;
 
   clients$ = new BehaviorSubject<IClient[]>([]);
   specialists$ = new BehaviorSubject<ISpecialist[]>([]);
@@ -37,25 +35,30 @@ export class FilterService {
   cFilterSubj$ = new ReplaySubject<ICFilter>(1);
   sFilterSubj$ = new ReplaySubject<ISFilter>(1);
 
-  constructor(private _excel: ExcelService, private helper: HelperService, private form: FormService) {
-    // this.specialistSubs = this._excel.getAllSpecialists().subscribe((val) => {
-    //   this.specialistArray = val;
-    //   this.specialists$.next(this.specialistArray);
-    // });
-    // this.clientSubs = this._excel.getAllClients().subscribe((val) => {
-    //   this.clientArray = val;
-    //   this.clients$.next(this.clientArray);
-    // });
-    // this.resetAllFilters();
-
-    
+  constructor(private form: FormService) {
+    /*
     this.clientArray = cData;
     this.clients$.next(this.clientArray);
     this.specialistArray = sData;
     this.specialists$.next(this.specialistArray);
 
     this.resetAllFilters();
-    
+    */
+   this.resetAllFilters();
+  }
+
+  initSpecialist(specialist : ISpecialist[]) {
+    this.specialistArray = specialist;
+    this.specialists$.next(this.specialistArray);
+  }
+
+  initClient(client : IClient[]) {
+    this.clientArray = client;
+    this.clients$.next(this.clientArray);
+  }
+
+  getSpecialist(){
+    return this.specialists$;
   }
 
   resetCFilter() {
@@ -178,7 +181,6 @@ export class FilterService {
         available_from: date,
         notice: val.notice
       }
-      // console.log(specialistFilter)
       this.setSFilter(specialistFilter);
     }
   }
@@ -186,11 +188,6 @@ export class FilterService {
   //                 Filter logic
 
   cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
-    // arr.map( el => {
-    //   let newEl: any = el;
-    //   newEl.region = el.city[1]
-    // } )
-
     if (!filt) {      return arr;    }
     let result = arr;
     for (const [key, value] of Object.entries(filt)) {
@@ -210,9 +207,6 @@ export class FilterService {
         continue;
       }
     }
-    // console.log('I am the filter ', filt);
-    // console.log(      'I am the original ',      arr.map((el) => el.name)    );
-    // console.log(      'I am filtered ',      result.map((el) => el.name)    );
     return result;
   }
 
@@ -237,9 +231,6 @@ export class FilterService {
         continue;
       }
     }
-    // console.log('I am the filter ', filt);
-    // console.log(      'I am the original ',      arr.map((el) => el.name)    );
-    // console.log(      'I am filtered ',      result.map((el) => el.name)    );
     return result;
   }
 
@@ -256,10 +247,5 @@ export class FilterService {
       map(([specialist, filterValue]) =>
         this.sFilterLogic(specialist, filterValue))
     );
-  }
-
-  ngOnDestroy() {
-    this.clientSubs?.unsubscribe();
-    this.specialistSubs?.unsubscribe();
   }
 }

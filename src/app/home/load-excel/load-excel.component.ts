@@ -8,7 +8,7 @@ import { ExcelService } from 'src/app/services/excel.service';
 })
 export class LoadExcelComponent {
   @Input() isClient!: boolean;
-  
+
   constructor(private _excel: ExcelService) {}
 
   public loadSpecialists(event: any) {
@@ -16,14 +16,13 @@ export class LoadExcelComponent {
   }
 
   public saveSpecialists() {
-    this._excel.exportSpecialists();
-  }
+     }
 
   public loadClients(event: any) {
     this._excel.importClients(event);
   }
 
   public saveClients() {
-    this._excel.exportClients();
+
   }
 }
