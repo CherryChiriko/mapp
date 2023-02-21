@@ -3,7 +3,7 @@
         <div class="row">
             <h4 (click)="toggleFilter()" [ngClass]="isFilterOpen? 'col-9': ''">Filter</h4>
             <div class="form-check form-switch col-1" [hidden]="!isFilterOpen">
-                <input class="form-check-input" (click)="toggleOnOff()"
+                <input class="form-check-input" (click)="onOffFilter()"
                 type="checkbox" role="switch" #onOff id="onOff" checked>
                 <label class="form-check-label" for="onOff">{{isFilterOn? 'On' : 'Off'}}</label>
             </div>
@@ -16,12 +16,15 @@
             <app-filter *ngIf="isFilterClientOpen" [isClient]="true"
             style="--color: {{getColor(true).color}}; 
            --lightColor: {{getColor(true).lightColor}}; 
-           --darkColor: {{getColor(true).darkColor}}"></app-filter>  
+           --darkColor: {{getColor(true).darkColor}}"
+           (onCFormGroupChange)="onCFormGroupChangeEvent($event)"
+           ></app-filter>  
 
             <app-filter *ngIf="isFilterSpecialistOpen" [isClient]="false"
             style="--color: {{getColor(false).color}}; 
            --lightColor: {{getColor(false).lightColor}}; 
-           --darkColor: {{getColor(false).darkColor}}"></app-filter>
+           --darkColor: {{getColor(false).darkColor}}"
+           (onSFormGroupChange)="onSFormGroupChangeEvent($event)"></app-filter>
 
            <button class="btn btn-danger m-2" (click)="clearFilter()"
            *ngIf="isFilterClientOpen || isFilterSpecialistOpen">

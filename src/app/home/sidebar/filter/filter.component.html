@@ -13,17 +13,17 @@
                     {{ macroregion.name }}                
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <input type="checkbox" class="form-check-input" id="all-{{macroregion}}"
-            (click)="selects()">
+            <input type="checkbox" class="form-check-input" id="all-{{macroregion.name}}"
+            (click)="checkAll(macroregion.name)">
             <!-- (checked)="checkAll('nort')"> -->
             <!-- (checked)="checkAll(macroregion.name)"> -->
-            <label class="form-check-label all" for="all-{{macroregion}}">
+            <label class="form-check-label all" for="all-{{macroregion.name}}">
                 All
             </label>
             <hr>
             <!-- [ngClass]="macroregion.name" -->
             <span *ngFor="let region of macroregion.regions; let i=index">
-                <input type="checkbox" class="btn-check" autocomplete="off" name="nort"
+                <input type="checkbox" class="btn-check" autocomplete="off" name="{{macroregion.name}}"
                 
                 id="{{isClient ? 'c' : 's'}}-region-{{i}}" value="{{region}}"
                 formControlName="{{region}}">
@@ -109,8 +109,6 @@
             </label>
         </span>
         <span>
-            <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary': 'btn-success'" 
-        (click)="createFilter(isClient)">Filter</button>
         <button class="btn m-2 mb-4" [ngClass]="isClient? 'btn-primary-outline': 'btn-success-outline'" 
         (click)="clearFilter(isClient)">Clear</button>
         </span>

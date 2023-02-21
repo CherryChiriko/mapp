@@ -34,6 +34,40 @@ export class SidebarComponent implements OnInit {
   getColor(condition: boolean){return this.helper.getColorScheme(condition)}
 
   clearFilter(){ this.filter.resetAllFilters();}
+
+  // sFormCheck :any  = '' ;
+  // cFormCheck :any  = '' ;
+
+  CFilt: any;
+  SFilt: any;
+
+  onOffFilter(){
+    this.toggleOnOff();
+    this.isFilterOn? 
+    this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter()
+  }
+
+  onCFormGroupChangeEvent(event: any) {
+    // this.cFormCheck = _event;
+    console.log(event)
+
+    this.CFilt = event;
+
+    // this.isFilterOn? 
+    // this.filter.createFilter(_event, true): this.filter.resetCFilter()
+
+    // console.log(_event, this.cFormCheck['controls'])
+    // console.log(_event)
+  }
+
+  onSFormGroupChangeEvent(_event: any) {
+    // this.sFormCheck = _event;
+    this.isFilterOn? 
+    this.filter.createFilter(_event, true): this.filter.resetCFilter()
+    // console.log(_event, this.sFormCheck['controls'])
+    // console.log(_event)
+  }
+  
 }
 
 

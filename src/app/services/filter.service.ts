@@ -18,6 +18,8 @@ import { HelperService } from './helper.service';
 
 import sData from 'src/assets/specialists.json';
 import cData from 'src/assets/clients.json';
+import { FormGroup } from '@angular/forms';
+import { FormService } from './form.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +37,7 @@ export class FilterService {
   cFilterSubj$ = new ReplaySubject<ICFilter>(1);
   sFilterSubj$ = new ReplaySubject<ISFilter>(1);
 
-  constructor(private _excel: ExcelService, private helper: HelperService) {
+  constructor(private _excel: ExcelService, private helper: HelperService, private form: FormService) {
     this.specialistSubs = this._excel.getAllSpecialists().subscribe((val) => {
       this.specialistArray = val;
       this.specialists$.next(this.specialistArray);
@@ -129,6 +131,44 @@ export class FilterService {
   }
   setCFilter(filt: ICFilter) {
     this.cFilterSubj$.next(filt);
+  }
+
+  createFilter(formG: any, isClient: boolean){
+    const val = formG;
+    const degreeArr : string[] = this.form.convertToArray(val, "degree");
+    const specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
+    const interestsArr : string[] = this.form.convertToArray(val, "interests");
+    const regionsArr : string[] = this.form.convertToArray(val, "regions")
+    const date = val.end? [this.form.formatDate(val.start),this.form.formatDate(val.end)]: null;
+
+    if (isClient){
+      let clientFilter: ICFilter = {
+        name: val.name,
+        region: regionsArr,
+        experience: degreeArr,
+        lookFor: specialtiesArr,
+        // interests: interestsArr,
+        available_from: date,
+        notice: val.notice
+      }
+      console.log(clientFilter)
+      this.setCFilter(clientFilter);
+    }
+    else {
+      let specialistFilter: ISFilter = {
+        name: val.name,
+        region: regionsArr,
+        // regions: val.regions,
+        mobility: null,
+        degree: degreeArr,
+        skills: specialtiesArr,
+        interests: interestsArr,
+        available_from: date,
+        notice: val.notice
+      }
+      // console.log(specialistFilter)
+      this.setSFilter(specialistFilter);
+    }
   }
 
   //                 Filter logic
