@@ -1,10 +1,21 @@
-
 <div class="container mt-5">
-    <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
-        <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark))"
-        *ngFor="let mark of allMarkers; let i=index" 
-        [position]="{lat: mark.latitude, lng: mark.longitude}"
-        (mapClick)="openInfoWindow(marker, infoWindow)"
+  <button (click)="addPixel()">+</button>
+  <button (click)="reducePixel()">-</button>
+  <google-map #map height="{{height}}px" width="{{width}}px" [center]="center" [zoom]="zoom">
+    <map-marker
+      #marker="mapMarker"
+      [icon]="getIcon(isClient(mark))"
+      *ngFor="let mark of allMarkers; let i = index"
+      [position]="{ lat: mark.latitude, lng: mark.longitude }"
+      (mapClick)="openInfoWindow(marker, infoWindow)"
+    >
+      <map-info-window #infoWindow="mapInfoWindow">
+        <div
+          class="text-center rounded"
+          style="--color: {{ getColor(isClient(el)).color }};
+            --lightColor: {{ getColor(isClient(el)).lightColor }};
+            --darkColor: {{ getColor(isClient(el)).darkColor }}"
+          *ngFor="let el of groupByCity(mark.city)"
         >
         <map-info-window #infoWindow="mapInfoWindow">
             <div class="text-center rounded"
