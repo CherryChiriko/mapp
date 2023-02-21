@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ICFilter, ICity, ISFilter } from 'src/app/interfaces/interfaces';
 import { FilterService } from 'src/app/services/filter.service';
@@ -13,6 +13,8 @@ import data from 'src/assets/specifics.json';
 })
 export class FilterComponent {
   @Input() isClient!: boolean;
+  @Output() private onSFormGroupChange = new EventEmitter<any>();
+  @Output() private onCFormGroupChange = new EventEmitter<any>();
 
   specialArr: string[] = data.specialties;
   degArr: string[] = data.degrees;
@@ -59,6 +61,12 @@ export class FilterComponent {
     this.form.addElementToFormGroup(this.cFilterForm, 'degree', this.degArr)
     this.form.addElementToFormGroup(this.cFilterForm, 'interests', this.specialArr)    
     this.form.addElementToFormGroup(this.cFilterForm, 'regions', regionArr)
+  
+    this.sFilterForm.valueChanges
+    .subscribe(() => this.onSFormGroupChange.emit(this.sFilterForm.value));
+    this.cFilterForm.valueChanges
+    .subscribe(() => this.onCFormGroupChange.emit(this.cFilterForm.value));
+
   }
 
   createFilter(isClient: boolean){
@@ -87,7 +95,6 @@ export class FilterComponent {
       let specialistFilter: ISFilter = {
         name: val.name,
         region: regionsArr,
-        // regions: val.regions,
         mobility: null,
         degree: degreeArr,
         skills: specialtiesArr,
@@ -108,18 +115,18 @@ export class FilterComponent {
 
   clearFilter(isClient: boolean){isClient? this.clearCFilter(): this.clearSFilter();}
   
-  checkAll(macro: string){
-    $(".nort").prop('checked', $(this).prop('checked'))
-    // $(`.${macro}`).prop('checked', $(this).prop('checked'));
-  }
+  // checkAll(macro: string){
+  //   $(".nort").prop('checked', $(this).prop('checked'))
+  //   // $(`.${macro}`).prop('checked', $(this).prop('checked'));
+  // }
 
-  selects(){  
-    console.log("HERE");
-    const ele: any = document.getElementsByName('nort');  
-    console.log(ele);
-    for(var i=0; i<ele.length; i++){  
-        if(ele[i].type=='checkbox')  {
-          ele[i].checked=true;  console.log("really")
+  checkAll(macro: string){  
+    const element: any = document.getElementsByName(macro);  
+    // element.map( (el : any) => 
+    // { if (el.type === 'checkbox'){      el.checked = true    }})
+    for(var i=0; i<element.length; i++){  
+        if(element[i].type=='checkbox')  {
+          element[i].checked=true;
         }
             
     }  
