@@ -9,10 +9,10 @@ export class MapService {
   
   getSMarkerInfo(mark: ISpecialist){
     let info = {
-      Specialties: mark.skills,
+      // Specialties: mark.skills,
       Degree: mark.degree,
       City: mark.city,
-      "Available to move": mark.canMove ? 'yes' : 'no',
+      // "Available to move": mark.canMove ? 'yes' : 'no',
       "Available from": mark.available_from,
       "Notice time" : mark.notice + ' days'
     }
@@ -20,10 +20,10 @@ export class MapService {
   }
   getCMarkerInfo(mark: IClient){
     let info = {
-      "Looking for": mark.lookFor,
+      // "Looking for": mark.lookFor,
       "City": mark.city,
-      "Available from": mark.available_from,
-      "Notice time" : mark.notice + ' days'
+      // "Available from": mark.available_from,
+      // "Notice time" : mark.notice + ' days'
     }
     return info
   }
