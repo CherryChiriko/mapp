@@ -26,7 +26,7 @@ export class MapComponent implements OnInit{
   // _clients: IClient[] = [];
   // get clients() { return this._clients;}
   // set clients(value) {console.log(value);this._clients = value;}
- 
+
   center: google.maps.LatLngLiteral = { lat: INITIAL_COORDS[0], lng: INITIAL_COORDS[1]};
   zoom = 5;
 
@@ -47,14 +47,14 @@ export class MapComponent implements OnInit{
       value => this.clients = value);
     // this.allMarkers = [...this.clients, ...this.specialists];
     // console.log(this.allMarkers)
-    this.allMarkersSubs = 
+    this.allMarkersSubs =
     combineLatest([this.filter.sFilterData(), this.filter.cFilterData()])
     .subscribe(([specialists, clients]) => this.allMarkers = [...clients,...specialists])
   }
 
   originalOrder =
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
-  
+
   toggleContacts(i: number){    this.contacts[i] = !this.contacts[i];  }
   setContact(){
     if (!this.contacts.length){
@@ -74,9 +74,9 @@ export class MapComponent implements OnInit{
   isClient(element: IClient | ISpecialist){    return element.hasOwnProperty('website') ?  true : false  }
 
   filterByCity(arr: any[], cityName: string){  return arr.filter(element => element.city === cityName)}
-  groupByCity(cityName: string): any[]  { 
+  groupByCity(cityName: string): any[]  {
     // this.isMixed = false;
-    let sGroup = this.filterByCity(this.specialists, cityName); 
+    let sGroup = this.filterByCity(this.specialists, cityName);
     let cGroup = this.filterByCity(this.clients, cityName);
     // if (sGroup.length > 0 && cGroup.length > 0 ){ this.isMixed = true}
     return [...cGroup, ...sGroup]

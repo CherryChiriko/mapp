@@ -89,10 +89,25 @@ export class FilterService {
     this.clientArray.push(newClient);
     this.clients$.next(this.clientArray);
   }
+
   addSpecialist(newSpecialist: ISpecialist) {
+    if(this.checkSpecialist(newSpecialist.name, newSpecialist.email)){
+      alert("specialista gia esistente")
+    }else{
     this.specialistArray.push(newSpecialist);
     this.specialists$.next(this.specialistArray);
+    }
   }
+
+  checkSpecialist(name : string , email : string) : boolean{
+    let matchUser = this.specialistArray.find((spec) => name === spec.name);
+    if(matchUser?.email === email) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   removeClient(client: IClient) {
     let index = this.clientArray.indexOf(client);
