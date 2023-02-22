@@ -2,6 +2,7 @@
 <div class="container mt-5">
     <!-- <button (click)="addPixel()">+</button>
     <button (click)="reducePixel()">-</button> -->
+    <button (click)="vedi()">vedi</button>
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark))"
         *ngFor="let mark of allMarkers; let i=index"
@@ -18,7 +19,7 @@
                 <mat-expansion-panel-header class="text-center rounded header">
                 <mat-panel-title>
                     <div class="row tag">
-                        <div class="col-2" *ngIf="isClient(el) && el.logo"><img class="logo" src="{{el.logo}}" ></div>    
+                        <div class="col-2" *ngIf="isClient(el) && el.logo"><img class="logo" src="{{el.logo}}" ></div>
                         <div class="col">{{el.name}}</div>
                         <div class="col-2"><i class="material-symbols-outlined">expand_more</i></div>
                     </div>

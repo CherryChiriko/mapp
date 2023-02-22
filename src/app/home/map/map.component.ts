@@ -53,6 +53,7 @@ export class MapComponent implements OnInit {
     this.sMarkersSubs = this.filter
       .sFilterData()
       .subscribe((value) => (this.specialists = value));
+
     this.cMarkersSubs = this.filter
       .cFilterData()
       .subscribe((value) => (this.clients = value));
@@ -65,10 +66,16 @@ export class MapComponent implements OnInit {
       ([specialists, clients]) =>
         (this.allMarkers = [...clients, ...specialists])
     );
+    console.log(this.allMarkers);
   }
 
-  
-  
+  vedi(){
+    console.log(this.allMarkers);
+
+  }
+
+
+
   originalOrder =
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 

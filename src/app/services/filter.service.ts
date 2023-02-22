@@ -55,9 +55,7 @@ export class FilterService{
     this.clients$.next(this.clientArray);
   }
 
-  getSpecialist(){
-    return this.specialists$;
-  }
+
 
   resetCFilter() {
     const emptyFilter = {
