@@ -42,18 +42,21 @@
                 <table class="table">
                     <thead *ngIf="!isClient(el)">
                         <tr>
+                            <td><button class="btn btn-warning" (click)="addFavorite(el)">Save favorite</button></td>
+                        </tr>
+                        <tr>
                             <td class="rounded contacts">
                             <i (click)="toggleContacts(i)" class="material-symbols-outlined contact-icon">contact_page</i>
                             <p class="info">Contacts</p></td>
                         </tr>
-                        <tr *ngIf="contacts[i] && !isClient(el)">
+                        <tr *ngIf="contacts[i]">
                             <td  class="contacts rounded" ><i class="material-symbols-outlined contact-icon">mail</i>
                             <p class="info">{{el.email}}</p></td></tr>
-                        <tr *ngIf="contacts[i] && !isClient(el)">
-                            <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">call</i>
-                            <p class="info">{{el.phone}}</p></td>
-                        </tr>
-                        <tr *ngIf="contacts[i] && !isClient(el)">
+                            <tr *ngIf="contacts[i]">
+                                <td class="p-3 rounded" style="background-color: var(--lightColor);">
+                                  <i class="material-icons text-primary mr-2">call</i>
+                                  <p class="m-0">{{el.phone}}</p></td></tr>
+                        <tr *ngIf="contacts[i] && el.website">
                             <td  class="contacts rounded"><i class="material-symbols-outlined contact-icon">language</i>
                             <a class="info" href="`${el.website}`" target="blank">{{el.website}}</a></td></tr>
                     </thead>
