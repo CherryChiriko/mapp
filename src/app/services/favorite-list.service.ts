@@ -15,8 +15,6 @@ export class FavoriteListService {
   public addSpecialistFavorite(specialist : ISpecialist){
     this.favoriteSArray.push(specialist);
     this.favoriteSpecialist$.next(this.favoriteSArray);
-    console.log(this.favoriteSArray);
-
   }
 
   public removeFavoriteSpecialist(specialist : ISpecialist){

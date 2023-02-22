@@ -64,6 +64,11 @@ export class MapComponent implements OnInit {
       ([specialists, clients]) =>
         (this.allMarkers = [...clients, ...specialists])
     );
+    this.favoriteSpecialistSubs = this._favorite
+    .getFavoriteList()
+    .subscribe(val => {
+      this.favoriteSpecialist = val;
+    })
   }
 
   originalOrder = (
@@ -162,17 +167,15 @@ export class MapComponent implements OnInit {
 
   public addFavorite(item : ISpecialist) {
     this._favorite.addSpecialistFavorite(item);
+    console.log(this.favoriteSpecialist);
+
   }
 
   public removeFavorite(item : ISpecialist) {
     this._favorite.removeFavoriteSpecialist(item);
   }
 
-  public getFavoriteList(){
-    this.favoriteSpecialistSubs = this._favorite
-    .getFavoriteList()
-    .subscribe(val => {
-      this.favoriteSpecialist = val;
-    })
+  public getFavoriteList() : ISpecialist[]{
+    return this.favoriteSpecialist;
   }
 }
