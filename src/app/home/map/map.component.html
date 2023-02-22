@@ -43,6 +43,7 @@
                     <thead *ngIf="!isClient(el)">
                         <tr>
                             <td><button class="btn btn-warning" (click)="addFavorite(el)">Save favorite</button></td>
+                            <td><button class="btn btn-warning" (click)="removeFavorite(el)">Remove favorite</button></td>
                         </tr>
                         <tr>
                             <td class="rounded contacts">

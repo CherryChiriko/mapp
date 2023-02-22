@@ -173,6 +173,8 @@ export class MapComponent implements OnInit {
 
   public removeFavorite(item : ISpecialist) {
     this._favorite.removeFavoriteSpecialist(item);
+    console.log(this.favoriteSpecialist);
+
   }
 
   public getFavoriteList() : ISpecialist[]{
