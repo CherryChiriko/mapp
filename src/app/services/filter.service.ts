@@ -36,15 +36,13 @@ export class FilterService{
   sFilterSubj$ = new ReplaySubject<ISFilter>(1);
 
   constructor(private form: FormService) {
-    /*
+
     this.clientArray = cData;
     this.clients$.next(this.clientArray);
     this.specialistArray = sData;
     this.specialists$.next(this.specialistArray);
 
     this.resetAllFilters();
-    */
-   this.resetAllFilters();
   }
 
   initSpecialist(specialist : ISpecialist[]) {

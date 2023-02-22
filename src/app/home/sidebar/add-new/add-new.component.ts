@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICity, IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { FilterService } from 'src/app/services/filter.service';
 import { FormService } from 'src/app/services/form.service';
+import { HelperService } from 'src/app/services/helper.service';
 import { MapService } from 'src/app/services/map.service';
 
 import data from 'src/assets/specifics.json';
@@ -27,7 +28,7 @@ export class AddNewComponent {
   dateError: boolean = false;
   
 
-  constructor(private filter : FilterService, private form: FormService){}
+  constructor(private filter : FilterService, private form: FormService, private helper: HelperService){}
 
   ngOnInit(): void {
     this.clientForm = new FormGroup({ 
@@ -132,4 +133,5 @@ export class AddNewComponent {
     }
     return "";
   }
+  getButton(condition: boolean){return this.helper.getButton(condition)}
 }

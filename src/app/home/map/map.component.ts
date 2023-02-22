@@ -23,9 +23,8 @@ export class MapComponent implements OnInit {
   cMarkersSubs?: Subscription;
   allMarkersSubs?: Subscription;
 
-  // _clients: IClient[] = [];
-  // get clients() { return this._clients;}
-  // set clients(value) {console.log(value);this._clients = value;}
+  showClients :    boolean = true;
+  showSpecialists: boolean = true;
 
   center: google.maps.LatLngLiteral = {
     lat: INITIAL_COORDS[0],

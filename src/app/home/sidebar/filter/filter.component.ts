@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ICFilter, ICity, ISFilter } from 'src/app/interfaces/interfaces';
 import { FilterService } from 'src/app/services/filter.service';
 import { FormService } from 'src/app/services/form.service';
+import { HelperService } from 'src/app/services/helper.service';
 
 import data from 'src/assets/specifics.json';
 
@@ -25,7 +26,7 @@ export class FilterComponent {
   sFilterForm !: FormGroup;
   cFilterForm !: FormGroup;
 
-  constructor(private form: FormService, private filter: FilterService){}
+  constructor(private form: FormService, private filter: FilterService, private helper: HelperService){}
 
   ngOnInit(): void {
     
@@ -115,11 +116,6 @@ export class FilterComponent {
 
   clearFilter(isClient: boolean){isClient? this.clearCFilter(): this.clearSFilter();}
   
-  // checkAll(macro: string){
-  //   $(".nort").prop('checked', $(this).prop('checked'))
-  //   // $(`.${macro}`).prop('checked', $(this).prop('checked'));
-  // }
-
   checkAll(macro: string){  
     const element: any = document.getElementsByName(macro);  
     // element.map( (el : any) => 
@@ -131,4 +127,6 @@ export class FilterComponent {
             
     }  
   }  
+
+  getButton(condition: boolean, outline: boolean = false){ return this.helper.getButton(condition, outline)}
 }

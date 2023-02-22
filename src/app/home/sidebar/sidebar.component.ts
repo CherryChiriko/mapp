@@ -48,6 +48,7 @@ export class SidebarComponent implements OnInit {
   onCFormGroupChangeEvent(event: any) {   this.CFilt = event;  }
   onSFormGroupChangeEvent(event: any) {   this.SFilt = event;  }
   
+  getButton(condition: boolean){ return this.helper.getButton(condition)}
 }
 
 
