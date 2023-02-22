@@ -1,6 +1,6 @@
 {
     "BMs": ["ACA", "AMI", "BFR", "BME", "DMT", "DPE", "FMR", "GNA", "LBR", "LZE", "MCV", "MLU", "MNV", "MVB", "RFU", "YCO"],
-    "specialties": [
+    "activities": [
         {"name": "Managment", "roles": ["BA", "PE", "PM", "PMO", "Post Vendita"]},        
         {"name": "Development", 
         "roles": ["BE", "FE", "Full stack", "Embedded", "Sviluppo SW", 

@@ -4,6 +4,7 @@ export interface IClient {
   name: string;
   city: string;
   region: string;
+  BM: string;
   logo?: string;
   activities: string[];
   need: string[];
@@ -18,7 +19,8 @@ export interface ISpecialist {
   phone: string;
   website?: string;
   city: string;
-  region: string;
+  region: string;  
+  BM: string;
   avatar?: string;
   experience: number;
   degree: string[];

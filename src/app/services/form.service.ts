@@ -72,7 +72,7 @@ export class FormService {
     return regionArr;
   }
 
-  
+
   treatAsUTC(date: Date) {
     date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
     return Number(date);
@@ -85,55 +85,53 @@ export class FormService {
     return this.datePipe.transform(date,'dd/MM/YYYY')!;
   }
 
-  formatSpecialist(sData: any[]): ISpecialist[]{
+  formatClientArr(cData: any[]): IClient[]{
+    let clients : IClient[] = [];
+    cData.map( c => clients.push(this.formatClient(c)))
+    return clients;
+  }
+  formatClient(c: any): IClient{
+    const [lat, lng] = this.getCityCoordinates(c.city);
+    const reg = this.getCityInfo(c.city)?.region;
+    return {
+      name: c.name,
+      city: c.city,
+      region: reg? reg : "",
+      BM: c.bm,
+      logo: c?.logo,
+      activities: c.activities,
+      need: c.need,
+      latitude: lat,
+      longitude: lng
+    } 
+  }
+
+  formatSpecialistArr(sData: any[]): ISpecialist[]{
     let specialists : ISpecialist[] = [];
-    sData.map( s => 
-      {
-
-        const [lat, lng] = this.getCityCoordinates(s.city);
-        const reg = this.getCityInfo(s.city)?.region;
-
-        specialists.push({
-        name: s.name,
-        id: s.id,
-        email: s.email,
-        phone: s.phone,
-        website: s.website? s.website: null,
-        city: s.city,
-        region: reg? reg: "",
-        avatar: s.avatar? s.avatar: null,
-        experience: s.experience,
-        degree: s.degree,
-        mobility: s.mobility,
-        interests: s.interests,
-        available_from: s.available_from ? s.available_from: null,
-        notice: s.notice? s.notice : null,
-        latitude: lat,
-        longitude: lng
-      })
-    }
-    )
-    // console.log(specialists)
+    sData.map( s => specialists.push(this.formatSpecialist(s)))
     return specialists;
   }
-  formatClient(cData: any[]): IClient[]{
-    let clients : IClient[] = [];
-    cData.map( c => {
-
-        const [lat, lng] = this.getCityCoordinates(c.city);
-        const reg = this.getCityInfo(c.city)?.region;
-        
-        clients.push( {
-          name: c.name,
-          city: c.city,
-          region: reg? reg : "",
-          logo: c?.logo,
-          activities: c.activities,
-          need: c.need,
-          latitude: lat,
-          longitude: lng
-        } )
-      })
-      return clients;
+  formatSpecialist(s: any): ISpecialist{
+    const [lat, lng] = this.getCityCoordinates(s.city);
+    const reg = this.getCityInfo(s.city)?.region;
+    return {
+      name: s.name,
+      id: s.id,
+      email: s.email,
+      phone: s.phone,
+      website: s.website? s.website: null,
+      city: s.city,
+      region: reg? reg: "",
+      BM: s.bm,
+      avatar: s.avatar? s.avatar: null,
+      experience: s.experience,
+      degree: s.degree,
+      mobility: s.mobility,
+      interests: s.interests,
+      available_from: s.available_from ? s.available_from: null,
+      notice: s.notice? s.notice : null,
+      latitude: lat,
+      longitude: lng
+    }
   }
 }
