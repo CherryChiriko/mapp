@@ -1,10 +1,10 @@
 [
   {
-      "name": "IMA Life",
-      "logo": "https://ima.it/pharma/wp-content/uploads/sites/2/2016/12/ima_logo-300x118.png",
-      "city": "Bologna",
-      "activities": ["Embedded", "DevOps"],
-      "need": ["Embedded"]
+    "name": "IMA Life",
+    "logo": "https://ima.it/pharma/wp-content/uploads/sites/2/2016/12/ima_logo-300x118.png",
+    "city": "Bologna",
+    "activities": ["Embedded", "DevOps"],
+    "need": ["Embedded"]
   },
   {
     "name": "Loccioni",

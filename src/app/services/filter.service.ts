@@ -23,7 +23,6 @@ export class FilterService{
 
   constructor(private form: FormService) {
 
-
     this.clientArray = this.form.formatClient(cData);
     this.clients$.next(this.clientArray);
     this.specialistArray = this.form.formatSpecialist(sData);
@@ -73,7 +72,7 @@ export class FilterService{
 
   addClient(newClient: IClient) {
     if(this.checkClient(newClient.name, newClient.city))
-    {      alert("Client is already present")    } 
+    {      alert("Client is already present")    }
     else{
       this.clientArray.push(newClient);
       this.clients$.next(this.clientArray);
