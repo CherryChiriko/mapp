@@ -1,79 +1,64 @@
 [
     {
-        "id": "C17",
+        "id": "TDACA17",
         "name": "Livio Rossi",
         "email": "livio@live.it",
         "phone": "333 22 55 671",
         "website": "wwww.livio-insta.com",
         "city": "Bologna",      
-        "region": "Emilia-Romagna",
         "mobility": ["Emilia-Romagna"],
         "experience": 1,
-        "degree": ["University", "Electrical Engineering"],
-        "interests": ["Frontend", "Fullstack"],
-        "available_from": "20/10/2023",
-        "latitude": 44.5075,
-        "longitude": 11.3514
+        "degree": ["Ing. Elettronica"],
+        "interests": ["Sviluppo SW", "Prog. Elettrica (AUT)", "Prog. Elettrica (IMP)"],
+        "available_from": "20/10/2023"
     },
     {
-        "id": "C18",
+        "id": "TDACA18",
         "name": "Mario Bianchi",
         "email": "mario@live.it",
         "phone": "334 22 55 672",
-        "city": "Cagliari",      
-        "region": "Sardegna",
+        "city": "Cagliari",   
         "mobility": ["Sardegna", "Sicilia"],
         "experience": 0,
-        "degree": ["Technical School", "Mechatronics"],
-        "interests": ["Backend", "Embedded", "Mobile"],
-        "notice": 11,
-        "latitude": 39.25,
-        "longitude": 9.05
+        "degree": ["Ing. Meccanica"],
+        "interests": ["Prog. Meccanica"],
+        "notice": 11
     },
     { 
-        "id": "C19",
+        "id": "TDACA19",
         "name": "Anna Verdi",
         "email": "anna@live.it",
         "phone": "335 22 55 673",
         "city": "Genova",
-        "region": "Liguria",
-        "mobility": ["Emilia-Romagna"],
+        "mobility": ["Nord Italia"],
         "experience": 0,
-        "degree": ["Technical School", "Chemistry"],
-        "interests": ["Backend", "Frontend", "Fullstack"],
-        "available_from": "01/05/2023",
-        "latitude": 44.411111,
-        "longitude": 8.932778
+        "degree": ["Ing. Gestionale"],
+        "interests": ["Data Scientist", "FE"],
+        "available_from": "01/05/2023"
   },
   {
-        "id": "C20",
+        "id": "TDACA20",
         "name": "Lara Neri",
         "email": "lara@live.it",
         "phone": "336 22 55 674",
         "city": "Firenze",
-        "region": "Toscana",
-        "mobility": ["Emilia-Romagna"],
+        "mobility": ["Centro-Nord"],
         "experience": 2,
-        "degree": ["University", "Informatics"],
-        "interests": ["Mobile"],
-        "available_from": "13/07/2023",
-        "latitude": 43.7686976,
-        "longitude": 11.2569291
+        "degree": ["Informatica"],
+        "interests": ["BE"],
+        "available_from": "13/07/2023"
   },
   {
-        "id": "C21",
+        "id": "TDACA21",
         "name": "Sofia Gialli",
         "email": "sofia@live.it",
         "phone": "337 22 55 675",
         "city": "Palermo",
-        "region": "Sicilia",
-        "mobility": ["Emilia-Romagna"],      
-        "degree": ["University", "Physics"],
+        "mobility": ["Emilia-Romagna", "Sicilia"],      
+        "degree": ["Perito Informatico"],
         "experience": 0,
-        "interests": ["Backend"],
-        "notice": 12,
-        "latitude": 38.116667,
-        "longitude": 13.366667
+        "interests": ["Sviluppo SW"],
+        "notice": 12
   }
 
 ]
