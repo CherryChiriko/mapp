@@ -31,7 +31,7 @@ export class FilterComponent {
 
   ngOnInit(): void {
     
-    let regionArr: string[] = this.form.getRegions(this.macroregions);
+    let regionArr: string[] = this.form.getRegionsArr(this.macroregions);
 
     this.sFilterForm = new FormGroup({
       name: new FormControl(null),

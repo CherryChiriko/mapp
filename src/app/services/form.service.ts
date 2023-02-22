@@ -33,6 +33,7 @@ export class FormService {
     return arr;
   }
 
+
   searchCity(expr: string){
     let reg = new RegExp(expr, "gi")
     let result = [{}];
@@ -54,13 +55,24 @@ export class FormService {
     )
     return result;
   }
-
   getCityCoordinates(cityName : string){
     const res = geoData?.find( element => element.comune === cityName);
     return [Number(res?.lat), Number(res?.lng)]
     // this.http.get(`${this.apiUrl}${cityName}`).subscribe(data => console.log("I Am ", data))
   }
+  getCityInfo(cityName: string){
+    return this.getAllCities()?.find( city => city.name === cityName)
+  }
+  getRegionsArr(arr: any){
+    let regionArr: string[] = [];
+    arr.map((macroregion: any) => {
+      let regions = macroregion.regions
+      regions.map( (region: string) => regionArr.push(region))
+    })
+    return regionArr;
+  }
 
+  
   treatAsUTC(date: Date) {
     date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
     return Number(date);
@@ -73,56 +85,55 @@ export class FormService {
     return this.datePipe.transform(date,'dd/MM/YYYY')!;
   }
 
-  getRegions(arr: any){
-    let regionArr: string[] = [];
-    arr.map((macroregion: any) => {
-      let regions = macroregion.regions
-      regions.map( (region: string) => regionArr.push(region))
-    })
-    return regionArr;
-  }
-
   formatSpecialist(sData: any[]): ISpecialist[]{
     let specialists : ISpecialist[] = [];
     sData.map( s => 
       {
+
+        const [lat, lng] = this.getCityCoordinates(s.city);
+        const reg = this.getCityInfo(s.city)?.region;
+
         specialists.push({
         name: s.name,
         id: s.id,
         email: s.email,
         phone: s.phone,
+        website: s.website? s.website: null,
         city: s.city,
-        region: "",
-        avatar: "",
-        experience: 0,
-        degree: [],
-        mobility: [],
-        interests: [],
-        available_from: "",
-        notice: 0,
-        latitude: 44.5075,
-        longitude: 11.3514
+        region: reg? reg: "",
+        avatar: s.avatar? s.avatar: null,
+        experience: s.experience,
+        degree: s.degree,
+        mobility: s.mobility,
+        interests: s.interests,
+        available_from: s.available_from ? s.available_from: null,
+        notice: s.notice? s.notice : null,
+        latitude: lat,
+        longitude: lng
       })
     }
     )
-    // website
+    // console.log(specialists)
     return specialists;
   }
-  formatClient(cData: any): IClient[]{
+  formatClient(cData: any[]): IClient[]{
     let clients : IClient[] = [];
-    cData.map( (c: any) => {
+    cData.map( c => {
+
+        const [lat, lng] = this.getCityCoordinates(c.city);
+        const reg = this.getCityInfo(c.city)?.region;
+        
         clients.push( {
           name: c.name,
           city: c.city,
-          region: "",
-          logo: "",
-          activities: [],
-          need: [],
-          latitude: 39.25,
-          longitude: 9.05
+          region: reg? reg : "",
+          logo: c?.logo,
+          activities: c.activities,
+          need: c.need,
+          latitude: lat,
+          longitude: lng
         } )
       })
-      console.log(clients)
       return clients;
   }
 }
