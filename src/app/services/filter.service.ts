@@ -37,10 +37,10 @@ export class FilterService{
 
   constructor(private form: FormService) {
 
-    this.clientArray = cData;
+    /*this.clientArray = cData;
     this.clients$.next(this.clientArray);
     this.specialistArray = sData;
-    this.specialists$.next(this.specialistArray);
+    this.specialists$.next(this.specialistArray);*/
 
     this.resetAllFilters();
   }
@@ -53,6 +53,14 @@ export class FilterService{
   initClient(client : IClient[]) {
     this.clientArray = client;
     this.clients$.next(this.clientArray);
+  }
+
+  getSpecialist() : ISpecialist[]{
+    return this.specialistArray;
+  }
+
+  getClient() : IClient[] {
+    return this.clientArray;
   }
 
 

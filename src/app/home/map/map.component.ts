@@ -26,30 +26,18 @@ export class MapComponent implements OnInit {
   showClients :    boolean = true;
   showSpecialists: boolean = true;
 
-  center: google.maps.LatLngLiteral = {
-    lat: INITIAL_COORDS[0],
-    lng: INITIAL_COORDS[1],
-  };
+  center: google.maps.LatLngLiteral = {    lat: INITIAL_COORDS[0],    lng: INITIAL_COORDS[1],  };
   zoom = 5;
 
-  public height = 450;
-  public width = 750;
+  // public height = 450;
+  // public width = 750;
 
   contacts: boolean[] = [];
   // isMixed : boolean = false;
 
-  constructor(
-    private map: MapService,
-    private filter: FilterService,
-    private helper: HelperService
-  ) {}
+  constructor(    private map: MapService,    private filter: FilterService,    private helper: HelperService  ) {}
 
   ngOnInit() {
-    // this.markersSubs = this.map.getSMarkers().subscribe(
-    //   value => this.specialists = value);
-    // this.markersSubs = this.map.getCMarkers().subscribe(
-    //   value => this.clients = value);
-
     this.sMarkersSubs = this.filter
       .sFilterData()
       .subscribe((value) => (this.specialists = value));
@@ -57,8 +45,7 @@ export class MapComponent implements OnInit {
     this.cMarkersSubs = this.filter
       .cFilterData()
       .subscribe((value) => (this.clients = value));
-    // this.allMarkers = [...this.clients, ...this.specialists];
-    // console.log(this.allMarkers)
+
     this.allMarkersSubs = combineLatest([
       this.filter.sFilterData(),
       this.filter.cFilterData(),
@@ -69,30 +56,25 @@ export class MapComponent implements OnInit {
     console.log(this.allMarkers);
   }
 
-  vedi(){
-    console.log(this.allMarkers);
-
-  }
-
 
 
   originalOrder =
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 
-  toggleContacts(i: number) {
-    this.contacts[i] = !this.contacts[i];
+  toggleContacts(i: number) {    this.contacts[i] = !this.contacts[i];  }
+  cToggleShow(){ this.showClients = !this.showClients}
+  sToggleShow(){ this.showSpecialists = !this.showSpecialists}
+  showMarkers(){
+    return (this.showClients && this.showSpecialists)? this.allMarkers :
+    this.showClients? this.clients : this.showSpecialists? this.specialists : [];
   }
+
   setContact() {
     if (!this.contacts.length) {
       for (let i = 0; i < this.specialists.length; i++) {
         this.contacts.push(false);
       }
     }
-  }
-
-  public addPixel() {
-    this.height += 50;
-    this.width += 100;
   }
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
@@ -103,9 +85,7 @@ export class MapComponent implements OnInit {
     infoWindow.close();
   }
 
-  isClient(element: IClient | ISpecialist) {
-    return element.hasOwnProperty('website') ? true : false;
-  }
+  isClient(element: IClient | ISpecialist) {    return !element.hasOwnProperty('id');  }
 
   filterByCity(arr: any[], cityName: string) {
     return arr.filter((element) => element.city === cityName);
@@ -119,25 +99,14 @@ export class MapComponent implements OnInit {
   }
 
   markerInfo(condition: boolean, mark: any) {
-    return condition
-      ? this.map.getCMarkerInfo(mark)
-      : this.map.getSMarkerInfo(mark);
+    return condition? this.map.getCMarkerInfo(mark) : this.map.getSMarkerInfo(mark);
   }
 
-  getColor(condition: boolean) {
-    return this.helper.getColorScheme(condition);
-  }
-  getIcon(condition: boolean) {
-    const url = 'http://maps.google.com/mapfiles/ms/icons/';
-    // const dotColor = this.isMixed ? 'red' : this.getColorScheme(condition).dot
-    const dotColor = this.getColor(condition).dot;
-    return `${url}${dotColor}-dot.png`;
-  }
+  getColor(condition: boolean) {   return this.helper.getColorScheme(condition);  }
+  getIcon(condition: boolean) { return this.helper.getIcon(condition)  }
 
   deleteElement(element: any) {
-    this.isClient(element)
-      ? this.filter.removeClient(element)
-      : this.filter.removeSpecialist(element);
+    this.isClient(element)? this.filter.removeClient(element) : this.filter.removeSpecialist(element);
   }
 
   ngOnDestroy() {

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { ExcelService } from 'src/app/services/excel.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
@@ -13,24 +14,23 @@ export class LoadExcelComponent {
   isCLoaded: boolean = false;
   isSLoaded: boolean = false;
 
-  specialistArray : ISpecialist[] = [];
-  clientArray : IClient[] = [];
+  public specialistArray : ISpecialist[] = [];
+  public clientArray : IClient[] = [];
 
-  constructor(private _excel: ExcelService, private helper: HelperService) {}
+  constructor(private _excel: ExcelService, private helper: HelperService, private _filt : FilterService) {
+  }
 
-  load(event: any) {
-    this.isClient
-      ? this._excel.importClients(event)
-      : this._excel.importSpecialists(event);
-    this.isClient ? (this.isCLoaded = true) : (this.isSLoaded = true);
+  load(event: any){
+    this.isClient? this._excel.importClients(event) : this._excel.importSpecialists(event);
+    this.isClient? this.isCLoaded = true : this.isSLoaded = true;
   }
-  save() {
-    //this.isClient? this._excel.exportClients() : this._excel.exportSpecialists();
+  save(){
+    this.specialistArray = this._filt.getSpecialist();
+    this.clientArray = this._filt.getClient();
+
+    this.isClient? this._excel.exportClients(this.clientArray) : this._excel.exportSpecialists(this.specialistArray);
   }
-  loadNew() {
-    this.isClient ? (this.isCLoaded = false) : (this.isSLoaded = false);
-  }
-  getButton() {
-    return this.helper.getButton(this.isClient);
-  }
+  loadNew(){ this.isClient? this.isCLoaded = false : this.isSLoaded = false}
+  getButton(){ return this.helper.getButton(this.isClient)}
+
 }

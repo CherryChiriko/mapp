@@ -2,10 +2,24 @@
 <div class="container mt-5">
     <!-- <button (click)="addPixel()">+</button>
     <button (click)="reducePixel()">-</button> -->
-    <button (click)="vedi()">vedi</button>
+    <div class="row">
+        <img class="mb-2 col-1" src="{{getIcon(true)}}">
+        <div class="form-check form-switch col-5">
+            <input class="form-check-input" (click)="cToggleShow()"
+            type="checkbox" role="switch" id="cOnOff" checked>
+            <label class="form-check-label" for="cOnOff">{{showClients? 'On' : 'Off'}}</label>
+        </div>
+        <img class="mb-2 col-1" src="{{getIcon(false)}}">
+        <div class="form-check form-switch col-5">
+            <input class="form-check-input" (click)="sToggleShow()"
+            type="checkbox" role="switch" id="sOnOff" checked>
+            <label class="form-check-label" for="sOnOff">{{showSpecialists? 'On' : 'Off'}}</label>
+        </div>
+    </div>
+
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark))"
-        *ngFor="let mark of allMarkers; let i=index"
+        *ngFor="let mark of showMarkers(); let i=index"
         [position]="{lat: mark.latitude, lng: mark.longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
