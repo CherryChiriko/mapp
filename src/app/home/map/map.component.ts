@@ -33,7 +33,6 @@ export class MapComponent implements OnInit {
   // public width = 750;
 
   contacts: boolean[] = [];
-  // isMixed : boolean = false;
 
   constructor(    private map: MapService,    private filter: FilterService,    private helper: HelperService  ) {}
 
@@ -91,11 +90,10 @@ export class MapComponent implements OnInit {
     return arr.filter((element) => element.city === cityName);
   }
   groupByCity(cityName: string): any[] {
-    // this.isMixed = false;
-    let sGroup = this.filterByCity(this.specialists, cityName);
-    let cGroup = this.filterByCity(this.clients, cityName);
-    // if (sGroup.length > 0 && cGroup.length > 0 ){ this.isMixed = true}
-    return [...cGroup, ...sGroup];
+    // let sGroup = this.filterByCity(this.specialists, cityName);
+    // let cGroup = this.filterByCity(this.clients, cityName);
+    // return [...cGroup, ...sGroup];
+    return this.filterByCity(this.showMarkers(), cityName)
   }
 
   markerInfo(condition: boolean, mark: any) {
