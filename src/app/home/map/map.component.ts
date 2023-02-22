@@ -8,6 +8,7 @@ import { FilterService } from 'src/app/services/filter.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { MapService } from 'src/app/services/map.service';
 
+
 const INITIAL_COORDS = [41.9028, 12.4964]; // Roma
 
 @Component({

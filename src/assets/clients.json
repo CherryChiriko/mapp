@@ -1,19 +1,11 @@
 [
   {
-<<<<<<< HEAD
-    "name": "IMA Life",
-    "logo": "https://ima.it/pharma/wp-content/uploads/sites/2/2016/12/ima_logo-300x118.png",
-    "city": "Bologna",
-    "activities": ["Embedded", "DevOps"],
-    "need": ["Embedded"]
-=======
       "name": "IMA Life",
       "logo": "https://ima.it/pharma/wp-content/uploads/sites/2/2016/12/ima_logo-300x118.png",
       "city": "Bologna",
-      "activities": ["Embedded", "DevOps"],      
+      "activities": ["Embedded", "DevOps"],
       "BM": "ACA",
       "need": ["Embedded"]
->>>>>>> 450106367e89a76f56a16e0d7ca55258505b3358
   },
   {
     "name": "Loccioni",

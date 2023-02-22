@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';  
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -52,7 +52,7 @@ import { LoadExcelComponent } from './home/load-excel/load-excel.component';
     GoogleMapsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    
+
     MatSelectModule,
     MatButtonModule,
     MatFormFieldModule,
