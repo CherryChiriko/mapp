@@ -17,7 +17,8 @@ export class FilterComponent {
   @Output() private onSFormGroupChange = new EventEmitter<any>();
   @Output() private onCFormGroupChange = new EventEmitter<any>();
 
-  specialArr: string[] = data.specialties;
+  // specialArr: string[] = data.specialties;
+  specialArr: string[] = [];
   degArr: string[] = data.degrees;
   macroregions = data["macro-regions"];
 

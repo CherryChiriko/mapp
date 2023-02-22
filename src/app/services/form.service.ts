@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+
 import citiesData from 'src/assets/istat-cities.json';
 import geoData from 'src/assets/italy_geo.json';
-import { ICities, ICity } from '../interfaces/interfaces';
+import { ICities, ICity, IClient, ISpecialist } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,6 @@ export class FormService {
       }
     });
   }
-
   convertToArray(val: any, name:string){
     let arr : string[] = [];
     Object.keys(val[name]).forEach(function (key) {
@@ -83,4 +82,47 @@ export class FormService {
     return regionArr;
   }
 
+  formatSpecialist(sData: any[]): ISpecialist[]{
+    let specialists : ISpecialist[] = [];
+    sData.map( s => 
+      {
+        specialists.push({
+        name: s.name,
+        id: s.id,
+        email: s.email,
+        phone: s.phone,
+        city: s.city,
+        region: "",
+        avatar: "",
+        experience: 0,
+        degree: [],
+        mobility: [],
+        interests: [],
+        available_from: "",
+        notice: 0,
+        latitude: 44.5075,
+        longitude: 11.3514
+      })
+    }
+    )
+    // website
+    return specialists;
+  }
+  formatClient(cData: any): IClient[]{
+    let clients : IClient[] = [];
+    cData.map( (c: any) => {
+        clients.push( {
+          name: c.name,
+          city: c.city,
+          region: "",
+          logo: "",
+          activities: [],
+          need: [],
+          latitude: 39.25,
+          longitude: 9.05
+        } )
+      })
+      console.log(clients)
+      return clients;
+  }
 }

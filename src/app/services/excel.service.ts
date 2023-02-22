@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FileSaverService } from 'ngx-filesaver';
-import { Observable, ReplaySubject } from 'rxjs';
 import * as XLSX from 'xlsx';
 import { IClient, ISpecialist } from '../interfaces/interfaces';
 import { FilterService } from './filter.service';

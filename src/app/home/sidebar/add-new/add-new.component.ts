@@ -17,7 +17,8 @@ export class AddNewComponent {
 
   @Input() isClient!: boolean;
 
-  specialArr: string[] = data.specialties;
+  // specialArr: string[] = data.specialties;
+  specialArr: string[] = [];
   degArr: string[] = data.degrees;
   citiesArr: ICity[] = this.form.getAllCities();
   

@@ -1,20 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  map,
-  Observable,
-  ReplaySubject,
-  Subscription,
-} from 'rxjs';
-import {
-  ICFilter,
-  IClient,
-  ISFilter,
-  ISpecialist,
-} from '../interfaces/interfaces';
-import { ExcelService } from './excel.service';
-import { HelperService } from './helper.service';
+import { BehaviorSubject, combineLatest, map, Observable, ReplaySubject } from 'rxjs';
+import { ICFilter, IClient, ISFilter, ISpecialist } from '../interfaces/interfaces';
 
 import sData from 'src/assets/specialists.json';
 import cData from 'src/assets/clients.json';
@@ -25,9 +11,9 @@ import { FormService } from './form.service';
   providedIn: 'root',
 })
 export class FilterService{
+
   clientArray: IClient[] = [];
   specialistArray: ISpecialist[] = [];
-
 
   clients$ = new BehaviorSubject<IClient[]>([]);
   specialists$ = new BehaviorSubject<ISpecialist[]>([]);
@@ -37,10 +23,11 @@ export class FilterService{
 
   constructor(private form: FormService) {
 
-    /*this.clientArray = cData;
+
+    this.clientArray = this.form.formatClient(cData);
     this.clients$.next(this.clientArray);
-    this.specialistArray = sData;
-    this.specialists$.next(this.specialistArray);*/
+    this.specialistArray = this.form.formatSpecialist(sData);
+    this.specialists$.next(this.specialistArray);
 
     this.resetAllFilters();
   }
@@ -55,15 +42,8 @@ export class FilterService{
     this.clients$.next(this.clientArray);
   }
 
-  getSpecialist() : ISpecialist[]{
-    return this.specialistArray;
-  }
-
-  getClient() : IClient[] {
-    return this.clientArray;
-  }
-
-
+  getClient() : IClient[] {    return this.clientArray;  }
+  getSpecialist() : ISpecialist[]{    return this.specialistArray;  }
 
   resetCFilter() {
     const emptyFilter = {
@@ -89,15 +69,12 @@ export class FilterService{
     };
     this.setSFilter(emptyFilter);
   }
-  resetAllFilters() {
-    this.resetCFilter();
-    this.resetSFilter();
-  }
+  resetAllFilters() {    this.resetCFilter();    this.resetSFilter();  }
 
   addClient(newClient: IClient) {
-    if(this.checkClient(newClient.name, newClient.city)){
-      alert("Errore, cliente gia presente")
-    }else{
+    if(this.checkClient(newClient.name, newClient.city))
+    {      alert("Client is already present")    } 
+    else{
       this.clientArray.push(newClient);
       this.clients$.next(this.clientArray);
     }
@@ -105,7 +82,7 @@ export class FilterService{
 
   addSpecialist(newSpecialist: ISpecialist) {
     if(this.checkSpecialist(newSpecialist.name, newSpecialist.email)){
-      alert("Errore, specialista gia presente")
+      alert("Consultant is already present")
     }else{
     this.specialistArray.push(newSpecialist);
     this.specialists$.next(this.specialistArray);
@@ -146,12 +123,8 @@ export class FilterService{
     this.specialists$.next(this.specialistArray);
   }
 
-  setSFilter(filt: ISFilter) {
-    this.sFilterSubj$.next(filt);
-  }
-  setCFilter(filt: ICFilter) {
-    this.cFilterSubj$.next(filt);
-  }
+  setSFilter(filt: ISFilter) {    this.sFilterSubj$.next(filt);  }
+  setCFilter(filt: ICFilter) {    this.cFilterSubj$.next(filt);  }
 
   createFilter(filter: any, isClient: boolean){
     const val = filter;
