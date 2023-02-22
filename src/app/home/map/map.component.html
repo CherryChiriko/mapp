@@ -18,7 +18,7 @@
                 <mat-expansion-panel-header class="text-center rounded header">
                 <mat-panel-title>
                     <div class="row tag">
-                        <div class="col-2"><img class="logo" src="{{el.logo}}" *ngIf="isClient(el) && el.logo !== null"></div>
+                        <div class="col-2" *ngIf="isClient(el) && el.logo"><img class="logo" src="{{el.logo}}" ></div>    
                         <div class="col">{{el.name}}</div>
                         <div class="col-2"><i class="material-symbols-outlined">expand_more</i></div>
                     </div>

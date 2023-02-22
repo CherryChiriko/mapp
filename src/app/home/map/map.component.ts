@@ -67,12 +67,10 @@ export class MapComponent implements OnInit {
     );
   }
 
-  originalOrder = (
-    a: KeyValue<string, string>,
-    b: KeyValue<string, string>
-  ): number => {
-    return 0;
-  };
+  
+  
+  originalOrder =
+  (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 
   toggleContacts(i: number) {
     this.contacts[i] = !this.contacts[i];
@@ -88,11 +86,6 @@ export class MapComponent implements OnInit {
   public addPixel() {
     this.height += 50;
     this.width += 100;
-  }
-
-  public reducePixel() {
-    this.height -= 50;
-    this.width -= 100;
   }
 
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
@@ -146,5 +139,16 @@ export class MapComponent implements OnInit {
     this.allMarkersSubs?.unsubscribe();
   }
 
-  filterForCompany(client: IClient) {}
+  filterForCompany(client: IClient){}
+  filterForSpecialist(specialist: ISpecialist){}
+
+  // public addPixel(){
+  //   this.height += 50;
+  //   this.width += 100;
+  // }
+
+  // public reducePixel(){
+  //   this.height -= 50;
+  //   this.width -= 100;
+  // }
 }
