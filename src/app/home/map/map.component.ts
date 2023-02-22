@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { combineLatest, Subscription } from 'rxjs';
 import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
+import { FavoriteListService } from 'src/app/services/favorite-list.service';
 import { FilterService } from 'src/app/services/filter.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { MapService } from 'src/app/services/map.service';
@@ -18,15 +19,20 @@ export class MapComponent implements OnInit {
   specialists: ISpecialist[] = [];
   clients: IClient[] = [];
   allMarkers: any[] = [];
+  favoriteSpecialist : ISpecialist[] = [];
 
   sMarkersSubs?: Subscription;
   cMarkersSubs?: Subscription;
   allMarkersSubs?: Subscription;
+  favoriteSpecialistSubs?: Subscription;
 
-  showClients :    boolean = true;
+  showClients: boolean = true;
   showSpecialists: boolean = true;
 
-  center: google.maps.LatLngLiteral = {    lat: INITIAL_COORDS[0],    lng: INITIAL_COORDS[1],  };
+  center: google.maps.LatLngLiteral = {
+    lat: INITIAL_COORDS[0],
+    lng: INITIAL_COORDS[1],
+  };
   zoom = 5;
 
   // public height = 450;
@@ -34,7 +40,12 @@ export class MapComponent implements OnInit {
 
   contacts: boolean[] = [];
 
-  constructor(    private map: MapService,    private filter: FilterService,    private helper: HelperService  ) {}
+  constructor(
+    private map: MapService,
+    private filter: FilterService,
+    private helper: HelperService,
+    private _favorite : FavoriteListService
+  ) {}
 
   ngOnInit() {
     this.sMarkersSubs = this.filter
@@ -52,20 +63,32 @@ export class MapComponent implements OnInit {
       ([specialists, clients]) =>
         (this.allMarkers = [...clients, ...specialists])
     );
-    console.log(this.allMarkers);
   }
 
+  originalOrder = (
+    a: KeyValue<string, string>,
+    b: KeyValue<string, string>
+  ): number => {
+    return 0;
+  };
 
-
-  originalOrder =
-  (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
-
-  toggleContacts(i: number) {    this.contacts[i] = !this.contacts[i];  }
-  cToggleShow(){ this.showClients = !this.showClients}
-  sToggleShow(){ this.showSpecialists = !this.showSpecialists}
-  showMarkers(){
-    return (this.showClients && this.showSpecialists)? this.allMarkers :
-    this.showClients? this.clients : this.showSpecialists? this.specialists : [];
+  toggleContacts(i: number) {
+    this.contacts[i] = !this.contacts[i];
+  }
+  cToggleShow() {
+    this.showClients = !this.showClients;
+  }
+  sToggleShow() {
+    this.showSpecialists = !this.showSpecialists;
+  }
+  showMarkers() {
+    return this.showClients && this.showSpecialists
+      ? this.allMarkers
+      : this.showClients
+      ? this.clients
+      : this.showSpecialists
+      ? this.specialists
+      : [];
   }
 
   setContact() {
@@ -84,7 +107,9 @@ export class MapComponent implements OnInit {
     infoWindow.close();
   }
 
-  isClient(element: IClient | ISpecialist) {    return !element.hasOwnProperty('id');  }
+  isClient(element: IClient | ISpecialist) {
+    return !element.hasOwnProperty('id');
+  }
 
   filterByCity(arr: any[], cityName: string) {
     return arr.filter((element) => element.city === cityName);
@@ -93,18 +118,26 @@ export class MapComponent implements OnInit {
     // let sGroup = this.filterByCity(this.specialists, cityName);
     // let cGroup = this.filterByCity(this.clients, cityName);
     // return [...cGroup, ...sGroup];
-    return this.filterByCity(this.showMarkers(), cityName)
+    return this.filterByCity(this.showMarkers(), cityName);
   }
 
   markerInfo(condition: boolean, mark: any) {
-    return condition? this.map.getCMarkerInfo(mark) : this.map.getSMarkerInfo(mark);
+    return condition
+      ? this.map.getCMarkerInfo(mark)
+      : this.map.getSMarkerInfo(mark);
   }
 
-  getColor(condition: boolean) {   return this.helper.getColorScheme(condition);  }
-  getIcon(condition: boolean) { return this.helper.getIcon(condition)  }
+  getColor(condition: boolean) {
+    return this.helper.getColorScheme(condition);
+  }
+  getIcon(condition: boolean) {
+    return this.helper.getIcon(condition);
+  }
 
   deleteElement(element: any) {
-    this.isClient(element)? this.filter.removeClient(element) : this.filter.removeSpecialist(element);
+    this.isClient(element)
+      ? this.filter.removeClient(element)
+      : this.filter.removeSpecialist(element);
   }
 
   ngOnDestroy() {
@@ -113,8 +146,8 @@ export class MapComponent implements OnInit {
     this.allMarkersSubs?.unsubscribe();
   }
 
-  filterForCompany(client: IClient){}
-  filterForSpecialist(specialist: ISpecialist){}
+  filterForCompany(client: IClient) {}
+  filterForSpecialist(specialist: ISpecialist) {}
 
   // public addPixel(){
   //   this.height += 50;
@@ -125,4 +158,20 @@ export class MapComponent implements OnInit {
   //   this.height -= 50;
   //   this.width -= 100;
   // }
+
+  public addFavorite(item : ISpecialist) {
+    this._favorite.addSpecialistFavorite(item);
+  }
+
+  public removeFavorite(item : ISpecialist) {
+    this._favorite.removeFavoriteSpecialist(item);
+  }
+
+  public getFavoriteList(){
+    this.favoriteSpecialistSubs = this._favorite
+    .getFavoriteList()
+    .subscribe(val => {
+      this.favoriteSpecialist = val;
+    })
+  }
 }
