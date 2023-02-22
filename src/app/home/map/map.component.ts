@@ -40,6 +40,7 @@ export class MapComponent implements OnInit {
     this.sMarkersSubs = this.filter
       .sFilterData()
       .subscribe((value) => (this.specialists = value));
+
     this.cMarkersSubs = this.filter
       .cFilterData()
       .subscribe((value) => (this.clients = value));
@@ -51,11 +52,12 @@ export class MapComponent implements OnInit {
       ([specialists, clients]) =>
         (this.allMarkers = [...clients, ...specialists])
     );
+    console.log(this.allMarkers);
   }
 
-  
-  
-  originalOrder =  
+
+
+  originalOrder =
   (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {return 0;}
 
   toggleContacts(i: number) {    this.contacts[i] = !this.contacts[i];  }
@@ -63,7 +65,7 @@ export class MapComponent implements OnInit {
   sToggleShow(){ this.showSpecialists = !this.showSpecialists}
   showMarkers(){
     return (this.showClients && this.showSpecialists)? this.allMarkers :
-    this.showClients? this.clients : this.showSpecialists? this.specialists : [];    
+    this.showClients? this.clients : this.showSpecialists? this.specialists : [];
   }
 
   setContact() {
