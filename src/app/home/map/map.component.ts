@@ -29,6 +29,7 @@ export class MapComponent implements OnInit {
 
   showClients: boolean = true;
   showSpecialists: boolean = true;
+  isStarFull: boolean = false;
 
   center: google.maps.LatLngLiteral = {
     lat: INITIAL_COORDS[0],
@@ -167,13 +168,16 @@ export class MapComponent implements OnInit {
 
   public addFavorite(item : ISpecialist) {
     this._favorite.addSpecialistFavorite(item);
-    console.log(this.favoriteSpecialist);
+    this.isStarFull = true;
+    console.log(this.isStarFull, this.favoriteSpecialist)
+    // console.log(this.favoriteSpecialist);
 
   }
 
   public removeFavorite(item : ISpecialist) {
-    this._favorite.removeFavoriteSpecialist(item);
-    console.log(this.favoriteSpecialist);
+    this._favorite.removeFavoriteSpecialist(item);    
+    this.isStarFull = false;
+    // console.log(this.favoriteSpecialist);
 
   }
 

@@ -1,20 +1,19 @@
 {
     "BMs": ["ACA", "AMI", "BFR", "BME", "DMT", "DPE", "FMR", "GNA", "LBR", "LZE", "MCV", "MLU", "MNV", "MVB", "RFU", "YCO"],
     "activities": [
-        {"name": "Managment", "roles": ["BA", "PE", "PM", "PMO", "Post Vendita"]},        
-        {"name": "Development", 
+        {"area": "Management", "roles": ["BA", "PE", "PM", "PMO", "Post Vendita"]},        
+        {"area": "Development", 
         "roles": ["BE", "FE", "Full stack", "Embedded", "Sviluppo SW", 
         "Data Scientist", "DevOps", "Doc Control", "HMI", "PLC",
         "SCADA Developer", "Firmware"]},
-        {"name": "Other engineering", 
+        {"area": "Test engineering", 
+        "roles": ["Prog. Elettrica (IMP)", 
+        "Technical Support", "Collaudo",  
+        "Testing HW", "Testing SW", "Verification Engineer" ]},        
+        {"area": "Other engineering", 
         "roles": ["Prog. Elettrica (AUT)", "Prog. Elettrica (IMP)",
         "Ing. Civile/Strutturista", "Ing. Processo", "Prog. Meccanica", 
-        "Progettazione HW", "Requirements", "System Engineer"]},
-        {"name": "Electrical", "roles": []},
-        {"name": "Test engineering", 
-        "roles": ["Collaudo", "Prog. Elettrica (IMP)", 
-        "Technical Support", "Technical Support", 
-        "Testing HW", "Testing SW", "Verification Engineer" ]}
+        "Progettazione HW", "Requirements", "System Engineer"]}
     ],
     "degrees": ["Architettura", "Economia", "Diploma", "Fisica", 
     "Informatica", "Ing. Aerospaziale", "Ing. Automazione", "Ing. Biomedica", 

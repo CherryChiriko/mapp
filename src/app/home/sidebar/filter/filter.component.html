@@ -20,11 +20,11 @@
             </label>
             <hr>
             <span *ngFor="let region of macroregion.regions; let i=index">
-                <input type="checkbox" class="btn-check" autocomplete="off" name="{{macroregion.name}}"
+                <input type="checkbox" class="btn-check" autocomplete="off" name="{{region}}"
                 
-                id="{{isClient ? 'c' : 's'}}-region-{{i}}" value="{{region}}"
+                id="{{isClient ? 'c' : 's'}}-{{region}}" value="{{region}}"
                 formControlName="{{region}}">
-                <label class="btn specialties" [ngClass]="getButton(isClient)" for="{{isClient ? 'c' : 's'}}-region-{{i}}">
+                <label class="btn specialties" [ngClass]="getButton(isClient)" for="{{isClient ? 'c' : 's'}}-{{region}}">
                 {{ region }}
                 </label>
             </span>

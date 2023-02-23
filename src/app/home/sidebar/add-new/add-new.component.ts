@@ -19,12 +19,16 @@ export class AddNewComponent {
   citiesArr: ICity[] = this.form.getAllCities();
   BMs: string[] = data.BMs;
   rolesArr: any = data.activities;
-  degArr: string[] = data.degrees;
+  degArr: string[] = data.degrees;  
+  macroregions = data["macro-regions"];
   
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
   
-  resultMessage: string = '';
+  result = {
+    resultMessage: '',
+    success: false
+  };
   // cityError: boolean = false;
   // dateError: boolean = false;
   
@@ -32,6 +36,9 @@ export class AddNewComponent {
   constructor(private filter : FilterService, private form: FormService, private helper: HelperService){}
 
   ngOnInit(): void {
+
+    const regionArr: string[] = this.form.getRegionsArr(this.macroregions);
+
     this.clientForm = new FormGroup({ 
       city: new FormControl(null, [Validators.required]),
       name: new FormControl(null),
@@ -47,11 +54,12 @@ export class AddNewComponent {
       id: new FormControl(null),
       bm: new FormControl(null),
 
-      website: new FormControl("", [Validators.pattern("https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}")]),
+      website: new FormControl(null, [Validators.pattern("https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}")]),
       email: new FormControl(null, [Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]),
       phone: new FormControl(null),
       
       background: new FormGroup({}),
+      experience: new FormControl(null),
       interests: new FormGroup({}),
       mobility: new FormGroup({}),
       start: new FormControl<Date | null | number>(null)
@@ -64,7 +72,7 @@ export class AddNewComponent {
     this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)
     this.form.addElementToFormGroup(this.specialistForm, 'background', this.degArr)    
     this.form.addElementToFormGroup(this.specialistForm, 'interests', this.rolesArr)    
-    // this.form.addElementToFormGroup(this.specialistForm, 'mobility', this.form.getRegionsArr())
+    this.form.addElementToFormGroup(this.specialistForm, 'mobility', regionArr)
   }
 
   addClient(){
@@ -87,55 +95,39 @@ export class AddNewComponent {
   }
   addSpecialist(){
     const val = this.specialistForm.value;
-    let cityInfo: string[] = val.city.split(",");
+
+    const cityInfo: string[] = val.city.split(",");
+    const backArr: string[] = this.form.convertToArray(val, "background"); 
+    const interestsArr: string[] = this.form.convertToArray(val, "interests");   
+    const regionsArr : string[] = this.form.convertToArray(val, "mobility");
+
+    console.log(val)
 
     let newSpecialist = {
       name: val.name,
       id: val.id,
       city: cityInfo[0],
       BM: val.bm,
+
       email: val.email,
       phone: val.phone,
-      website: val.website
+      website: val.website,
+
+      background: backArr,
+      experience: val.experience,
+      interests: interestsArr,
+      mobility: regionsArr,
+      start: val.start
     }
     console.log(newSpecialist)
     this.filter.addSpecialist(this.form.formatSpecialist(newSpecialist));
-    this.clientForm.reset();
-
-    // 
-    // let [lat, lng] = this.form.getCityCoordinates(cityInfo[0]);
-    
-    // const date : Date = val.end? val.end : new Date();
-    // // this.dateError = val.end ? false : true;
-
-    // let interestsArr : string[] = this.form.convertToArray(val, "interests")
-    // let specialtiesArr : string[] = this.form.convertToArray(val, "specialties")
-
-    // let newSpecialist: ISpecialist = {
-    //   id: "",
-    //   name: val.name,
-    //   email: val.email,
-    //   phone: val.phone,
-    //   city: `${cityInfo.join(", ")}`,
-    //   region: cityInfo[1],
-    //   BM: val.bm,
-    //   experience: 0,
-    //   degree: val.degree,
-    //   interests: interestsArr,
-    //   available_from: this.form.formatDate(date),
-    //   notice: val.end ? this.form.daysBetween(val.start, date) : 0,
-    //   latitude: lat,
-    //   longitude: lng,
-    //   mobility: ["false"]
-    // }
-    // console.log(newSpecialist)
-    // this.filter.addSpecialist(newSpecialist);
-    // this.specialistForm.reset();
+    this.specialistForm.reset();
   }
 
   add(){    
     this.isClient? this.addClient() : this.addSpecialist();
-    this.resultMessage = `${this.isClient? 'Client': 'Consultant'} successfully added`
+    this.result.resultMessage = `${this.isClient? 'Client': 'Consultant'} successfully added`;
+    this.result.success = true;
   }
 
   formatLabel(value: number): string {
