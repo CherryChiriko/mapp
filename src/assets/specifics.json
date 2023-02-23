@@ -21,10 +21,10 @@
     "Ing. Energetica", "Ing. Gestionale", "Ing. Informatica", "Ing. Meccanica", "Ing. Meccatronica", 
     "ITS Maker", "Ing. Navale", "Ing. Telecomunicazioni", "Matematica", "Perito Elettrico", 
     "Perito Industriale", "Perito Informatico", "Perito Meccanico"],
-    "macro-regions": [
-        {"name": "North", "regions": ["Trentino-Alto Adige", "Lombardia", "Emilia-Romagna", "Piemonte", "Liguria", "Friuli-Venezia Giulia", "Valle d'Aosta", "Veneto"]},
-        {"name": "Centre", "regions": ["Marche", "Abruzzo", "Lazio", "Molise", "Umbria", "Toscana"]},
-        {"name":"South", "regions":["Campania", "Basilicata", "Calabria", "Puglia", "Sicilia", "Sardegna"]}
+    "macroregions": [
+        {"area": "North", "regions": ["Trentino-Alto Adige", "Lombardia", "Emilia-Romagna", "Piemonte", "Liguria", "Friuli-Venezia Giulia", "Valle d'Aosta", "Veneto"]},
+        {"area": "Centre", "regions": ["Marche", "Abruzzo", "Lazio", "Molise", "Umbria", "Toscana"]},
+        {"area":"South", "regions":["Campania", "Basilicata", "Calabria", "Puglia", "Sicilia", "Sardegna"]}
     ]
 
 }

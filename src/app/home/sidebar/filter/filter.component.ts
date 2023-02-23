@@ -20,7 +20,7 @@ export class FilterComponent {
   // specialArr: string[] = data.specialties;
   specialArr: string[] = [];
   degArr: string[] = data.degrees;
-  macroregions = data["macro-regions"];
+  macroregions = data.macroregions;
 
   citiesArr: ICity[] = this.form.getAllCities();
 
@@ -31,7 +31,7 @@ export class FilterComponent {
 
   ngOnInit(): void {
     
-    let regionArr: string[] = this.form.getRegionsArr(this.macroregions);
+    let regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
 
     this.sFilterForm = new FormGroup({
       name: new FormControl(null),

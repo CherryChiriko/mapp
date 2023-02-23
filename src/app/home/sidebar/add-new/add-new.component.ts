@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICity, IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { FilterService } from 'src/app/services/filter.service';
@@ -15,20 +15,18 @@ import data from 'src/assets/specifics.json';
 export class AddNewComponent {
 
   @Input() isClient!: boolean;
-  
+  @Output('add') result = new EventEmitter<{ resultMessage: string, success: boolean }>();
+
+
   citiesArr: ICity[] = this.form.getAllCities();
   BMs: string[] = data.BMs;
-  rolesArr: any = data.activities;
+  rolesArrTot: any = data.activities;
   degArr: string[] = data.degrees;  
-  macroregions = data["macro-regions"];
+  macroregions = data.macroregions;
   
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
   
-  result = {
-    resultMessage: '',
-    success: false
-  };
   // cityError: boolean = false;
   // dateError: boolean = false;
   
@@ -37,7 +35,8 @@ export class AddNewComponent {
 
   ngOnInit(): void {
 
-    const regionArr: string[] = this.form.getRegionsArr(this.macroregions);
+    const regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
+    const rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
 
     this.clientForm = new FormGroup({ 
       city: new FormControl(null, [Validators.required]),
@@ -58,7 +57,7 @@ export class AddNewComponent {
       email: new FormControl(null, [Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]),
       phone: new FormControl(null),
       
-      background: new FormGroup({}),
+      background: new FormControl(null),
       experience: new FormControl(null),
       interests: new FormGroup({}),
       mobility: new FormGroup({}),
@@ -66,12 +65,11 @@ export class AddNewComponent {
     });
 
     this.form.addElementToFormGroup(this.clientForm, 'bm', this.BMs)
-    this.form.addElementToFormGroup(this.clientForm, 'activities', this.rolesArr)
-    this.form.addElementToFormGroup(this.clientForm, 'need', this.rolesArr)
+    this.form.addElementToFormGroup(this.clientForm, 'activities', rolesArr)
+    this.form.addElementToFormGroup(this.clientForm, 'need', rolesArr)
 
-    this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)
-    this.form.addElementToFormGroup(this.specialistForm, 'background', this.degArr)    
-    this.form.addElementToFormGroup(this.specialistForm, 'interests', this.rolesArr)    
+    this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)  
+    this.form.addElementToFormGroup(this.specialistForm, 'interests', rolesArr)    
     this.form.addElementToFormGroup(this.specialistForm, 'mobility', regionArr)
   }
 
@@ -97,7 +95,6 @@ export class AddNewComponent {
     const val = this.specialistForm.value;
 
     const cityInfo: string[] = val.city.split(",");
-    const backArr: string[] = this.form.convertToArray(val, "background"); 
     const interestsArr: string[] = this.form.convertToArray(val, "interests");   
     const regionsArr : string[] = this.form.convertToArray(val, "mobility");
 
@@ -113,7 +110,7 @@ export class AddNewComponent {
       phone: val.phone,
       website: val.website,
 
-      background: backArr,
+      background: val.background,
       experience: val.experience,
       interests: interestsArr,
       mobility: regionsArr,
@@ -126,8 +123,8 @@ export class AddNewComponent {
 
   add(){    
     this.isClient? this.addClient() : this.addSpecialist();
-    this.result.resultMessage = `${this.isClient? 'Client': 'Consultant'} successfully added`;
-    this.result.success = true;
+    this.result.emit(
+      { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true})
   }
 
   formatLabel(value: number): string {
@@ -145,3 +142,4 @@ export class AddNewComponent {
   getButton(condition: boolean){return this.helper.getButton(condition)}
   
 }
+

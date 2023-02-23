@@ -42,7 +42,9 @@
         <div [hidden]="!isNewOpen"> 
         <button class="btn m-2" [ngClass]="getButton(true)" (click)="toggleClient()">Client</button>
         <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleSpecialist()">Consultant</button>    
-           <app-add-new [isClient]="true" *ngIf="isClientOpen"
+           <app-add-new 
+           (add)="onNewAdded($event)"
+           [isClient]="true" *ngIf="isClientOpen"
            style="--color: {{getColor(true).color}}; 
            --lightColor: {{getColor(true).lightColor}}; 
            --darkColor: {{getColor(true).darkColor}}"></app-add-new>

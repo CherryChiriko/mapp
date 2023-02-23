@@ -20,6 +20,8 @@ export class SidebarComponent implements OnInit {
   isFilterOn: boolean = true;
   CFilt: any;  SFilt: any;
 
+  message = { resultMessage: '', success: false};
+
   constructor(private helper: HelperService, private filter: FilterService){}
 
   ngOnInit(): void {}
@@ -49,6 +51,11 @@ export class SidebarComponent implements OnInit {
   onSFormGroupChangeEvent(event: any) {   this.SFilt = event;  }
   
   getButton(condition: boolean){ return this.helper.getButton(condition)}
+
+  onNewAdded(eventData: { resultMessage: string, success: boolean }) {
+    this.message = eventData;
+    console.log('event ', eventData)
+  }
 }
 
 

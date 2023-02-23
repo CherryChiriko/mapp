@@ -10,12 +10,12 @@
         formArrayName="regions">
             <mat-expansion-panel-header class="rounded">
                 <mat-panel-title class="rounded ">
-                    {{ macroregion.name }}                
+                    {{ macroregion.area }}                
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <input type="checkbox" class="form-check-input" id="all-{{macroregion.name}}"
-            (click)="checkAll(macroregion.name)">
-            <label class="form-check-label all" for="all-{{macroregion.name}}">
+            <input type="checkbox" class="form-check-input" id="all-{{macroregion.area}}"
+            (click)="checkAll(macroregion.area)">
+            <label class="form-check-label all" for="all-{{macroregion.area}}">
                 All
             </label>
             <hr>
