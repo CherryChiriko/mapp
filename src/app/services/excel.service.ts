@@ -76,6 +76,26 @@ export class ExcelService {
     this._fileSaver.save(blobData, 'clientFile');
   }
 
+  //-------------------------------------------------------------------------------lista preferiti
+  exportFavorites(favoritesArray : ISpecialist[]) {
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+    //custom code
+    const worksheet = XLSX.utils.json_to_sheet(favoritesArray);
+    const workbook = {
+      Sheets: {
+        testingSheet: worksheet,
+      },
+      SheetNames: ['testingSheet'],
+    };
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
+    this._fileSaver.save(blobData, 'favoritesSpecialistFile');
+  }
+
 
 
 

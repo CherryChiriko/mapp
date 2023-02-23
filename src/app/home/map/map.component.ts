@@ -49,6 +49,7 @@ export class MapComponent implements OnInit {
     private _favorite : FavoriteListService
   ) {}
 
+
   ngOnInit() {
     this.sMarkersSubs = this.filter
       .sFilterData()
@@ -69,7 +70,7 @@ export class MapComponent implements OnInit {
     .getFavoriteList()
     .subscribe(val => {
       this.favoriteSpecialist = val;
-    })
+    });
   }
 
   originalOrder = (
