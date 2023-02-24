@@ -139,8 +139,12 @@
             </select>
         </div>
         
-        <button class="btn m-2 mb-4" [ngClass]="getButton(isClient)" 
+        <!-- <button class="btn m-2 mb-4" [ngClass]="getButton(isClient)" 
+        (click)="add()">Add {{isClient? "client": "specialist"}}</button> -->
+        <button mat-raised-button 
+        class="btn m-2 mb-4" [ngClass]="getButton(isClient)" 
         (click)="add()">Add {{isClient? "client": "specialist"}}</button>
+
     </form>
     
 </div>

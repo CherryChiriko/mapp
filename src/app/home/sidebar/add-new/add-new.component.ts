@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ICity, IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { FilterService } from 'src/app/services/filter.service';
 import { FormService } from 'src/app/services/form.service';
@@ -29,7 +30,8 @@ export class AddNewComponent {
   clientForm!: FormGroup;
 
 
-  constructor(private filter : FilterService, private form: FormService, private helper: HelperService){}
+  constructor(private filter : FilterService, private form: FormService, 
+    private helper: HelperService, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
 
@@ -123,13 +125,16 @@ export class AddNewComponent {
     this.specialistForm.reset();
   }
 
-  add(){
+  getButton(condition: boolean){return this.helper.getButton(condition)}
+
+  add() {
     this.isClient? this.addClient() : this.addSpecialist();
     this.result.emit(
       { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true})
+    let res = { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true}
+    this.snackBar.open(res.resultMessage, '', { duration: 2000 });
+    res.success = false;
   }
-
-  getButton(condition: boolean){return this.helper.getButton(condition)}
 
 }
 
