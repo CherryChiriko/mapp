@@ -23,14 +23,14 @@ export class AddNewComponent {
   BMs: string[] = data.BMs;
   rolesArrTot: any = data.activities;
   rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
-  degArr: string[] = data.degrees;  
+  degArr: string[] = data.degrees;
   macroregions = data.macroregions;
 
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
 
 
-  constructor(private filter : FilterService, private form: FormService, 
+  constructor(private filter : FilterService, private form: FormService,
     private helper: HelperService, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
@@ -74,9 +74,10 @@ export class AddNewComponent {
 
   addClient(){
     const val = this.clientForm.value;
-    
+
     const cityInfo: string[] = val.city.split(",");
-    const activitiesArr: string[] = this.form.convertToArray(val, "activities");  
+    const activitiesArr: string[] = this.form.convertToArray(val, "activities");
+    const activitiesStr = activitiesArr.join(',');
 
     console.log(val)
     let newClient = {
@@ -85,7 +86,7 @@ export class AddNewComponent {
       city: cityInfo[0],
       BM: val.bm,
 
-      activities: activitiesArr,
+      activities: activitiesStr,
       need: val.need
     }
     console.log(newClient)

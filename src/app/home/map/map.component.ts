@@ -31,6 +31,8 @@ export class MapComponent implements OnInit {
   showSpecialists: boolean = true;
   isStarFull: boolean = false;
 
+
+
   center: google.maps.LatLngLiteral = {
     lat: INITIAL_COORDS[0],
     lng: INITIAL_COORDS[1],
@@ -43,7 +45,7 @@ export class MapComponent implements OnInit {
   contacts: boolean[] = [];
 
   constructor(
-    private map: MapService,
+    private _map: MapService,
     private filter: FilterService,
     private helper: HelperService,
     private _favorite : FavoriteListService
@@ -73,7 +75,9 @@ export class MapComponent implements OnInit {
     });
   }
 
-  
+
+
+
   cToggleShow() {
     this.showClients = !this.showClients;
   }
@@ -91,6 +95,7 @@ export class MapComponent implements OnInit {
   }
 
  infoWindows: any[] = [];
+ map !: google.maps.Map;
 
  openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
   this.infoWindows.forEach((w) => w.close());
