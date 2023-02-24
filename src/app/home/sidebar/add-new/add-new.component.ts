@@ -24,9 +24,10 @@ export class AddNewComponent {
   rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
   degArr: string[] = data.degrees;  
   macroregions = data.macroregions;
-  
+
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
+
 
   constructor(private filter : FilterService, private form: FormService, private helper: HelperService){}
 
@@ -35,7 +36,7 @@ export class AddNewComponent {
     const regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
     const rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
 
-    this.clientForm = new FormGroup({ 
+    this.clientForm = new FormGroup({
       city: new FormControl(null, [Validators.required]),
       name: new FormControl(null),
       bm: new FormControl(null),
@@ -53,7 +54,7 @@ export class AddNewComponent {
       website: new FormControl(null, [Validators.pattern("https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}")]),
       email: new FormControl(null, [Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]),
       phone: new FormControl(null),
-      
+
       background: new FormControl(null),
       experience: new FormControl(null),
       interests: new FormGroup({}),
@@ -64,8 +65,8 @@ export class AddNewComponent {
     this.form.addElementToFormGroup(this.clientForm, 'bm', this.BMs)
     this.form.addElementToFormGroup(this.clientForm, 'activities', rolesArr)
 
-    this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)  
-    this.form.addElementToFormGroup(this.specialistForm, 'interests', rolesArr)    
+    this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)
+    this.form.addElementToFormGroup(this.specialistForm, 'interests', rolesArr)
     this.form.addElementToFormGroup(this.specialistForm, 'mobility', regionArr)
   }
 
@@ -93,8 +94,11 @@ export class AddNewComponent {
     const val = this.specialistForm.value;
 
     const cityInfo: string[] = val.city.split(",");
-    const interestsArr: string[] = this.form.convertToArray(val, "interests");   
+    const interestsArr: string[] = this.form.convertToArray(val, "interests");
     const regionsArr : string[] = this.form.convertToArray(val, "mobility");
+
+    const interestsStr = interestsArr.join(',');
+    const regionsStr = regionsArr.join(',');
 
     console.log(val)
 
@@ -110,8 +114,8 @@ export class AddNewComponent {
 
       background: val.background,
       experience: val.experience,
-      interests: interestsArr,
-      mobility: regionsArr,
+      interests: interestsStr,
+      mobility: regionsStr,
       start: val.start
     }
     console.log(newSpecialist)
@@ -119,13 +123,13 @@ export class AddNewComponent {
     this.specialistForm.reset();
   }
 
-  add(){    
+  add(){
     this.isClient? this.addClient() : this.addSpecialist();
     this.result.emit(
       { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true})
   }
 
   getButton(condition: boolean){return this.helper.getButton(condition)}
-  
+
 }
 

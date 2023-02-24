@@ -107,12 +107,6 @@ export class MapComponent implements OnInit {
     }
   }
 
-  /*
-  openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
-    this.setContact();
-    infoWindow.open(marker);
-  }
-  */
  infoWindows: any[] = [];
 
  openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
