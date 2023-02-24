@@ -8,9 +8,7 @@
       "DevOps"
     ],
     "BM": "ACA",
-    "need": [
-      "Embedded"
-    ]
+    "need": "Embedded"
   },
   {
     "name": "Loccioni",
@@ -22,9 +20,6 @@
       "Testing SW",
       "Collaudo"
     ],
-    "need": [
-      "Embedded",
-      "Collaudo"
-    ]
+    "need": "Embedded"
   }
 ]

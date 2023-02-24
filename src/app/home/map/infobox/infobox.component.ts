@@ -14,7 +14,7 @@ import { MapService } from 'src/app/services/map.service';
 export class InfoboxComponent {
   @Input() mark!: any;
   @Input() totalMarkers!: any;
-
+  
   isStarFull: boolean = false;
   showContacts: boolean = false;
 
