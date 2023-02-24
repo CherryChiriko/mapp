@@ -24,20 +24,21 @@ export class FilterService{
   constructor(private form: FormService) {
 
 
+    /*
     this.clientArray = this.form.formatClientArr(cData);
     this.clients$.next(this.clientArray);
     this.specialistArray = this.form.formatSpecialistArr(sData);
-    this.specialists$.next(this.specialistArray);
+    this.specialists$.next(this.specialistArray);*/
     this.resetAllFilters();
   }
 
   initSpecialist(specialist : ISpecialist[]) {
-    this.specialistArray = specialist;
+    this.specialistArray = this.form.formatSpecialistArr(specialist);
     this.specialists$.next(this.specialistArray);
   }
 
   initClient(client : IClient[]) {
-    this.clientArray = client;
+    this.clientArray = this.form.formatClientArr(client);
     this.clients$.next(this.clientArray);
   }
 
