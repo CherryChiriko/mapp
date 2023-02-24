@@ -73,7 +73,7 @@ export class FilterService{
 
   addClient(newClient: IClient) {
     if(this.checkClient(newClient.name, newClient.city))
-    {      alert("Client is already present")    }
+    {      alert("Client " + newClient.name + " is already present in " + newClient.city)    }
     else{
       this.clientArray.push(newClient);
       this.clients$.next(this.clientArray);
@@ -81,17 +81,18 @@ export class FilterService{
   }
 
   addSpecialist(newSpecialist: ISpecialist) {
-    if(this.checkSpecialist(newSpecialist.name, newSpecialist.email)){
-      alert("Consultant is already present")
+    if(this.checkSpecialist(newSpecialist.id)){
+      alert("Consultant with ID " + newSpecialist.id + " is already present")
     }else{
     this.specialistArray.push(newSpecialist);
     this.specialists$.next(this.specialistArray);
     }
   }
 
-  checkSpecialist(name : string , email : string) : boolean{
-    let matchUser = this.specialistArray.find((spec) => name === spec.name);
-    if(matchUser?.email === email) {
+  checkSpecialist(id : string) : boolean {
+    let matchUser = this.specialistArray.find((spec) =>
+    id === spec.id)
+    if(matchUser){
       return true;
     }else{
       return false;
