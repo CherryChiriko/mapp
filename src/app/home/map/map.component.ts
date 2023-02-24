@@ -107,10 +107,21 @@ export class MapComponent implements OnInit {
     }
   }
 
+  /*
   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
     this.setContact();
     infoWindow.open(marker);
   }
+  */
+ infoWindows: any[] = [];
+
+ openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
+  this.infoWindows.forEach((w) => w.close());
+  this.infoWindows = [infoWindow];
+  this.setContact();
+  infoWindow.open(marker);
+  }
+
   closeInfoWindow(infoWindow: MapInfoWindow) {
     infoWindow.close();
   }
@@ -176,7 +187,7 @@ export class MapComponent implements OnInit {
   }
 
   public removeFavorite(item : ISpecialist) {
-    this._favorite.removeFavoriteSpecialist(item);    
+    this._favorite.removeFavoriteSpecialist(item);
     this.isStarFull = false;
     // console.log(this.favoriteSpecialist);
 

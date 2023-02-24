@@ -23,7 +23,7 @@
         [position]="{lat: mark.latitude, lng: mark.longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
-        <map-info-window #infoWindow="mapInfoWindow">
+        <map-info-window #infoWindow="mapInfoWindow" [options]="{disableAutoPan:true}">
             <div class="text-center rounded" *ngFor="let el of groupByCity(mark.city)">
                 <div class="row align-items-center">
                   <div class="col-1">
@@ -37,7 +37,7 @@
             <!-- <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header class="text-center rounded header">
                 <mat-panel-title>
-                    <div class="row tag">                   
+                    <div class="row tag">
                         <div class="col-2" *ngIf="isClient(el) && el.logo"><img class="logo" src="{{el.logo}}" ></div>
                         <div class="col">{{el.name}}</div>
                         <div class="col-2"><i class="material-symbols-outlined">expand_more</i></div>
@@ -48,13 +48,13 @@
                     <thead *ngIf="!isClient(el)">
                         <tr>
                         <td class="rounded contacts">
-                            <i (click)="toggleContacts(i)" 
+                            <i (click)="toggleContacts(i)"
                             class="material-symbols-outlined align-middle mr-2">contact_page</i>
                             <p class="m-0">Contacts</p>
-                        </td>    
+                        </td>
                         <td class="rounded favourite" (click)="isStarFull? removeFavorite(el): addFavorite(el)">
                             <i *ngIf="!isStarFull" class="material-icons align-middle mr-2">star_border</i>
-                            <i *ngIf="isStarFull" class="star-full material-icons align-middle mr-2">star</i> 
+                            <i *ngIf="isStarFull" class="star-full material-icons align-middle mr-2">star</i>
                         </td>
                         </tr>
                         <tr *ngIf="contacts[i]">
