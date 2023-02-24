@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { HelperService } from 'src/app/services/helper.service';
 import { FilterService } from 'src/app/services/filter.service';
 
@@ -54,8 +54,17 @@ export class SidebarComponent implements OnInit {
 
   onNewAdded(eventData: { resultMessage: string, success: boolean }) {
     this.message = eventData;
-    console.log('event ', eventData)
+    this.toggleNew();
   }
+
+  closeAlert(){
+    setTimeout(() => {
+      console.log("Delayed for 1 second.");
+    }, 1000)    
+    console.log("I'm closing")
+  }
+
+
 }
 
 

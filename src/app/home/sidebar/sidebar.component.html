@@ -9,7 +9,7 @@
             </div>
         </div>
         
-        <div [hidden]="!isFilterOpen">
+        <div *ngIf="isFilterOpen">
             <button class="btn m-2" [ngClass]="getButton(true)" (click)="toggleFilterClient()">Client</button>
             <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleFilterSpecialist()">Consultant</button>    
             
@@ -31,15 +31,8 @@
             Clear all</button>
         </div>
         <hr>
-        <!-- <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header class="text-center rounded header">
-            <mat-panel-title class="colors"> -->
-                <!-- <h4>Add New</h4> -->
-            <!-- </mat-panel-title>
-            </mat-expansion-panel-header> -->
-            <!-- <div class="colors"> -->
         <h4 (click)="toggleNew()">Add New</h4>
-        <div [hidden]="!isNewOpen"> 
+        <div *ngIf="isNewOpen"> 
         <button class="btn m-2" [ngClass]="getButton(true)" (click)="toggleClient()">Client</button>
         <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleSpecialist()">Consultant</button>    
            <app-add-new 
@@ -48,10 +41,13 @@
            style="--color: {{getColor(true).color}}; 
            --lightColor: {{getColor(true).lightColor}}; 
            --darkColor: {{getColor(true).darkColor}}"></app-add-new>
+           
            <app-add-new [isClient]="false" *ngIf="isSpecialistOpen"
            style="--color: {{getColor(false).color}}; 
            --lightColor: {{getColor(false).lightColor}}; 
            --darkColor: {{getColor(false).darkColor}}"></app-add-new>
         </div>
-            
+        <div class="alert alert-success my-2" id='alert' role="alert" [hidden]="!message.success">
+        {{message.resultMessage}}
+        </div>
     </div>

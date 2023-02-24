@@ -21,15 +21,12 @@ export class AddNewComponent {
   citiesArr: ICity[] = this.form.getAllCities();
   BMs: string[] = data.BMs;
   rolesArrTot: any = data.activities;
+  rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
   degArr: string[] = data.degrees;  
   macroregions = data.macroregions;
   
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
-  
-  // cityError: boolean = false;
-  // dateError: boolean = false;
-  
 
   constructor(private filter : FilterService, private form: FormService, private helper: HelperService){}
 
@@ -44,7 +41,7 @@ export class AddNewComponent {
       bm: new FormControl(null),
       picture: new FormControl(null),
       activities: new FormGroup({}),
-      need: new FormGroup({}),
+      need: new FormControl(null),
     });
 
     this.specialistForm = new FormGroup({
@@ -66,7 +63,6 @@ export class AddNewComponent {
 
     this.form.addElementToFormGroup(this.clientForm, 'bm', this.BMs)
     this.form.addElementToFormGroup(this.clientForm, 'activities', rolesArr)
-    this.form.addElementToFormGroup(this.clientForm, 'need', rolesArr)
 
     this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)  
     this.form.addElementToFormGroup(this.specialistForm, 'interests', rolesArr)    
@@ -75,16 +71,18 @@ export class AddNewComponent {
 
   addClient(){
     const val = this.clientForm.value;
-    let cityInfo: string[] = val.city.split(",");
+    
+    const cityInfo: string[] = val.city.split(",");
+    const activitiesArr: string[] = this.form.convertToArray(val, "activities");  
 
-    // const lookForArr : string[] = this.form.convertToArray(val, "lookFor");
-
+    console.log(val)
     let newClient = {
       name: val.name,
       logo: val.picture,
       city: cityInfo[0],
       BM: val.bm,
-      activities: val.activities,
+
+      activities: activitiesArr,
       need: val.need
     }
     console.log(newClient)
@@ -127,18 +125,6 @@ export class AddNewComponent {
       { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true})
   }
 
-  formatLabel(value: number): string {
-    switch(value){
-      case 0: return "No experience";
-      case 1: return "Some experience";
-      case 2: return "Technical high school";
-      case 3: return "Bachelor degree";
-      case 4: return "Master degree";
-      case 5: return "Mid";
-      case 6: return "Senior";
-    }
-    return "";
-  }
   getButton(condition: boolean){return this.helper.getButton(condition)}
   
 }
