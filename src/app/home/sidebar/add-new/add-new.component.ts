@@ -85,7 +85,7 @@ export class AddNewComponent {
       city: cityInfo[0],
       BM: val.bm,
 
-      activities: activitiesArr,
+      activities: activitiesArr.join(', '),
       need: val.need
     }
     console.log(newClient)
@@ -98,9 +98,6 @@ export class AddNewComponent {
     const cityInfo: string[] = val.city.split(",");
     const interestsArr: string[] = this.form.convertToArray(val, "interests");
     const regionsArr : string[] = this.form.convertToArray(val, "mobility");
-
-    const interestsStr = interestsArr.join(',');
-    const regionsStr = regionsArr.join(',');
 
     console.log(val)
 
@@ -116,8 +113,8 @@ export class AddNewComponent {
 
       background: val.background,
       experience: val.experience,
-      interests: interestsStr,
-      mobility: regionsStr,
+      interests: interestsArr.join(', '),
+      mobility: regionsArr.join(', '),
       start: val.start
     }
     console.log(newSpecialist)
