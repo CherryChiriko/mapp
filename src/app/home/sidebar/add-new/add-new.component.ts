@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ICity, IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { FilterService } from 'src/app/services/filter.service';
 import { FormService } from 'src/app/services/form.service';
@@ -21,17 +22,16 @@ export class AddNewComponent {
   citiesArr: ICity[] = this.form.getAllCities();
   BMs: string[] = data.BMs;
   rolesArrTot: any = data.activities;
-  degArr: string[] = data.degrees;
+  rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
+  degArr: string[] = data.degrees;  
   macroregions = data.macroregions;
 
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
 
-  // cityError: boolean = false;
-  // dateError: boolean = false;
 
-
-  constructor(private filter : FilterService, private form: FormService, private helper: HelperService){}
+  constructor(private filter : FilterService, private form: FormService, 
+    private helper: HelperService, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
 
@@ -44,7 +44,7 @@ export class AddNewComponent {
       bm: new FormControl(null),
       picture: new FormControl(null),
       activities: new FormGroup({}),
-      need: new FormGroup({}),
+      need: new FormControl(null),
     });
 
     this.specialistForm = new FormGroup({
@@ -66,7 +66,6 @@ export class AddNewComponent {
 
     this.form.addElementToFormGroup(this.clientForm, 'bm', this.BMs)
     this.form.addElementToFormGroup(this.clientForm, 'activities', rolesArr)
-    this.form.addElementToFormGroup(this.clientForm, 'need', rolesArr)
 
     this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)
     this.form.addElementToFormGroup(this.specialistForm, 'interests', rolesArr)
@@ -75,19 +74,18 @@ export class AddNewComponent {
 
   addClient(){
     const val = this.clientForm.value;
-    let cityInfo: string[] = val.city.split(",");
+    
+    const cityInfo: string[] = val.city.split(",");
+    const activitiesArr: string[] = this.form.convertToArray(val, "activities");  
 
-    const activitiesArr : string[] = this.form.convertToArray(val, "activities");
-    const activitiesStr = activitiesArr.join(',');
-
-    // const lookForArr : string[] = this.form.convertToArray(val, "lookFor");
-
+    console.log(val)
     let newClient = {
       name: val.name,
       logo: val.picture,
       city: cityInfo[0],
       BM: val.bm,
-      activities: activitiesStr,
+
+      activities: activitiesArr,
       need: val.need
     }
     console.log(newClient)
@@ -127,25 +125,16 @@ export class AddNewComponent {
     this.specialistForm.reset();
   }
 
-  add(){
+  getButton(condition: boolean){return this.helper.getButton(condition)}
+
+  add() {
     this.isClient? this.addClient() : this.addSpecialist();
     this.result.emit(
       { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true})
+    let res = { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true}
+    this.snackBar.open(res.resultMessage, '', { duration: 2000 });
+    res.success = false;
   }
-
-  formatLabel(value: number): string {
-    switch(value){
-      case 0: return "No experience";
-      case 1: return "Some experience";
-      case 2: return "Technical high school";
-      case 3: return "Bachelor degree";
-      case 4: return "Master degree";
-      case 5: return "Mid";
-      case 6: return "Senior";
-    }
-    return "";
-  }
-  getButton(condition: boolean){return this.helper.getButton(condition)}
 
 }
 

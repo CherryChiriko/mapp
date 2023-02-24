@@ -52,10 +52,8 @@ export class SidebarComponent implements OnInit {
   
   getButton(condition: boolean){ return this.helper.getButton(condition)}
 
-  onNewAdded(eventData: { resultMessage: string, success: boolean }) {
-    this.message = eventData;
-    console.log('event ', eventData)
-  }
+  onNewAdded() {    this.toggleNew(); this.isClientOpen= false; this.isSpecialistOpen = false; }
+
 }
 
 

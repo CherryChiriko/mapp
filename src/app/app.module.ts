@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +32,7 @@ import { HammerModule} from '@angular/platform-browser';
 import { AddNewComponent } from './home/sidebar/add-new/add-new.component';
 import { FilterComponent } from './home/sidebar/filter/filter.component';
 import { LoadExcelComponent } from './home/load-excel/load-excel.component';
+import { InfoboxComponent } from './home/map/infobox/infobox.component';
 
 // npm i ngx-mat-intl-tel-input --save
 // npm install libphonenumber-js --save
@@ -45,6 +47,7 @@ import { LoadExcelComponent } from './home/load-excel/load-excel.component';
     AddNewComponent,
     FilterComponent,
     LoadExcelComponent,
+    InfoboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { LoadExcelComponent } from './home/load-excel/load-excel.component';
     CdkAccordionModule,
     MatSliderModule,
     HammerModule,
+    MatSnackBarModule,
 
     BrowserAnimationsModule
   ],
