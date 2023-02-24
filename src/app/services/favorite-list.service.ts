@@ -15,6 +15,8 @@ export class FavoriteListService {
   public addSpecialistFavorite(specialist : ISpecialist){
     this.favoriteSArray.push(specialist);
     this.favoriteSpecialist$.next(this.favoriteSArray);
+    console.log(this.favoriteSArray);
+
   }
 
   public removeFavoriteSpecialist(specialist : ISpecialist){
@@ -23,6 +25,8 @@ export class FavoriteListService {
       this.favoriteSArray.splice(index, 1);
     }
     this.favoriteSpecialist$.next(this.favoriteSArray);
+    console.log(this.favoriteSArray);
+
   }
 
   public getFavoriteList() : Observable<ISpecialist[]> {

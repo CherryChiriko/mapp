@@ -143,7 +143,7 @@ export class FormService {
       BM: s.bm,
       avatar: s.avatar? s.avatar: null,
       experience: s.experience,
-      degree: s.degree,
+      background: s.background,
       mobility: s.mobility,
       interests: s.interests,
       available_from: s.available_from ? s.available_from: null,

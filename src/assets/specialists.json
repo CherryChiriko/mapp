@@ -5,11 +5,11 @@
         "email": "livio@live.it",
         "phone": "333 22 55 671",
         "website": "wwww.livio-insta.com",
-        "city": "Bologna",      
+        "city": "Bologna",
         "mobility": ["Emilia-Romagna"],
         "BM": "RFU",
         "experience": 1,
-        "degree": ["Ing. Elettronica"],
+        "background": ["Ing. Elettronica"],
         "interests": ["Sviluppo SW", "Prog. Elettrica (AUT)", "Prog. Elettrica (IMP)"],
         "available_from": "20/10/2023"
     },
@@ -18,15 +18,15 @@
         "name": "Mario Bianchi",
         "email": "mario@live.it",
         "phone": "334 22 55 672",
-        "city": "Cagliari",   
+        "city": "Cagliari",
         "mobility": ["Sardegna", "Sicilia"],
         "BM": "RFU",
         "experience": 0,
-        "degree": ["Ing. Meccanica"],
+        "background": ["Ing. Meccanica"],
         "interests": ["Prog. Meccanica"],
         "notice": 11
     },
-    { 
+    {
         "id": "TDACA19",
         "name": "Anna Verdi",
         "email": "anna@live.it",
@@ -35,7 +35,7 @@
         "mobility": ["Nord Italia"],
         "BM": "RFU",
         "experience": 0,
-        "degree": ["Ing. Gestionale"],
+        "background": ["Ing. Gestionale"],
         "interests": ["Data Scientist", "FE"],
         "available_from": "01/05/2023"
   },
@@ -48,7 +48,7 @@
         "mobility": ["Centro-Nord"],
         "BM": "RFU",
         "experience": 2,
-        "degree": ["Informatica"],
+        "background": ["Informatica"],
         "interests": ["BE"],
         "available_from": "13/07/2023"
   },
@@ -58,9 +58,9 @@
         "email": "sofia@live.it",
         "phone": "337 22 55 675",
         "city": "Palermo",
-        "mobility": ["Emilia-Romagna", "Sicilia"],      
+        "mobility": ["Emilia-Romagna", "Sicilia"],
         "BM": "RFU",
-        "degree": ["Perito Informatico"],
+        "background": ["Perito Informatico"],
         "experience": 0,
         "interests": ["Sviluppo SW"],
         "notice": 12

@@ -58,7 +58,7 @@ export class ExcelService {
       mobility: s.mobility,
       BM: s.bm,
       experience: s.experience,
-      degree: s.degree,
+      background: s.background,
       interests: s.interests,
       available_from: s.available_from ? s.available_from: null,
       notice: s.notice
