@@ -6,11 +6,11 @@ import { IClient, ISpecialist } from '../interfaces/interfaces';
 })
 
 export class MapService {
-  
+
   getSMarkerInfo(mark: ISpecialist){
     let info = {
       // Specialties: mark.skills,
-      Degree: mark.degree,
+      Background: mark.background,
       City: mark.city,
       // "Available to move": mark.canMove ? 'yes' : 'no',
       "Available from": mark.available_from,
@@ -27,6 +27,6 @@ export class MapService {
     }
     return info
   }
-   
-  
+
+
 }

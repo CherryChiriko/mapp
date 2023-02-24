@@ -23,7 +23,7 @@ export interface ISpecialist {
   BM: string;
   avatar?: string;
   experience: number;
-  degree: string[];
+  background: string[];
   mobility: string[];
   interests: string[];
   available_from?: string;
