@@ -5,16 +5,16 @@
             class="form-control rounded text-center my-2"
             formControlName="city">
             <option disabled selected [ngValue]="null">-- City --</option>
-            <option *ngFor="let city of citiesArr" 
+            <option *ngFor="let city of citiesArr"
             value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
-        </select>   
-        <!-- <small style="color: var(--darkColor)" 
+        </select>
+        <!-- <small style="color: var(--darkColor)"
         *ngIf="clientForm?.errors?.['required'] &&
         clientForm?.get('city')?.touched">** Required field **</small>             -->
-        <small style="color: var(--darkColor)" 
-        *ngIf="clientForm?.get('city')?.invalid && clientForm?.errors?.['required']">** Required field **</small>    
-        
-        <input type="text" name="name" 
+        <small style="color: var(--darkColor)"
+        *ngIf="clientForm?.get('city')?.invalid && clientForm?.errors?.['required']">** Required field **</small>
+
+        <input type="text" name="name"
         class="form-control text-center my-2" placeholder="Name"
         formControlName = "name">
 
@@ -27,7 +27,7 @@
         formControlName = "id">
 
         <select name="bm" id="{{isClient? 'c-': 's-'}}bm"
-            class="form-select text-center my-3" 
+            class="form-select text-center my-3"
             formControlName = "bm">
             <option [ngValue]="null" disabled selected>--Business Manager--</option>
             <option *ngFor="let bm of BMs" value="{{bm}}">{{bm}}</option>
@@ -37,8 +37,8 @@
             <p>Contacts</p>
             <mat-form-field appearance="outline" >
                 <mat-label>Phone number</mat-label>
-                <ngx-mat-intl-tel-input formControlName="phone" 
-                    [enablePlaceholder]="true" [enableSearch]="true" 
+                <ngx-mat-intl-tel-input formControlName="phone"
+                    [enablePlaceholder]="true" [enableSearch]="true"
                     name="phone" #phone>
                 </ngx-mat-intl-tel-input>
             </mat-form-field>
@@ -46,14 +46,14 @@
             <input type="text" name="email"
             class="form-control text-center my-2" placeholder="Email"
             formControlName = "email">
-            <small class="text-danger" 
+            <small class="text-danger"
             *ngIf="specialistForm.get('email')?.errors?.['pattern']">
             Enter a valid email address</small>
 
             <input type="text" name="website"
             class="form-control text-center my-2" placeholder="Website"
             formControlName = "website">
-            <small class="text-danger" 
+            <small class="text-danger"
             *ngIf="specialistForm.get('website')?.errors?.['pattern']">
             Enter a valid website</small>
         </div>
@@ -63,24 +63,24 @@
         formArrayName="{{isClient? 'activities': 'interests'}}">
             <mat-expansion-panel-header class="rounded">
                 <mat-panel-title class="rounded ">
-                    {{ roles.area }}                
+                    {{ roles.area }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <span *ngFor="let role of roles.roles; let i=index">
-                <input type="checkbox" class="btn-check" autocomplete="off" 
+                <input type="checkbox" class="btn-check" autocomplete="off"
                 name="{{isClient? 'c': 's'}}-{{role}}"
                 id="{{isClient? 'c': 's'}}-{{role}}" value="{{role}}"
                 formControlName="{{role}}">
                 <label class="btn specialties" [ngClass]="getButton(false)" for="{{isClient? 'c': 's'}}-{{role}}">
                 {{ role }}
                 </label>
-            </span>              
+            </span>
         </mat-expansion-panel>
 
         <div *ngIf="!isClient" class="contacts rounded container my-3">
             <p>Background</p>
             <select name="background" id="background"
-            class="form-select text-center my-3" 
+            class="form-select text-center my-3"
             formControlName = "background">
                 <option [ngValue]="null" disabled selected>--Background--</option>
                 <option *ngFor="let d of degArr" value="{{d}}">{{d}}</option>
@@ -97,11 +97,11 @@
 
         <div *ngIf="!isClient" class="contacts rounded container">
             <p> Mobility </p>
-            <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions" 
+            <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions"
             formArrayName="mobility">
                 <mat-expansion-panel-header class="rounded">
                     <mat-panel-title class="rounded ">
-                        {{ macroregion.area }}                
+                        {{ macroregion.area }}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <!-- <input type="checkbox" class="form-check-input" id="all-{{macroregion.name}}"
@@ -128,9 +128,9 @@
                 <span class="input-group-text">days</span>
             </div>
         </div>
-        
-        <button class="btn m-2 mb-4" [ngClass]="getButton(isClient)" 
+
+        <button class="btn m-2 mb-4" [ngClass]="getButton(isClient)"
         (click)="add()">Add {{isClient? "client": "specialist"}}</button>
     </form>
-    
+
 </div>

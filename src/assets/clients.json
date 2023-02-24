@@ -1,18 +1,30 @@
 [
   {
-      "name": "IMA Life",
-      "logo": "https://ima.it/pharma/wp-content/uploads/sites/2/2016/12/ima_logo-300x118.png",
-      "city": "Bologna",
-      "activities": ["Embedded", "DevOps"],
-      "BM": "ACA",
-      "need": ["Embedded"]
+    "name": "IMA Life",
+    "logo": "https://ima.it/pharma/wp-content/uploads/sites/2/2016/12/ima_logo-300x118.png",
+    "city": "Bologna",
+    "activities": [
+      "Embedded",
+      "DevOps"
+    ],
+    "BM": "ACA",
+    "need": [
+      "Embedded"
+    ]
   },
   {
     "name": "Loccioni",
     "logo": "https://www.loccioni.com/wp-content/themes/bst-master/img/loccioni_w.svg",
     "city": "Ancona",
     "BM": "RFU",
-    "activities": ["Embedded", "Testing SW", "Collaudo"],
-    "need": ["Embedded", "Collaudo"]
-}
+    "activities": [
+      "Embedded",
+      "Testing SW",
+      "Collaudo"
+    ],
+    "need": [
+      "Embedded",
+      "Collaudo"
+    ]
+  }
 ]

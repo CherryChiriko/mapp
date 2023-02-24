@@ -3,13 +3,13 @@ import { Observable } from "rxjs";
 export interface IClient {
   name: string;
   city: string;
-  region: string;
+  region ?: string;
   BM: string;
   logo?: string;
   activities: string[];
   need: string[];
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface ISpecialist {
@@ -19,7 +19,7 @@ export interface ISpecialist {
   phone: string;
   website?: string;
   city: string;
-  region: string;
+  region ?: string;
   BM: string;
   avatar?: string;
   experience: number;
@@ -28,11 +28,9 @@ export interface ISpecialist {
   interests: string[];
   available_from?: string;
   notice?: number;
-  latitude: number;
-  longitude: number;
+  latitude ?: number;
+  longitude ?: number;
 }
-
-
 
 export interface ISFilter {
   name: string | null;

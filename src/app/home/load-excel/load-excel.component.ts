@@ -17,6 +17,9 @@ export class LoadExcelComponent {
   public specialistArray : ISpecialist[] = [];
   public clientArray : IClient[] = [];
 
+  public clientArrayFormatted : IClient[] = [];
+  public specialistArrayFormatted : ISpecialist[] = [];
+
   constructor(private _excel: ExcelService, private helper: HelperService, private _filt : FilterService) {
   }
 
@@ -26,9 +29,12 @@ export class LoadExcelComponent {
   }
   save(){
     this.specialistArray = this._filt.getSpecialist();
-    this.clientArray = this._filt.getClient();
+    this.specialistArrayFormatted = this._excel.formatExcelSpecialistArr(this.specialistArray);
 
-    this.isClient? this._excel.exportClients(this.clientArray) : this._excel.exportSpecialists(this.specialistArray);
+    this.clientArray = this._filt.getClient();
+    this.clientArrayFormatted = this._excel.formatExcelClientArr(this.clientArray);
+
+    this.isClient? this._excel.exportClients(this.clientArrayFormatted) : this._excel.exportSpecialists(this.specialistArrayFormatted);
   }
   loadNew(){ this.isClient? this.isCLoaded = false : this.isSLoaded = false}
   getButton(){ return this.helper.getButton(this.isClient)}

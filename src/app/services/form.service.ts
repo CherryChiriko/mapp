@@ -121,7 +121,7 @@ export class FormService {
       need: c.need,
       latitude: lat,
       longitude: lng
-    } 
+    }
   }
 
   formatSpecialistArr(sData: any[]): ISpecialist[]{
@@ -147,7 +147,7 @@ export class FormService {
       mobility: s.mobility,
       interests: s.interests,
       available_from: s.available_from ? s.available_from: null,
-      notice: s.notice? s.notice : null,
+      notice: s.notice ? s.notice : null,
       latitude: lat,
       longitude: lng
     }

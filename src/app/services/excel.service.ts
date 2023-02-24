@@ -42,6 +42,29 @@ export class ExcelService {
     this._fileSaver.save(blobData, 'specialistFile');
   }
 
+  formatExcelSpecialistArr(sData: any[]): ISpecialist[]{
+    let specialists : ISpecialist[] = [];
+    sData.map( s => specialists.push(this.formatExcelSpecialist(s)))
+    return specialists;
+  }
+  formatExcelSpecialist(s: any): ISpecialist{
+
+    return {
+      id: s.id,
+      name: s.name,
+      email: s.email,
+      phone: s.phone,
+      city: s.city,
+      mobility: s.mobility,
+      BM: s.bm,
+      experience: s.experience,
+      degree: s.degree,
+      interests: s.interests,
+      available_from: s.available_from ? s.available_from: null,
+      notice: s.notice
+    }
+  }
+
   //--------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------Metodi Clienti
@@ -74,6 +97,23 @@ export class ExcelService {
     });
     const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
     this._fileSaver.save(blobData, 'clientFile');
+  }
+
+  formatExcelClientArr(cData: IClient[]): IClient[]{
+    let clients : IClient[] = [];
+    cData.map( c => clients.push(this.formatExcelClient(c)))
+    return clients;
+  }
+
+  public formatExcelClient(c : any) : IClient {
+    return {
+      name : c.name,
+      logo : c?.logo,
+      city : c.city,
+      BM : c.bm,
+      activities : c.activities,
+      need : c.need
+    }
   }
 
   //-------------------------------------------------------------------------------lista preferiti
