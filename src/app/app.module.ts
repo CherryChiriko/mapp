@@ -32,6 +32,7 @@ import { HammerModule} from '@angular/platform-browser';
 import { AddNewComponent } from './home/sidebar/add-new/add-new.component';
 import { FilterComponent } from './home/sidebar/filter/filter.component';
 import { LoadExcelComponent } from './home/load-excel/load-excel.component';
+import { InfoboxComponent } from './home/map/infobox/infobox.component';
 
 // npm i ngx-mat-intl-tel-input --save
 // npm install libphonenumber-js --save
@@ -46,6 +47,7 @@ import { LoadExcelComponent } from './home/load-excel/load-excel.component';
     AddNewComponent,
     FilterComponent,
     LoadExcelComponent,
+    InfoboxComponent,
   ],
   imports: [
     BrowserModule,

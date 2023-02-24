@@ -1,7 +1,5 @@
 
 <div class="container mt-5">
-    <!-- <button (click)="addPixel()">+</button>
-    <button (click)="reducePixel()">-</button> -->
     <div class="row">
         <img class="mb-2 col-1" src="{{getIcon(true)}}">
         <div class="form-check form-switch col-5">
@@ -24,67 +22,11 @@
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow" [options]="{disableAutoPan:true}">
-            <div class="text-center rounded" *ngFor="let el of groupByCity(mark.city)">
-                <div class="row align-items-center">
-                  <div class="col-1">
-                    <div class="rounded favourite" *ngIf="!isClient(el)"
-                         (click)="isStarFull ? removeFavorite(el) : addFavorite(el)">
-                      <i *ngIf="!isStarFull" class="material-icons align-middle" style="font-size: 1rem">star_border</i>
-                      <i *ngIf="isStarFull" class="star-full material-icons align-middle" style="font-size: 1rem">star</i>
-                    </div>
-                  </div>
-        <div class="col-9"></div></div></div>
-            <!-- <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header class="text-center rounded header">
-                <mat-panel-title>
-                    <div class="row tag">
-                        <div class="col-2" *ngIf="isClient(el) && el.logo"><img class="logo" src="{{el.logo}}" ></div>
-                        <div class="col">{{el.name}}</div>
-                        <div class="col-2"><i class="material-symbols-outlined">expand_more</i></div>
-                    </div>
-                </mat-panel-title>
-                </mat-expansion-panel-header>
-                <table class="table">
-                    <thead *ngIf="!isClient(el)">
-                        <tr>
-                        <td class="rounded contacts">
-                            <i (click)="toggleContacts(i)"
-                            class="material-symbols-outlined align-middle mr-2">contact_page</i>
-                            <p class="m-0">Contacts</p>
-                        </td>
-                        <td class="rounded favourite" (click)="isStarFull? removeFavorite(el): addFavorite(el)">
-                            <i *ngIf="!isStarFull" class="material-icons align-middle mr-2">star_border</i>
-                            <i *ngIf="isStarFull" class="star-full material-icons align-middle mr-2">star</i>
-                        </td>
-                        </tr>
-                        <tr *ngIf="contacts[i]">
-                            <td  class="contacts p-3 rounded"><i class="material-symbols-outlined mr-2">mail</i>
-                            <p class="m-0">{{el.email}}</p></td></tr>
-                        <tr *ngIf="contacts[i]">
-                            <td class="contacts p-3 rounded"><i class="material-symbols-outlined mr-2">call</i>
-                            <p class="m-0">{{el.phone}}</p></td></tr>
-                        <tr *ngIf="contacts[i] && el.website">
-                            <td class="contacts p-3 rounded"><i class="material-symbols-outlined mr-2">language</i>
-                            <a class="m-0" href="`${el.website}`" target="blank">{{el.website}}</a></td></tr>
-                    </thead>
-
-                    <tr *ngFor="let item of markerInfo(isClient(el), el) | keyvalue: originalOrder">
-                        <td class="rounded">
-                            {{item.key}} : {{item.value}}
-                        </td>
-                    </tr>
-                    <tr *ngIf="isClient(el)"><td class="borderless">
-                        <button class="btn btn-primary" (click)="filterForCompany(el)">Matches for this company</button></td></tr>
-                </table>
-                <button class="btn btn-danger" (click)="deleteElement(el)">Delete</button>
-            </mat-expansion-panel>
+            <app-infobox [mark]="mark" [totalMarkers]="showMarkers()"></app-infobox>
         </map-info-window>
         </map-marker>
     </google-map>
 </div>
 
-<!-- Work: -->
-<!-- [icon]="'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'" -->
-<!-- [icon]="'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'" -->
-<!-- Does not work:
-[icon]="'src/assets/img/google_marker_green.jpg'" -->
+<!-- <button (click)="addPixel()">+</button>
+<button (click)="reducePixel()">-</button> -->

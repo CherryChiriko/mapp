@@ -73,16 +73,7 @@ export class MapComponent implements OnInit {
     });
   }
 
-  originalOrder = (
-    a: KeyValue<string, string>,
-    b: KeyValue<string, string>
-  ): number => {
-    return 0;
-  };
-
-  toggleContacts(i: number) {
-    this.contacts[i] = !this.contacts[i];
-  }
+  
   cToggleShow() {
     this.showClients = !this.showClients;
   }
@@ -99,45 +90,16 @@ export class MapComponent implements OnInit {
       : [];
   }
 
-  setContact() {
-    if (!this.contacts.length) {
-      for (let i = 0; i < this.specialists.length; i++) {
-        this.contacts.push(false);
-      }
-    }
-  }
-
  infoWindows: any[] = [];
 
  openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
   this.infoWindows.forEach((w) => w.close());
   this.infoWindows = [infoWindow];
-  this.setContact();
   infoWindow.open(marker);
-  }
-
-  closeInfoWindow(infoWindow: MapInfoWindow) {
-    infoWindow.close();
   }
 
   isClient(element: IClient | ISpecialist) {
     return !element.hasOwnProperty('id');
-  }
-
-  filterByCity(arr: any[], cityName: string) {
-    return arr.filter((element) => element.city === cityName);
-  }
-  groupByCity(cityName: string): any[] {
-    // let sGroup = this.filterByCity(this.specialists, cityName);
-    // let cGroup = this.filterByCity(this.clients, cityName);
-    // return [...cGroup, ...sGroup];
-    return this.filterByCity(this.showMarkers(), cityName);
-  }
-
-  markerInfo(condition: boolean, mark: any) {
-    return condition
-      ? this.map.getCMarkerInfo(mark)
-      : this.map.getSMarkerInfo(mark);
   }
 
   getColor(condition: boolean) {
@@ -147,20 +109,12 @@ export class MapComponent implements OnInit {
     return this.helper.getIcon(condition);
   }
 
-  deleteElement(element: any) {
-    this.isClient(element)
-      ? this.filter.removeClient(element)
-      : this.filter.removeSpecialist(element);
-  }
-
   ngOnDestroy() {
     this.sMarkersSubs?.unsubscribe();
     this.cMarkersSubs?.unsubscribe();
     this.allMarkersSubs?.unsubscribe();
   }
 
-  filterForCompany(client: IClient) {}
-  filterForSpecialist(specialist: ISpecialist) {}
 
   // public addPixel(){
   //   this.height += 50;
@@ -171,23 +125,4 @@ export class MapComponent implements OnInit {
   //   this.height -= 50;
   //   this.width -= 100;
   // }
-
-  public addFavorite(item : ISpecialist) {
-    this._favorite.addSpecialistFavorite(item);
-    this.isStarFull = true;
-    console.log(this.isStarFull, this.favoriteSpecialist)
-    // console.log(this.favoriteSpecialist);
-
-  }
-
-  public removeFavorite(item : ISpecialist) {
-    this._favorite.removeFavoriteSpecialist(item);
-    this.isStarFull = false;
-    // console.log(this.favoriteSpecialist);
-
-  }
-
-  public getFavoriteList() : ISpecialist[]{
-    return this.favoriteSpecialist;
-  }
 }
