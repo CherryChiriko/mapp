@@ -1,13 +1,13 @@
 #sidebar-div{
     background-color: var(--main);
-    color: white;
+    color: var(--alten-black);
     border: solid white 1px;
     max-height: 85vh;
     overflow-y: auto;
 }
-hr { color: var(--dark-color-black)}
+hr { color: var(--alten-black)}
 .form-div{
-    background-color: var(--dark-color-black);
+    background-color: var(--alten-black);
     color: var(--main);
 }
 h4{cursor: pointer;}

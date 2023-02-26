@@ -1,0 +1,31 @@
+.favorite{
+    position: absolute;
+    right: -10rem;
+    top: 0;
+    max-width: 10rem;
+}
+.favorite-star{
+    background-color: var(--light-alten-yellow);
+    color: var(--main);
+    margin-left: 1rem;
+}
+.expand{ color: white; }
+.close { color: red; margin-top: -.8rem;}
+.star-full {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+mat-expansion-panel-header{    
+    background-color: var(--alten-blue) !important;
+} 
+.contact-box{
+    border: transparent;
+    margin-left: -.5rem; margin-right: -.5rem;
+    margin-top: .5rem;  
+    text-align: center;
+    background-color: var(--light-alten-blue);
+}

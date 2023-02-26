@@ -77,7 +77,6 @@ export class AddNewComponent {
 
     const cityInfo: string[] = val.city.split(",");
     const activitiesArr: string[] = this.form.convertToArray(val, "activities");
-    const activitiesStr = activitiesArr.join(',');
 
     console.log(val)
     let newClient = {
