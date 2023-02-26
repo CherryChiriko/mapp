@@ -38,7 +38,9 @@ p{
     border-color: var(--bs-btn-active-border-color);
     margin: .2rem;
 }
-
+.all{
+  margin-left: 1rem;
+}
 .contacts{
   border: 1px solid var(--darkColor)
 }

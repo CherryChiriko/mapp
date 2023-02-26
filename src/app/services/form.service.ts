@@ -58,29 +58,11 @@ export class FormService {
   getCityCoordinates(cityName : string){
     const res = geoData?.find( element => element.comune === cityName);
     return [Number(res?.lat), Number(res?.lng)]
-    // this.http.get(`${this.apiUrl}${cityName}`).subscribe(data => console.log("I Am ", data))
   }
   getCityInfo(cityName: string){
     return this.getAllCities()?.find( city => city.name === cityName)
   }
 
-
-  // getRegionsArr(arr: any){
-  //   let regionArr: string[] = [];
-  //   arr.map((macroregion: any) => {
-  //     let regions = macroregion.regions
-  //     regions.map( (region: string) => regionArr.push(region))
-  //   })
-  //   return regionArr;
-  // }
-  // getRolesArr(arr: any){
-  //   let rolesArr: string[] = [];
-  //   arr.map((macroregion: any) => {
-  //     let regions = macroregion.roles
-  //     regions.map( (region: string) => rolesArr.push(region))
-  //   })
-  //   return rolesArr;
-  // }
   getArr(arr: any, category: string){
     let newArr: string[] = []
     arr.map((element: any) => {
@@ -89,7 +71,11 @@ export class FormService {
     })
     return newArr
   }
-
+  removeRegion(arr: string[]){
+    arr.map(
+      
+    )
+  }
 
   treatAsUTC(date: Date) {
     date.setMinutes(date.getMinutes() - date.getTimezoneOffset());

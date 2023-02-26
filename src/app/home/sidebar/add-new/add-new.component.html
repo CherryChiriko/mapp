@@ -97,21 +97,27 @@
 
         <div *ngIf="!isClient" class="contacts rounded container">
             <p> Mobility </p>
+            <input type="checkbox" class="form-check-input" id="all-Italy"
+                (click)="checkAllItaly()">
+                <label class="form-check-label all" for="all-Italy">
+                    All Italy
+                </label>
+                <hr>
             <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions"
-            formArrayName="mobility">
+            formArrayName="mobility" [disabled]="checkedAllItaly">
                 <mat-expansion-panel-header class="rounded">
                     <mat-panel-title class="rounded ">
                         {{ macroregion.area }}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <!-- <input type="checkbox" class="form-check-input" id="all-{{macroregion.name}}"
-                (click)="checkAll(macroregion.name)">
-                <label class="form-check-label all" for="all-{{macroregion.name}}">
+                <input type="checkbox" class="form-check-input" id="all-{{macroregion.area}}"
+                (click)="checkAll(macroregion.area)">
+                <label class="form-check-label all" for="all-{{macroregion.area}}">
                     All
-                </label> -->
+                </label>
                 <hr>
                 <span *ngFor="let region of macroregion.regions; let i=index">
-                    <input type="checkbox" class="btn-check" autocomplete="off" name="new-{{region}}"
+                    <input type="checkbox" class="btn-check" autocomplete="off" name="{{macroregion.area}}"
                     id="new-{{region}}" value="{{region}}"
                     formControlName="{{region}}">
                     <label class="btn specialties" [ngClass]="getButton(false)" for="new-{{region}}">
@@ -130,7 +136,7 @@
         </div>
 
         <button class="btn m-2 mb-4" [ngClass]="getButton(isClient)"
-        (click)="add()">Add {{isClient? "client": "specialist"}}</button>
+        (click)="add()">Add {{isClient? "client": "consultant"}}</button>
 
     </form>
 

@@ -25,17 +25,20 @@ export class AddNewComponent {
   rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
   degArr: string[] = data.degrees;
   macroregions = data.macroregions;
+  regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
 
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
 
+  checkedRegions: string[] = [];
+  checkedAllItaly : boolean = false;
 
   constructor(private filter : FilterService, private form: FormService,
     private helper: HelperService, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
 
-    const regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
+    // const regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
     const rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
 
     this.clientForm = new FormGroup({
@@ -69,8 +72,25 @@ export class AddNewComponent {
 
     this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)
     this.form.addElementToFormGroup(this.specialistForm, 'interests', rolesArr)
-    this.form.addElementToFormGroup(this.specialistForm, 'mobility', regionArr)
+    this.form.addElementToFormGroup(this.specialistForm, 'mobility', this.regionArr)
   }
+
+  checkAllItaly(){ 
+    this.checkedAllItaly = !this.checkedAllItaly;
+    // this.checkedAllItaly ? this.checkedRegions = this.regionArr : this.checkedRegions = [];
+  }
+
+  checkAll(macro: string){  
+    const element: any = document.getElementsByName(macro); 
+    // element.map( (el : any) => 
+    // { if (el.type === 'checkbox'){      el.checked = true    }})
+    for(var i=0; i<element.length; i++){  
+        if(element[i].type=='checkbox')  {
+          element[i].checked=true;
+          this.checkedRegions.push(element[i].value)
+        }
+    }  
+  }  
 
   addClient(){
     const val = this.clientForm.value;
@@ -97,14 +117,17 @@ export class AddNewComponent {
 
     const cityInfo: string[] = val.city.split(",");
     const interestsArr: string[] = this.form.convertToArray(val, "interests");
-    const regionsArr : string[] = this.form.convertToArray(val, "mobility");
 
-    console.log(val)
+    let regionsArr : string[] = this.form.convertToArray(val, "mobility");
+    let newArr = [...this.checkedRegions,...regionsArr]
+    // console.log(val)
+    console.log(val.region)
 
     let newSpecialist = {
       name: val.name,
       id: val.id,
-      city: cityInfo[0],
+      // city: cityInfo[0],
+      city: 'Rimini, Emilia-Romagna, Italy',
       BM: val.bm,
 
       email: val.email,
@@ -114,7 +137,7 @@ export class AddNewComponent {
       background: val.background,
       experience: val.experience,
       interests: interestsArr.join(', '),
-      mobility: regionsArr.join(', '),
+      mobility: newArr.join(', '),
       start: val.start
     }
     console.log(newSpecialist)
@@ -130,7 +153,7 @@ export class AddNewComponent {
       { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true})
     let res = { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true}
     this.snackBar.open(res.resultMessage, '', { duration: 2000 });
-    res.success = false;
+    res.success = false; this.checkedRegions = [];
   }
 
 }
