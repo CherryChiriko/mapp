@@ -29,6 +29,7 @@ export class MapComponent implements OnInit {
 
   showClients: boolean = true;
   showSpecialists: boolean = true;
+  showNeed: boolean = true;
   isStarFull: boolean = false;
 
 
@@ -84,6 +85,11 @@ export class MapComponent implements OnInit {
   sToggleShow() {
     this.showSpecialists = !this.showSpecialists;
   }
+  nToggleShow() {
+    this.showNeed = !this.showNeed;
+  }
+
+  
   showMarkers() {
     return this.showClients && this.showSpecialists
       ? this.allMarkers
@@ -110,8 +116,8 @@ export class MapComponent implements OnInit {
   getColor(condition: boolean) {
     return this.helper.getColorScheme(condition);
   }
-  getIcon(condition: boolean) {
-    return this.helper.getIcon(condition);
+  getIcon(condition: boolean, need: boolean = false) {
+    return this.helper.getIcon(condition, need);
   }
 
   ngOnDestroy() {
@@ -119,15 +125,4 @@ export class MapComponent implements OnInit {
     this.cMarkersSubs?.unsubscribe();
     this.allMarkersSubs?.unsubscribe();
   }
-
-
-  // public addPixel(){
-  //   this.height += 50;
-  //   this.width += 100;
-  // }
-
-  // public reducePixel(){
-  //   this.height -= 50;
-  //   this.width -= 100;
-  // }
 }
