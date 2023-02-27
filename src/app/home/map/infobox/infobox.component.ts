@@ -56,12 +56,9 @@ export class InfoboxComponent {
     return this.map.getMarkerInfo(mark, condition);
   }
 
-  getColor(condition: boolean) {
-    return this.helper.getColorScheme(condition);
-  }
-  getIcon(condition: boolean) {
-    return this.helper.getIcon(condition);
-  }
+  getColor(condition: boolean) {    return this.helper.getColorScheme(condition);  }
+  getIcon(condition: boolean) {    return this.helper.getIcon(condition);  }
+  getButton(condition: boolean){ return this.helper.getButton(condition)}
 
   deleteElement(element: any) {
     this.isClient(element)
@@ -69,22 +66,18 @@ export class InfoboxComponent {
       : this.filter.removeSpecialist(element);
   }
 
+  match(person: any){}
   filterForCompany(client: IClient) {}
   filterForSpecialist(specialist: ISpecialist) {}
 
   public addFavorite(item : ISpecialist) {
     this._favorite.addSpecialistFavorite(item);
     this.isStarFull = true;
-    // console.log(this.isStarFull, this.favoriteSpecialist)
-    // console.log(this.favoriteSpecialist);
-
   }
 
   public removeFavorite(item : ISpecialist) {
     this._favorite.removeFavoriteSpecialist(item);
     this.isStarFull = false;
-    // console.log(this.favoriteSpecialist);
-
   }
 
   // public getFavoriteList() : ISpecialist[]{
