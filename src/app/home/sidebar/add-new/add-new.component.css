@@ -73,3 +73,8 @@ margin-left: 1rem;
   border-color: var(--bs-btn-active-border-color);
   margin: .2rem;
 }
+
+.in-text{
+  background-color: var(--color);
+  color: white;
+}

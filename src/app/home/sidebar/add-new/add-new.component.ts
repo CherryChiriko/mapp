@@ -32,6 +32,8 @@ export class AddNewComponent {
 
   checkedRegions: string[] = [];
 
+  showNotice: boolean = true;
+
   constructor(private filter : FilterService, private form: FormService,
     private helper: HelperService, private snackBar: MatSnackBar){}
 
@@ -134,9 +136,10 @@ export class AddNewComponent {
     const val = this.specialistForm.value;
 
     // const cityInfo: string[] = val.city.split(",");
+    let date: string | number = 
+    typeof(val.start)==='number'? val.start: this.form.formatDate(val.start);
     const interestsArr: string[] = this.form.convertToArray(val, "interests");
     const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
-    console.log(regionsArr)
 
     let newSpecialist = {
       name: val.name,
@@ -153,7 +156,7 @@ export class AddNewComponent {
       experience: val.experience,
       interests: interestsArr.join(', '),
       mobility: regionsArr.join(', '),
-      start: val.start
+      start: date
     }
     console.log(newSpecialist)
     this.filter.addSpecialist(this.form.formatSpecialist(newSpecialist));
