@@ -131,7 +131,7 @@ export class FormService {
       website: s.website? s.website: null,
       city: s.city,
       region: reg? reg: "",
-      bm: s.bm,
+      bm : s.bm,
       avatar: s.avatar? s.avatar: null,
       experience: s.experience,
       background: s.background,

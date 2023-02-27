@@ -42,7 +42,7 @@ export class AddNewComponent {
     this.clientForm = new FormGroup({
       city: new FormControl(null, [Validators.required]),
       name: new FormControl(null),
-      BM: new FormControl(null),
+      bm: new FormControl(null),
       picture: new FormControl(null),
       activities: new FormGroup({}),
       need: new FormControl(null),
@@ -52,7 +52,7 @@ export class AddNewComponent {
       city: new FormControl(null, [Validators.required]),
       name: new FormControl(null),
       id: new FormControl(null),
-      BM: new FormControl(null),
+      bm: new FormControl(null),
 
       website: new FormControl(null, [Validators.pattern("https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}")]),
       email: new FormControl(null, [Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]),
