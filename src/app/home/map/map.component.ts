@@ -6,7 +6,6 @@ import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { FavoriteListService } from 'src/app/services/favorite-list.service';
 import { FilterService } from 'src/app/services/filter.service';
 import { HelperService } from 'src/app/services/helper.service';
-import { MapService } from 'src/app/services/map.service';
 
 
 const INITIAL_COORDS = [41.9028, 12.4964]; // Roma
@@ -46,7 +45,6 @@ export class MapComponent implements OnInit {
   contacts: boolean[] = [];
 
   constructor(
-    private _map: MapService,
     private filter: FilterService,
     private helper: HelperService,
     private _favorite : FavoriteListService
