@@ -2,7 +2,7 @@ export interface IClient {
   name: string;
   city: string;
   region ?: string;
-  BM: string;
+  bm: string;
   logo?: string;
   activities: string[];
   need: string[];
@@ -18,7 +18,7 @@ export interface ISpecialist {
   website?: string;
   city: string;
   region ?: string;
-  BM: string;
+  bm: string;
   avatar?: string;
   experience: number;
   background: string[];
@@ -32,7 +32,7 @@ export interface ISpecialist {
 
 export interface ISFilter {
   id: string | null;
-  BM: string | null;
+  bm: string | null;
   regions: string[] | null;
   interests: string[] | null;
   experience: number | null;
@@ -41,8 +41,8 @@ export interface ISFilter {
 
 export interface ICFilter {
   name: string | null;
-  BM: string | null;
-  needed_activities: string[] | null;
+  bm: string | null;
+  activities: string[] | null;
   need: boolean | null;
 }
 

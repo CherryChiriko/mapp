@@ -56,7 +56,7 @@ export class ExcelService {
       phone: s.phone,
       city: s.city,
       mobility: s.mobility,
-      BM: s.bm,
+      bm: s.bm,
       experience: s.experience,
       background: s.background,
       interests: s.interests,
@@ -110,7 +110,7 @@ export class ExcelService {
       name : c.name,
       logo : c?.logo,
       city : c.city,
-      BM : c.bm,
+      bm : c.bm,
       activities : c.activities,
       need : c.need
     }

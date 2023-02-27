@@ -11,7 +11,7 @@
             <option *ngFor="let bm of BMs" value="{{bm}}">{{bm}}</option>
         </select>
 
-        <!-- <p>{{isClient? 'Activities': 'Interests'}}</p>
+        <p>{{isClient? 'Activities': 'Interests'}}</p>
         <mat-expansion-panel hideToggle *ngFor="let roles of rolesArrTot"  class="mb-2"
         formArrayName="{{isClient? 'activities': 'interests'}}">
             <mat-expansion-panel-header class="rounded">
@@ -28,12 +28,20 @@
                 {{ role }}
                 </label>
             </span>
-        </mat-expansion-panel> -->
+        </mat-expansion-panel>
 
-        <p> Regions </p>
-        <div>
-            <!-- <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions"
-            formArrayName="mobility">
+        <div class="input-group my-3" *ngIf="!isClient">
+            <span class="me-3">Experience</span>
+            <input type="number" name="experience"
+                class="form-control "   min="0" max="10"
+                formControlName = "experience">
+            <span class="input-group-text in-text">years</span>
+        </div>
+
+        <div *ngIf="!isClient" class="contacts rounded container">
+            <p> Mobility </p>
+            <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions"
+            formArrayName="regions">
                 <mat-expansion-panel-header class="rounded">
                     <mat-panel-title class="rounded ">
                         {{ macroregion.area }}
@@ -53,7 +61,19 @@
                     {{ region }}
                     </label>
                 </span>
-            </mat-expansion-panel> -->
+            </mat-expansion-panel>
+            <hr>
+            
+            <div class="input-group my-3" *ngIf="!isClient">
+                <span class="me-3">Available in max</span>
+                <input type="number" name="date"
+                    class="form-control "  min="1" max="100"
+                    formControlName = "date">
+                <span class="input-group-text in-text">days</span>
+            </div>
+            
+           
+              
         </div>
           
           
@@ -99,35 +119,8 @@
             </span>
         </div> -->
 
-        <!-- <p>Range of starting time</p>
-
-      <mat-form-field appearance="fill" color="accent" class="my-3">
-        <mat-label>Enter a starting time range</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Start date">
-          <input matEndDate formControlName="end" placeholder="End date">
-        </mat-date-range-input>
-        <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      
-        <mat-error *ngIf="filterForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
-        <mat-error *ngIf="filterForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
-      </mat-form-field>
-        
-      <p>Notice time</p>
-
-        <div class="input-group">
-            <input type="number" class="form-control" formControlName="notice">
-            <span class="input-group-text">days</span>
-        </div> -->
-
         <div class="input-group my-3" *ngIf="!isClient">
-            <span class="me-3">Available in max</span>
-            <input type="number" name="date"
-                class="form-control "  min="1" max="100"
-                formControlName = "date">
-            <span class="input-group-text in-text">days</span>
+            
         </div>
 
         <span>

@@ -65,10 +65,7 @@ export class AddNewComponent {
       start: new FormControl<Date | null | number>(null)
     });
 
-    this.form.addElementToFormGroup(this.clientForm, 'bm', this.BMs)
     this.form.addElementToFormGroup(this.clientForm, 'activities', this.rolesArr)
-
-    this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)
     this.form.addElementToFormGroup(this.specialistForm, 'interests', this.rolesArr)
     this.form.addElementToFormGroup(this.specialistForm, 'mobility', this.regionArr)
   }
@@ -123,7 +120,7 @@ export class AddNewComponent {
       name: val.name,
       logo: val.picture,
       city: cityInfo[0],
-      BM: val.bm,
+      bm: val.bm,
 
       activities: activitiesArr.join(', '),
       need: val.need
@@ -146,7 +143,7 @@ export class AddNewComponent {
       name: val.name,
       id: val.id,
       city: cityInfo[0],
-      BM: val.bm,
+      bm: val.bm,
 
       email: val.email,
       phone: val.phone,
