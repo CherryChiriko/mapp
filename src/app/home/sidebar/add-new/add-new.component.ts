@@ -135,17 +135,17 @@ export class AddNewComponent {
   addSpecialist(){
     const val = this.specialistForm.value;
 
-    // const cityInfo: string[] = val.city.split(",");
+    const cityInfo: string[] = val.city.split(",");
     let date: string | number = 
-    typeof(val.start)==='number'? val.start: this.form.formatDate(val.start);
+    typeof(val.start)==='number'? val.start: this.helper.formatDate(val.start);
     const interestsArr: string[] = this.form.convertToArray(val, "interests");
     const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
+    this.checkedRegions = [];
 
     let newSpecialist = {
       name: val.name,
       id: val.id,
-      // city: cityInfo[0],
-      city: 'Rimini, Emilia-Romagna, Italy',
+      city: cityInfo[0],
       BM: val.bm,
 
       email: val.email,
@@ -171,7 +171,7 @@ export class AddNewComponent {
       { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true})
     let res = { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true}
     this.snackBar.open(res.resultMessage, '', { duration: 2000 });
-    res.success = false; this.checkedRegions = [];
+    res.success = false;
   }
 
 }

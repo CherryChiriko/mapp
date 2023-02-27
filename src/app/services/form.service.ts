@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
@@ -14,7 +13,7 @@ export class FormService {
 
   cities : ICities[] = [] ;
 
-  constructor(private datePipe: DatePipe, private helper: HelperService) {
+  constructor(private helper: HelperService) {
     this.cities = citiesData as ICities[];
   }
 
@@ -89,18 +88,7 @@ export class FormService {
     return newArr
   }
   
-
-  treatAsUTC(date: Date) {
-    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-    return Number(date);
-  }
-  daysBetween(startDate: Date, endDate: Date) {
-      var millisecondsPerDay = 24 * 60 * 60 * 1000;
-      return (this.treatAsUTC(endDate) - this.treatAsUTC(startDate)) / millisecondsPerDay;
-  }
-  formatDate(date: Date): string{
-    return this.datePipe.transform(date,'dd/MM/YYYY')!;
-  }
+  
 
   formatClientArr(cData: any[]): IClient[]{
     let clients : IClient[] = [];

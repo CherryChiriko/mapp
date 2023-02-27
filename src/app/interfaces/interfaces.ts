@@ -1,5 +1,3 @@
-import { Observable } from "rxjs";
-
 export interface IClient {
   name: string;
   city: string;
@@ -33,23 +31,19 @@ export interface ISpecialist {
 }
 
 export interface ISFilter {
-  name: string | null;
-  region: string[] | null;
-  mobility: boolean | null;
-  degree: string[] | null;
-  skills: string[] | null;
+  id: string | null;
+  BM: string | null;
+  regions: string[] | null;
   interests: string[] | null;
-  available_from: string[] | null;
-  notice: number | null;
+  experience: number | null;
+  date: Date | null;
 }
 
 export interface ICFilter {
   name: string | null;
-  region: string[] | null;
-  experience: string[] | null;
-  lookFor: string[] | null;
-  available_from: string[] | null;
-  notice: number | null;
+  BM: string | null;
+  needed_activities: string[] | null;
+  need: boolean | null;
 }
 
 export interface ICities {
