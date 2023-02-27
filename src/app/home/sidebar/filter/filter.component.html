@@ -1,16 +1,16 @@
 <div class="container form-div box rounded">
     <form [formGroup]="isClient? cFilterForm: sFilterForm" class="my-3 pt-3" >
-        <input type="text" name="name" 
+        <input type="text" name="name"
             class="form-control text-center my-2" placeholder="Name"
             formControlName = "name">
 
         <p> Regions </p>
         <div>
-        <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions" 
+        <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions"
         formArrayName="regions">
             <mat-expansion-panel-header class="rounded">
                 <mat-panel-title class="rounded ">
-                    {{ macroregion.area }}                
+                    {{ macroregion.area }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <input type="checkbox" class="form-check-input" id="all-{{macroregion.area}}"
@@ -21,51 +21,51 @@
             <hr>
             <span *ngFor="let region of macroregion.regions; let i=index">
                 <input type="checkbox" class="btn-check" autocomplete="off" name="{{region}}"
-                
+
                 id="{{isClient ? 'c' : 's'}}-{{region}}" value="{{region}}"
                 formControlName="{{region}}">
                 <label class="btn specialties" [ngClass]="getButton(isClient)" for="{{isClient ? 'c' : 's'}}-{{region}}">
                 {{ region }}
                 </label>
             </span>
-                       
+
             </mat-expansion-panel>
         </div>
-          
-          
-          
+
+
+
 
         <!-- <select type="search" name="region" id="{{isClient? 'c-region': 's-region'}}"
             class="form-control rounded text-center my-2"
             formControlName="region">
             <option disabled selected [ngValue]="null">-- Region --</option> -->
-            <!-- <option *ngFor="let region of [macroregion]" 
+            <!-- <option *ngFor="let region of [macroregion]"
             value="{{[city.name, city.region, city.country]}}">{{city.name}}</option> -->
         <!-- </select> -->
 
 
-        <!-- <p>Degree</p>
-        <div class="form-check" id="degree">
-            <span *ngFor="let d of degArr; let i=index" formArrayName="degree">
+        <!-- <p>Background</p>
+        <div class="form-check" id="background">
+            <span *ngFor="let d of degArr; let i=index" formArrayName="background">
             <input type="checkbox" class="btn-check" autocomplete="off"
-            name="degree" id= "optio{{i}}" value="{{d}}"
+            name="background" id= "optio{{i}}" value="{{d}}"
             formControlName="{{d}}">
             <label class="btn btn-success special" for="optio{{i}}">{{d}}</label>
-            </span>  
+            </span>
         </div> -->
-        
+
         <p>{{isClient? 'Looking for': 'Specialties'}}</p>
         <div class="form-check">
             <span *ngFor="let s of specialArr; let i=index" formArrayName="specialties">
             <input type="checkbox" class="btn-check" autocomplete="off"
                 id= "fSpec-option{{isClient? 's': ''}}{{i}}" value="{{s}}"
                 formControlName="{{s}}">
-            <label class="btn specialties" [ngClass]="getButton(isClient)" 
+            <label class="btn specialties" [ngClass]="getButton(isClient)"
             for="fSpec-option{{isClient? 's': ''}}{{i}}">{{s}}</label>
-            </span>  
+            </span>
         </div>
 
-        <!-- <p>Interests</p>                
+        <!-- <p>Interests</p>
         <div class="form-check">
             <span *ngFor="let s of specialArr; let i=index" formArrayName="interests">
             <input type="checkbox" class="btn-check" autocomplete="off"
@@ -86,11 +86,11 @@
         <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
-      
+
         <mat-error *ngIf="filterForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
         <mat-error *ngIf="filterForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
       </mat-form-field>
-        
+
       <p>Notice time</p>
 
         <div class="input-group">
@@ -106,18 +106,18 @@
 </div>
 <!-- <div class="container form-div specialist rounded"> -->
     <!-- <form [formGroup]="filterForm" class="my-3 pt-3" >
-        <input type="text" name="name" 
+        <input type="text" name="name"
             class="form-control text-center my-2" placeholder="Name"
             formControlName = "name">
 
         <p>Degree</p>
-        <div class="form-check" id="degree">
-            <span *ngFor="let d of degArr; let i=index" formArrayName="degree">
+        <div class="form-check" id="background">
+            <span *ngFor="let d of degArr; let i=index" formArrayName="background">
             <input type="checkbox" class="btn-check" autocomplete="off"
-            name="degree" id= "optio{{i}}" value="{{d}}"
+            name="background" id= "optio{{i}}" value="{{d}}"
             formControlName="{{d}}">
             <label class="btn btn-success special" for="optio{{i}}">{{d}}</label>
-            </span>  
+            </span>
         </div>
 
       <p>Specialty</p>
@@ -127,10 +127,10 @@
           name="specialties" id= "option{{i}}" value="{{s}}"
           formControlName = "{{s}}">
           <label class="btn btn-success special" for="option{{i}}">{{s}}</label>
-          </span>  
+          </span>
       </div>
 
-      <p>Interests</p>                
+      <p>Interests</p>
       <div class="form-check" id="interests">
           <span *ngFor="let s of specialArr; let i=index" formArrayName="interests">
           <input type="checkbox" class="btn-check" autocomplete="off"
@@ -139,7 +139,7 @@
           <label class="btn btn-success special" for="options{{i}}">{{s}}</label>
           </span>
       </div>
-      
+
       <p>Range of starting time</p>
 
       <mat-form-field appearance="fill" color="accent" class="my-3">
@@ -151,11 +151,11 @@
         <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
-      
+
         <mat-error *ngIf="filterForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
         <mat-error *ngIf="filterForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
       </mat-form-field>
-        
+
       <p>Notice time</p>
 
         <div class="input-group">

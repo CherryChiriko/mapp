@@ -30,13 +30,13 @@ export class FilterComponent {
   constructor(private form: FormService, private filter: FilterService, private helper: HelperService){}
 
   ngOnInit(): void {
-    
+
     let regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
 
     this.sFilterForm = new FormGroup({
       name: new FormControl(null),
       regions: new FormGroup({}),
-      degree: new FormGroup({}),
+      background: new FormGroup({}),
       specialties: new FormGroup({}),
       interests: new FormGroup({}),
       canMove: new FormControl(null),
@@ -48,22 +48,22 @@ export class FilterComponent {
     this.cFilterForm = new FormGroup({
       name: new FormControl(null),
       regions: new FormGroup({}),
-      degree: new FormGroup({}),
+      background: new FormGroup({}),
       specialties: new FormGroup({}),
       interests: new FormGroup({}),
       online: new FormControl(null),
     });
 
     this.form.addElementToFormGroup(this.sFilterForm, 'specialties', this.specialArr)
-    this.form.addElementToFormGroup(this.sFilterForm, 'degree', this.degArr)
+    this.form.addElementToFormGroup(this.sFilterForm, 'background', this.degArr)
     this.form.addElementToFormGroup(this.sFilterForm, 'interests', this.specialArr)
     this.form.addElementToFormGroup(this.sFilterForm, 'regions', regionArr)
 
     this.form.addElementToFormGroup(this.cFilterForm, 'specialties', this.specialArr)
-    this.form.addElementToFormGroup(this.cFilterForm, 'degree', this.degArr)
-    this.form.addElementToFormGroup(this.cFilterForm, 'interests', this.specialArr)    
+    this.form.addElementToFormGroup(this.cFilterForm, 'background', this.degArr)
+    this.form.addElementToFormGroup(this.cFilterForm, 'interests', this.specialArr)
     this.form.addElementToFormGroup(this.cFilterForm, 'regions', regionArr)
-  
+
     this.sFilterForm.valueChanges
     .subscribe(() => this.onSFormGroupChange.emit(this.sFilterForm.value));
     this.cFilterForm.valueChanges
@@ -73,7 +73,7 @@ export class FilterComponent {
 
   createFilter(isClient: boolean){
     const val = isClient? this.cFilterForm.value: this.sFilterForm.value;
-    const degreeArr : string[] = this.form.convertToArray(val, "degree");
+    const degreeArr : string[] = this.form.convertToArray(val, "background");
     const specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
     const interestsArr : string[] = this.form.convertToArray(val, "interests");
     const regionsArr : string[] = this.form.convertToArray(val, "regions")
@@ -98,7 +98,7 @@ export class FilterComponent {
         name: val.name,
         region: regionsArr,
         mobility: null,
-        degree: degreeArr,
+        background: degreeArr,
         skills: specialtiesArr,
         interests: interestsArr,
         available_from: date,
@@ -110,24 +110,24 @@ export class FilterComponent {
     }
   }
 
-  clearSFilter(){ 
+  clearSFilter(){
     this.cFilterForm.reset(); this.filter.resetSFilter()};
-  clearCFilter(){ 
+  clearCFilter(){
     this.cFilterForm.reset(); this.filter.resetCFilter()};
 
   clearFilter(isClient: boolean){isClient? this.clearCFilter(): this.clearSFilter();}
-  
-  checkAll(macro: string){  
-    const element: any = document.getElementsByName(macro);  
-    // element.map( (el : any) => 
+
+  checkAll(macro: string){
+    const element: any = document.getElementsByName(macro);
+    // element.map( (el : any) =>
     // { if (el.type === 'checkbox'){      el.checked = true    }})
-    for(var i=0; i<element.length; i++){  
+    for(var i=0; i<element.length; i++){
         if(element[i].type=='checkbox')  {
           element[i].checked=true;
         }
-            
-    }  
-  }  
+
+    }
+  }
 
   getButton(condition: boolean, outline: boolean = false){ return this.helper.getButton(condition, outline)}
 }

@@ -19,7 +19,7 @@ export interface ISpecialist {
   phone: string;
   website?: string;
   city: string;
-  region ?: string;
+  region?: string;
   BM: string;
   avatar?: string;
   experience: number;
@@ -36,7 +36,7 @@ export interface ISFilter {
   name: string | null;
   region: string[] | null;
   mobility: boolean | null;
-  degree: string[] | null;
+  background: string[] | null;
   skills: string[] | null;
   interests: string[] | null;
   available_from: string[] | null;
