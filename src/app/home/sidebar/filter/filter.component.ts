@@ -19,12 +19,10 @@ export class FilterComponent {
 
   BMs: string[] = data.BMs;
   rolesArrTot: any = data.activities;
-  // specialArr: string[] = data.specialties;
-  // specialArr: string[] = [];
-  // degArr: string[] = data.degrees;
-  // macroregions = data.macroregions;
 
-  // citiesArr: ICity[] = this.form.getAllCities();
+  macroregions = data.macroregions
+  rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
+  regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
 
   sFilterForm !: FormGroup;
   cFilterForm !: FormGroup;
@@ -35,12 +33,10 @@ export class FilterComponent {
 
   ngOnInit(): void {
 
-    // let regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
-
     this.cFilterForm = new FormGroup({
       name: new FormControl(null),
       bm: new FormControl(null),
-      needed_activities: new FormGroup({}),
+      activities: new FormGroup({}),
       need: new FormControl(null)
     });
 
@@ -53,15 +49,9 @@ export class FilterComponent {
       date: new FormControl(null)
     });
 
-    // this.form.addElementToFormGroup(this.sFilterForm, 'specialties', this.specialArr)
-    // this.form.addElementToFormGroup(this.sFilterForm, 'degree', this.degArr)
-    // this.form.addElementToFormGroup(this.sFilterForm, 'interests', this.specialArr)
-    // this.form.addElementToFormGroup(this.sFilterForm, 'regions', regionArr)
-
-    // this.form.addElementToFormGroup(this.cFilterForm, 'specialties', this.specialArr)
-    // this.form.addElementToFormGroup(this.cFilterForm, 'degree', this.degArr)
-    // this.form.addElementToFormGroup(this.cFilterForm, 'interests', this.specialArr)
-    // this.form.addElementToFormGroup(this.cFilterForm, 'regions', regionArr)
+    this.form.addElementToFormGroup(this.cFilterForm, 'activities', this.rolesArr)
+    this.form.addElementToFormGroup(this.sFilterForm, 'interests', this.rolesArr)
+    this.form.addElementToFormGroup(this.sFilterForm, 'regions', this.regionArr)
 
     this.sFilterForm.valueChanges
     .subscribe(() => this.onSFormGroupChange.emit(this.sFilterForm.value));
@@ -72,20 +62,17 @@ export class FilterComponent {
 
   createFilter(isClient: boolean){
     const val = isClient? this.cFilterForm.value: this.sFilterForm.value;
-    // const degreeArr : string[] = this.form.convertToArray(val, "degree");
-    // const specialtiesArr : string[] = this.form.convertToArray(val, "specialties");
-    // const interestsArr : string[] = this.form.convertToArray(val, "interests");
-    // const regionsArr : string[] = this.form.convertToArray(val, "regions")
-    // const date = val.end? [this.form.formatDate(val.start),this.form.formatDate(val.end)]: null;
-
+    const interestsArr : string[] = this.form.convertToArray(val, "interests");
+    const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
+    this.checkedRegions = [];
 
     const date = this.helper.addDays(val.date);
 
     if (isClient){
       let clientFilter: ICFilter = {
         name: val.name,
-        BM: val.bm,
-        needed_activities: null,
+        bm: val.bm,
+        activities: interestsArr,
         need: null
       }
       console.log(clientFilter)
@@ -95,12 +82,11 @@ export class FilterComponent {
     else {
       let specialistFilter: ISFilter = {
         id: val.id,
-        BM: val.bm,
-        regions: null,
-        interests: null,
+        bm: val.bm,
+        regions: regionsArr,
+        interests: interestsArr,
         experience: null,
         date: date
-        // date: val.date? new Date() : null
       }
       console.log(specialistFilter)
       this.filter.setSFilter(specialistFilter);

@@ -65,7 +65,7 @@ export class ExcelService {
       phone: s.phone,
       city: s.city,
       mobility: s.mobility,
-      BM: s.bm,
+      bm: s.bm,
       experience: s.experience,
       background: s.background,
       interests: s.interests,
@@ -122,13 +122,13 @@ export class ExcelService {
 
   public formatExcelClient(c: any): IClient {
     return {
-      name: c.name,
-      logo: c?.logo,
-      city: c.city,
-      BM: c.bm,
-      activities: c.activities,
-      need: c.need,
-    };
+      name : c.name,
+      logo : c?.logo,
+      city : c.city,
+      bm : c.bm,
+      activities : c.activities,
+      need : c.need
+    }
   }
 
   //-------------------------------------------------------------------------------lista preferiti

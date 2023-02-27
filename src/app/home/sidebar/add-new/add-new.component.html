@@ -78,6 +78,15 @@
             </span>
         </mat-expansion-panel>
 
+        <div class="input-group my-3" *ngIf="isClient">
+            <select name="need" id="need"
+            class="form-select text-center my-3"
+            formControlName = "need">
+                <option [ngValue]="null" disabled selected>--Active need--</option>
+                <option *ngFor="let n of clientForm.value.activities" value="{{n}}">{{n}}</option>
+            </select>
+        </div>
+
         <div *ngIf="!isClient" class="contacts rounded container my-3">
             <p>Background</p>
             <select name="background" id="background"

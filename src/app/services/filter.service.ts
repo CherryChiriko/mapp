@@ -62,8 +62,8 @@ export class FilterService {
   resetCFilter() {
     const emptyFilter = {
       name: null,
-      BM: null,
-      needed_activities: null,
+      bm: null,
+      activities: null,
       need: null
     };
     this.setCFilter(emptyFilter);
@@ -71,7 +71,7 @@ export class FilterService {
   resetSFilter() {
     const emptyFilter = {
       id: null,
-      BM: null,
+      bm: null,
       regions: null,
       interests: null,
       experience: null,

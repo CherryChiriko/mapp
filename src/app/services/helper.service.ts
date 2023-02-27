@@ -19,9 +19,9 @@ export class HelperService {
       button: `${but}`,
     } 
   }
-  getIcon(condition: boolean){
+  getIcon(condition: boolean, need : boolean = false){
     const url = "http://maps.google.com/mapfiles/ms/icons/";
-    const dotColor = this.getColorScheme(condition).dot
+    const dotColor = need? 'yellow' : this.getColorScheme(condition).dot
     return `${url}${dotColor}-dot.png`;
   }
   getButton(condition:boolean, outline: boolean = false){
