@@ -70,44 +70,44 @@ export class AddNewComponent {
     this.form.addElementToFormGroup(this.specialistForm, 'mobility', this.regionArr)
   }
 
-  checkAllItaly(){ 
-    
-    const northRegions: any = document.getElementsByName("North"); 
-    const centerRegions: any = document.getElementsByName("Centre"); 
-    const southRegions: any = document.getElementsByName("South"); 
-    // element.map( (el : any) => 
+  checkAllItaly(){
+
+    const northRegions: any = document.getElementsByName("North");
+    const centerRegions: any = document.getElementsByName("Centre");
+    const southRegions: any = document.getElementsByName("South");
+    // element.map( (el : any) =>
     // { if (el.type === 'checkbox'){      el.checked = true    }})
-    for(var i=0; i < northRegions.length; i++){  
+    for(var i=0; i < northRegions.length; i++){
         if(northRegions[i].type=='checkbox')  {
           northRegions[i].checked=true;
           this.checkedRegions.push(northRegions[i].value)
         }
-    } 
-    for(var i=0; i < centerRegions.length; i++){  
+    }
+    for(var i=0; i < centerRegions.length; i++){
       if(centerRegions[i].type=='checkbox')  {
         centerRegions[i].checked=true;
         this.checkedRegions.push(centerRegions[i].value)
       }
-    } 
-    for(var i=0; i < southRegions.length; i++){  
+    }
+    for(var i=0; i < southRegions.length; i++){
       if(southRegions[i].type=='checkbox')  {
         southRegions[i].checked=true;
         this.checkedRegions.push(southRegions[i].value)
       }
-    }  
+    }
   }
 
-  checkAll(macro: string){  
-    const element: any = document.getElementsByName(macro); 
-    // element.map( (el : any) => 
+  checkAll(macro: string){
+    const element: any = document.getElementsByName(macro);
+    // element.map( (el : any) =>
     // { if (el.type === 'checkbox'){      el.checked = true    }})
-    for(var i=0; i<element.length; i++){  
+    for(var i=0; i<element.length; i++){
         if(element[i].type=='checkbox')  {
           element[i].checked=true;
           this.checkedRegions.push(element[i].value)
         }
-    }  
-  }  
+    }
+  }
 
   addClient(){
     const val = this.clientForm.value;
@@ -122,7 +122,7 @@ export class AddNewComponent {
       city: cityInfo[0],
       bm: val.bm,
 
-      activities: activitiesArr.join(', '),
+      activities: activitiesArr.join(','),
       need: val.need
     }
     console.log(newClient)
@@ -133,7 +133,7 @@ export class AddNewComponent {
     const val = this.specialistForm.value;
 
     const cityInfo: string[] = val.city.split(",");
-    let date: string | number = 
+    let date: string | number =
     typeof(val.start)==='number'? val.start: this.helper.formatDate(val.start);
     const interestsArr: string[] = this.form.convertToArray(val, "interests");
     const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);

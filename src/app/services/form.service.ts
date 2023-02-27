@@ -87,8 +87,8 @@ export class FormService {
     })
     return newArr
   }
-  
-  
+
+
 
   formatClientArr(cData: any[]): IClient[]{
     let clients : IClient[] = [];
@@ -98,13 +98,15 @@ export class FormService {
   formatClient(c: any): IClient{
     const [lat, lng] = this.getCityCoordinates(c.city);
     const reg = this.getCityInfo(c.city)?.region;
+    const activitiesArr = c.activities.split(',');
+
     return {
       name: c.name,
       city: c.city,
       region: reg? reg : "",
       bm: c.bm,
       logo: c?.logo,
-      activities: c.activities,
+      activities: activitiesArr,
       need: c.need,
       latitude: lat,
       longitude: lng
@@ -119,6 +121,8 @@ export class FormService {
   formatSpecialist(s: any): ISpecialist{
     const [lat, lng] = this.getCityCoordinates(s.city);
     const reg = this.getCityInfo(s.city)?.region;
+    const interestsArr = s.interests.split(',');
+
     return {
       name: s.name,
       id: s.id,
@@ -132,7 +136,7 @@ export class FormService {
       experience: s.experience,
       background: s.background,
       mobility: s.mobility,
-      interests: s.interests,
+      interests: interestsArr,
       available_from: s.available_from ? s.available_from: null,
       notice: s.notice ? s.notice : null,
       latitude: lat,

@@ -76,9 +76,6 @@ export class MapComponent implements OnInit {
     });
   }
 
-
-
-
   cToggleShow() {
     this.showClients = !this.showClients;
   }
@@ -89,7 +86,6 @@ export class MapComponent implements OnInit {
     this.showNeed = !this.showNeed;
   }
 
-  
   showMarkers() {
     return this.showClients && this.showSpecialists
       ? this.allMarkers
@@ -99,6 +95,7 @@ export class MapComponent implements OnInit {
       ? this.specialists
       : [];
   }
+
 
  infoWindows: any[] = [];
  map !: google.maps.Map;

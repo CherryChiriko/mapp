@@ -70,6 +70,7 @@ export class ExcelService {
       background: s.background,
       interests: s.interests,
       available_from: s.available_from ? s.available_from : null,
+      notice : s.notice
     };
   }
 
