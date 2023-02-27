@@ -126,7 +126,7 @@ export class FilterComponent {
 //       name: val.name,
 //       id: val.id,
 //       city: cityInfo[0],
-//       BM: val.bm,
+//       bm: val.bm,
 
 //       email: val.email,
 //       phone: val.phone,
@@ -151,7 +151,7 @@ export class FilterComponent {
 //       name: val.name,
 //       id: val.id,
 //       city: cityInfo[0],
-//       BM: val.bm,
+//       bm: val.bm,
 
 //       email: val.email,
 //       phone: val.phone,
