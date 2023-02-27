@@ -14,30 +14,32 @@
 
     --grey: #d2d2d2;
     --dark-grey: #5b5756;
+    --light-alten-grey: #b1b3b4;
 
-    --alten-red: #e11f26;
-    --alten-black: #160f0e;
-    --alten-blue: #1b90be;
-    --alten-yellow: #faf109;
+    --alten-red: #e30513;
+    --alten-grey: #4b4b4d;
+    --alten-blue: #008bd2;
+    --alten-yellow: #ffed00;
 
-    --light-alten-blue: #baddeb;
+    --light-alten-blue: #d4ecfc;
     --light-alten-red: #f3a5a8;
 
     --dark-alten-red: #5a0c0f;
     --dark-alten-blue: #0d485f;
 
-    --better-alten-yellow: #fae214;
-    --light-alten-yellow: #fcf089;
-    --dark-alten-yellow: #96870c;
+    --darker-alten-blue: #93b2c2;
 
-    --main: orange;
-    /* --main: var(--better-alten-yellow) */
+    --main: #fedc00;
 }
 
 
     /* --less-dark-blue: #0d5bdd; */
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* background-color: var(--alten-grey); */
+}
 
 
 

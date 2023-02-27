@@ -45,3 +45,9 @@ td{
 /* *{
     border: 1px solid red;
 } */
+.specialties{
+    color: var(--darkColor);
+    background-color: var(--lightColor);
+    border-color: var(--bs-btn-active-border-color);
+    margin: .2rem;  padding: .2rem;
+}

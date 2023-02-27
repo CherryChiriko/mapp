@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,15 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class HelperService {
 
-  constructor() { }
+  constructor(private datePipe: DatePipe) { }
 
-  // distanceCalc(latLng1: google.maps.LatLngLiteral, latLng2: google.maps.LatLngLiteral){
-  //   var distance = google.maps.geometry.spherical.computeDistanceBetween(
-  //     latLng1,
-  //     latLng2
-  //     );
-  //   console.log(distance)  // answer is in meters
-  // }
   getColorScheme(condition: boolean){
     const color = condition? 'red': 'blue';
     const but = condition? 'danger': 'primary'
@@ -47,10 +41,34 @@ export class HelperService {
   //   }
   //   return map;
   // }
-  
-  dateBuilder(dateString: string) {
-    const [day, month, year] = dateString.split('/');
-    return new Date(Number(`20${year}`), Number(month) - 1, Number(day));
+
+
+  // treatAsUTC(date: Date) {
+  //   date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  //   return Number(date);
+  // }
+  // daysBetween(startDate: Date, endDate: Date) {
+  //     var millisecondsPerDay = 24 * 60 * 60 * 1000;
+  //     return (this.treatAsUTC(endDate) - this.treatAsUTC(startDate)) / millisecondsPerDay;
+  // }
+  // dateBuilder(dateString: string) {
+  //   const [day, month, year] = dateString.split('/');
+  //   return new Date(Number(`20${year}`), Number(month) - 1, Number(day));
+  // }
+
+  addDays(days: number) {
+    let result = new Date();
+    result.setDate(result.getDate() + days);
+    return result;
   }
-  
+
+  formatDate(date: Date): string{
+    return this.datePipe.transform(date,'dd/MM/YYYY')!;
+  }
+
+  removeElement(element: any, arr: any[]){  
+    const index = arr.indexOf(element)
+    index > -1 ? arr.splice(index, 1): null; 
+  }
+
 }

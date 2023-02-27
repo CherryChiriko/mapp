@@ -53,9 +53,7 @@ export class InfoboxComponent {
   }
 
   markerInfo(condition: boolean, mark: any) {
-    return condition
-      ? this.map.getCMarkerInfo(mark)
-      : this.map.getSMarkerInfo(mark);
+    return this.map.getMarkerInfo(mark, condition);
   }
 
   getColor(condition: boolean) {

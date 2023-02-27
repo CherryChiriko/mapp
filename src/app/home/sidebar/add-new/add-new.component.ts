@@ -25,18 +25,19 @@ export class AddNewComponent {
   rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
   degArr: string[] = data.degrees;
   macroregions = data.macroregions;
+  regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
 
   specialistForm !: FormGroup;
   clientForm!: FormGroup;
 
+  checkedRegions: string[] = [];
+
+  showNotice: boolean = true;
 
   constructor(private filter : FilterService, private form: FormService,
     private helper: HelperService, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
-
-    const regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
-    const rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
 
     this.clientForm = new FormGroup({
       city: new FormControl(null, [Validators.required]),
@@ -65,19 +66,57 @@ export class AddNewComponent {
     });
 
     this.form.addElementToFormGroup(this.clientForm, 'bm', this.BMs)
-    this.form.addElementToFormGroup(this.clientForm, 'activities', rolesArr)
+    this.form.addElementToFormGroup(this.clientForm, 'activities', this.rolesArr)
 
     this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)
-    this.form.addElementToFormGroup(this.specialistForm, 'interests', rolesArr)
-    this.form.addElementToFormGroup(this.specialistForm, 'mobility', regionArr)
+    this.form.addElementToFormGroup(this.specialistForm, 'interests', this.rolesArr)
+    this.form.addElementToFormGroup(this.specialistForm, 'mobility', this.regionArr)
   }
+
+  checkAllItaly(){ 
+    
+    const northRegions: any = document.getElementsByName("North"); 
+    const centerRegions: any = document.getElementsByName("Centre"); 
+    const southRegions: any = document.getElementsByName("South"); 
+    // element.map( (el : any) => 
+    // { if (el.type === 'checkbox'){      el.checked = true    }})
+    for(var i=0; i < northRegions.length; i++){  
+        if(northRegions[i].type=='checkbox')  {
+          northRegions[i].checked=true;
+          this.checkedRegions.push(northRegions[i].value)
+        }
+    } 
+    for(var i=0; i < centerRegions.length; i++){  
+      if(centerRegions[i].type=='checkbox')  {
+        centerRegions[i].checked=true;
+        this.checkedRegions.push(centerRegions[i].value)
+      }
+    } 
+    for(var i=0; i < southRegions.length; i++){  
+      if(southRegions[i].type=='checkbox')  {
+        southRegions[i].checked=true;
+        this.checkedRegions.push(southRegions[i].value)
+      }
+    }  
+  }
+
+  checkAll(macro: string){  
+    const element: any = document.getElementsByName(macro); 
+    // element.map( (el : any) => 
+    // { if (el.type === 'checkbox'){      el.checked = true    }})
+    for(var i=0; i<element.length; i++){  
+        if(element[i].type=='checkbox')  {
+          element[i].checked=true;
+          this.checkedRegions.push(element[i].value)
+        }
+    }  
+  }  
 
   addClient(){
     const val = this.clientForm.value;
 
     const cityInfo: string[] = val.city.split(",");
     const activitiesArr: string[] = this.form.convertToArray(val, "activities");
-    const activitiesStr = activitiesArr.join(',');
 
     console.log(val)
     let newClient = {
@@ -86,7 +125,7 @@ export class AddNewComponent {
       city: cityInfo[0],
       BM: val.bm,
 
-      activities: activitiesStr,
+      activities: activitiesArr.join(', '),
       need: val.need
     }
     console.log(newClient)
@@ -97,13 +136,11 @@ export class AddNewComponent {
     const val = this.specialistForm.value;
 
     const cityInfo: string[] = val.city.split(",");
+    let date: string | number = 
+    typeof(val.start)==='number'? val.start: this.helper.formatDate(val.start);
     const interestsArr: string[] = this.form.convertToArray(val, "interests");
-    const regionsArr : string[] = this.form.convertToArray(val, "mobility");
-
-    const interestsStr = interestsArr.join(',');
-    const regionsStr = regionsArr.join(',');
-
-    console.log(val)
+    const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
+    this.checkedRegions = [];
 
     let newSpecialist = {
       name: val.name,
@@ -117,9 +154,9 @@ export class AddNewComponent {
 
       background: val.background,
       experience: val.experience,
-      interests: interestsStr,
-      mobility: regionsStr,
-      start: val.start
+      interests: interestsArr.join(', '),
+      mobility: regionsArr.join(', '),
+      start: date
     }
     console.log(newSpecialist)
     this.filter.addSpecialist(this.form.formatSpecialist(newSpecialist));

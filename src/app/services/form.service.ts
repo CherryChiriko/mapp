@@ -1,10 +1,10 @@
-import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 import citiesData from 'src/assets/istat-cities.json';
 import geoData from 'src/assets/italy_geo.json';
 import { ICities, ICity, IClient, ISpecialist } from '../interfaces/interfaces';
+import { HelperService } from './helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class FormService {
 
   cities : ICities[] = [] ;
 
-  constructor(private datePipe: DatePipe) {
+  constructor(private helper: HelperService) {
     this.cities = citiesData as ICities[];
   }
 
@@ -32,7 +32,13 @@ export class FormService {
     })
     return arr;
   }
-
+  convertToNegativeArr(val: any){
+    let arr : string[] = [];
+    Object.keys(val.mobility).forEach(function (key) {
+      val.mobility[key] === false ? arr.push(key) : null;
+    })
+    return arr;
+  }
 
   searchCity(expr: string){
     let reg = new RegExp(expr, "gi")
@@ -58,29 +64,21 @@ export class FormService {
   getCityCoordinates(cityName : string){
     const res = geoData?.find( element => element.comune === cityName);
     return [Number(res?.lat), Number(res?.lng)]
-    // this.http.get(`${this.apiUrl}${cityName}`).subscribe(data => console.log("I Am ", data))
   }
   getCityInfo(cityName: string){
     return this.getAllCities()?.find( city => city.name === cityName)
   }
+  getRegions(val: any, checekedRegions: string[]){
+    const regionsToAdd: string[] = this.convertToArray(val, "mobility");
+    const regionsToRemove: string[] = this.convertToNegativeArr(val);
 
+    let arr: string[] = [...checekedRegions,...regionsToAdd];
+    regionsToRemove.map( region =>
+      this.helper.removeElement(region, arr)
+    )
+    return arr;
+  }
 
-  // getRegionsArr(arr: any){
-  //   let regionArr: string[] = [];
-  //   arr.map((macroregion: any) => {
-  //     let regions = macroregion.regions
-  //     regions.map( (region: string) => regionArr.push(region))
-  //   })
-  //   return regionArr;
-  // }
-  // getRolesArr(arr: any){
-  //   let rolesArr: string[] = [];
-  //   arr.map((macroregion: any) => {
-  //     let regions = macroregion.roles
-  //     regions.map( (region: string) => rolesArr.push(region))
-  //   })
-  //   return rolesArr;
-  // }
   getArr(arr: any, category: string){
     let newArr: string[] = []
     arr.map((element: any) => {
@@ -89,19 +87,8 @@ export class FormService {
     })
     return newArr
   }
-
-
-  treatAsUTC(date: Date) {
-    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-    return Number(date);
-  }
-  daysBetween(startDate: Date, endDate: Date) {
-      var millisecondsPerDay = 24 * 60 * 60 * 1000;
-      return (this.treatAsUTC(endDate) - this.treatAsUTC(startDate)) / millisecondsPerDay;
-  }
-  formatDate(date: Date): string{
-    return this.datePipe.transform(date,'dd/MM/YYYY')!;
-  }
+  
+  
 
   formatClientArr(cData: any[]): IClient[]{
     let clients : IClient[] = [];

@@ -33,6 +33,7 @@ import { AddNewComponent } from './home/sidebar/add-new/add-new.component';
 import { FilterComponent } from './home/sidebar/filter/filter.component';
 import { LoadExcelComponent } from './home/load-excel/load-excel.component';
 import { InfoboxComponent } from './home/map/infobox/infobox.component';
+import { FavoriteComponent } from './home/favorite/favorite.component';
 
 // npm i ngx-mat-intl-tel-input --save
 // npm install libphonenumber-js --save
@@ -48,6 +49,7 @@ import { InfoboxComponent } from './home/map/infobox/infobox.component';
     FilterComponent,
     LoadExcelComponent,
     InfoboxComponent,
+    FavoriteComponent,
   ],
   imports: [
     BrowserModule,

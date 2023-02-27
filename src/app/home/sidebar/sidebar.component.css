@@ -1,6 +1,6 @@
 #sidebar-div{
     background-color: var(--main);
-    color: white;
+    color: var(--dark-color-black);
     border: solid white 1px;
     max-height: 85vh;
     overflow-y: auto;

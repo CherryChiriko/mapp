@@ -2,4 +2,7 @@ nav{
     background-color: var(--main);
     font-weight: bold;
 }
-nav a{    font-size: 2rem;}
+nav a {    
+    font-size: 2rem; 
+    color: var(--dark-color-black)
+}
