@@ -10,7 +10,7 @@
     margin-left: 1rem;
 }
 .expand{ color: white; }
-.close { color: red; margin-top: -.8rem;}
+.close { color: red; margin-top: -.8rem; cursor: pointer;}
 .star-full {
   font-variation-settings:
   'FILL' 1,

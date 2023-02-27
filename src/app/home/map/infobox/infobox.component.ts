@@ -3,8 +3,8 @@ import { Component, Input } from '@angular/core';
 import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { FavoriteListService } from 'src/app/services/favorite-list.service';
 import { FilterService } from 'src/app/services/filter.service';
+import { FormService } from 'src/app/services/form.service';
 import { HelperService } from 'src/app/services/helper.service';
-import { MapService } from 'src/app/services/map.service';
 
 @Component({
   selector: 'app-infobox',
@@ -19,7 +19,7 @@ export class InfoboxComponent {
   showContacts: boolean = false;
 
   constructor(
-    private map: MapService,
+    private form: FormService,
     private filter: FilterService,
     private helper: HelperService,
     private _favorite : FavoriteListService
@@ -53,7 +53,7 @@ export class InfoboxComponent {
   }
 
   markerInfo(condition: boolean, mark: any) {
-    return this.map.getMarkerInfo(mark, condition);
+    return this.form.getMarkerInfo(mark, condition);
   }
 
   getColor(condition: boolean) {    return this.helper.getColorScheme(condition);  }

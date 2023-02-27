@@ -15,19 +15,10 @@
             </div>
         </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="contact-box card">
-                <p>TDACA18</p>
-                <i class="material-symbols-outlined close">close</i>
+        <div class="contact-box card" *ngFor="let fav of favorites">
+            <p>{{fav.id}}</p>
+            <i class="material-symbols-outlined close" (click)="removeFavorite(fav)">close</i>
         </div>
-        <div class="contact-box card">
-            <p>TDACA20</p>
-            <i class="material-symbols-outlined close">close</i>
-        </div>
-        Much names
-        <hr>
-        Very deep
-        <hr>
-        Such length 
         <hr>
         <div class="d-flex justify-content-center my-4">
             <button class="btn btn-warning">Export</button>

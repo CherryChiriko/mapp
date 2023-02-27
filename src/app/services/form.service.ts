@@ -143,4 +143,10 @@ export class FormService {
       longitude: lng
     }
   }
+
+  getMarkerInfo(mark: any, isClient: boolean){
+    return isClient ? 
+    {"Activities" : mark.activities} : 
+    {"Interests" : mark.interests}
+  }   
 }

@@ -144,7 +144,7 @@ export class FilterService {
   //   if (isClient) {
   //     let clientFilter = {
   //       name: null,
-  //       BM: null,
+  //       bm: null,
   //       needed_activities: null,
   //       need: null
   //     }
@@ -153,7 +153,7 @@ export class FilterService {
   //   } else {
   //     let specialistFilter: ISFilter = {
   //       id: null,
-  //       BM: null,
+  //       bm: null,
   //       regions: null,
   //       interests: null,
   //       experience: null,

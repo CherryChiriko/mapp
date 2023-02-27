@@ -7,19 +7,19 @@
       "Embedded",
       "DevOps"
     ],
-    "BM": "ACA",
+    "bm": "ACA",
     "need": "Embedded"
   },
   {
     "name": "Loccioni",
     "logo": "https://www.loccioni.com/wp-content/themes/bst-master/img/loccioni_w.svg",
     "city": "Ancona",
-    "BM": "RFU",
+    "bm": "RFU",
     "activities": [
       "Embedded",
       "Testing SW",
       "Collaudo"
     ],
-    "need": "Embedded"
+    "need": ""
   }
 ]
