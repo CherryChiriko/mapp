@@ -53,4 +53,9 @@ export class HelperService {
     return new Date(Number(`20${year}`), Number(month) - 1, Number(day));
   }
   
+  removeElement(element: any, arr: any[]){  
+    const index = arr.indexOf(element)
+    index > -1 ? arr.splice(index, 1): null; 
+  }
+
 }

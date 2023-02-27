@@ -31,15 +31,11 @@ export class AddNewComponent {
   clientForm!: FormGroup;
 
   checkedRegions: string[] = [];
-  checkedAllItaly : boolean = false;
 
   constructor(private filter : FilterService, private form: FormService,
     private helper: HelperService, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
-
-    // const regionArr: string[] = this.form.getArr(this.macroregions, 'regions');
-    const rolesArr: string[] = this.form.getArr(this.rolesArrTot, 'roles');
 
     this.clientForm = new FormGroup({
       city: new FormControl(null, [Validators.required]),
@@ -68,16 +64,38 @@ export class AddNewComponent {
     });
 
     this.form.addElementToFormGroup(this.clientForm, 'bm', this.BMs)
-    this.form.addElementToFormGroup(this.clientForm, 'activities', rolesArr)
+    this.form.addElementToFormGroup(this.clientForm, 'activities', this.rolesArr)
 
     this.form.addElementToFormGroup(this.specialistForm, 'bm', this.BMs)
-    this.form.addElementToFormGroup(this.specialistForm, 'interests', rolesArr)
+    this.form.addElementToFormGroup(this.specialistForm, 'interests', this.rolesArr)
     this.form.addElementToFormGroup(this.specialistForm, 'mobility', this.regionArr)
   }
 
   checkAllItaly(){ 
-    this.checkedAllItaly = !this.checkedAllItaly;
-    // this.checkedAllItaly ? this.checkedRegions = this.regionArr : this.checkedRegions = [];
+    
+    const northRegions: any = document.getElementsByName("North"); 
+    const centerRegions: any = document.getElementsByName("Centre"); 
+    const southRegions: any = document.getElementsByName("South"); 
+    // element.map( (el : any) => 
+    // { if (el.type === 'checkbox'){      el.checked = true    }})
+    for(var i=0; i < northRegions.length; i++){  
+        if(northRegions[i].type=='checkbox')  {
+          northRegions[i].checked=true;
+          this.checkedRegions.push(northRegions[i].value)
+        }
+    } 
+    for(var i=0; i < centerRegions.length; i++){  
+      if(centerRegions[i].type=='checkbox')  {
+        centerRegions[i].checked=true;
+        this.checkedRegions.push(centerRegions[i].value)
+      }
+    } 
+    for(var i=0; i < southRegions.length; i++){  
+      if(southRegions[i].type=='checkbox')  {
+        southRegions[i].checked=true;
+        this.checkedRegions.push(southRegions[i].value)
+      }
+    }  
   }
 
   checkAll(macro: string){  
@@ -115,13 +133,10 @@ export class AddNewComponent {
   addSpecialist(){
     const val = this.specialistForm.value;
 
-    const cityInfo: string[] = val.city.split(",");
+    // const cityInfo: string[] = val.city.split(",");
     const interestsArr: string[] = this.form.convertToArray(val, "interests");
-
-    let regionsArr : string[] = this.form.convertToArray(val, "mobility");
-    let newArr = [...this.checkedRegions,...regionsArr]
-    // console.log(val)
-    console.log(val.region)
+    const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
+    console.log(regionsArr)
 
     let newSpecialist = {
       name: val.name,
@@ -137,7 +152,7 @@ export class AddNewComponent {
       background: val.background,
       experience: val.experience,
       interests: interestsArr.join(', '),
-      mobility: newArr.join(', '),
+      mobility: regionsArr.join(', '),
       start: val.start
     }
     console.log(newSpecialist)

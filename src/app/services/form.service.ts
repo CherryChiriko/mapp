@@ -5,6 +5,7 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import citiesData from 'src/assets/istat-cities.json';
 import geoData from 'src/assets/italy_geo.json';
 import { ICities, ICity, IClient, ISpecialist } from '../interfaces/interfaces';
+import { HelperService } from './helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class FormService {
 
   cities : ICities[] = [] ;
 
-  constructor(private datePipe: DatePipe) {
+  constructor(private datePipe: DatePipe, private helper: HelperService) {
     this.cities = citiesData as ICities[];
   }
 
@@ -32,7 +33,13 @@ export class FormService {
     })
     return arr;
   }
-
+  convertToNegativeArr(val: any){
+    let arr : string[] = [];
+    Object.keys(val.mobility).forEach(function (key) {
+      val.mobility[key] === false ? arr.push(key) : null;
+    })
+    return arr;
+  }
 
   searchCity(expr: string){
     let reg = new RegExp(expr, "gi")
@@ -62,6 +69,16 @@ export class FormService {
   getCityInfo(cityName: string){
     return this.getAllCities()?.find( city => city.name === cityName)
   }
+  getRegions(val: any, checekedRegions: string[]){
+    const regionsToAdd: string[] = this.convertToArray(val, "mobility");
+    const regionsToRemove: string[] = this.convertToNegativeArr(val);
+
+    let arr: string[] = [...checekedRegions,...regionsToAdd];
+    regionsToRemove.map( region =>
+      this.helper.removeElement(region, arr)
+    )
+    return arr;
+  }
 
   getArr(arr: any, category: string){
     let newArr: string[] = []
@@ -71,11 +88,7 @@ export class FormService {
     })
     return newArr
   }
-  removeRegion(arr: string[]){
-    arr.map(
-      
-    )
-  }
+  
 
   treatAsUTC(date: Date) {
     date.setMinutes(date.getMinutes() - date.getTimezoneOffset());

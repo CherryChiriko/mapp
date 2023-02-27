@@ -14,9 +14,10 @@
 
     --grey: #d2d2d2;
     --dark-grey: #5b5756;
+    --light-alten-grey: #b1b3b4;
 
     --alten-red: #e30513;
-    --alten-black: #4b4b4d;
+    --alten-grey: #4b4b4d;
     --alten-blue: #008bd2;
     --alten-yellow: #ffed00;
 
@@ -34,7 +35,11 @@
 
     /* --less-dark-blue: #0d5bdd; */
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* background-color: var(--alten-grey); */
+}
 
 
 
