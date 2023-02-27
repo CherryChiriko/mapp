@@ -8,22 +8,32 @@ import { FilterService } from './filter.service';
   providedIn: 'root',
 })
 export class ExcelService {
-  constructor(private _filt: FilterService,private _fileSaver: FileSaverService) {}
+  constructor(
+    private _filt: FilterService,
+    private _fileSaver: FileSaverService
+  ) {}
 
   //-------------------------------------------------------------------------Metodi Specialisti
   public importSpecialists(event: any) {
     const file = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.readAsBinaryString(file);
-    fileReader.onload = (e) => {
-      let workBook = XLSX.read(fileReader.result, { type: 'binary' });
-      let data = workBook.SheetNames;
-      this._filt.initSpecialist(XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]));
-    };
+    const extension = file.name.split('.').pop(); //ottengo l'estensione del file
+    if (extension !== 'xlsx' && extension !== 'xls') {
+      alert('Errore: il file non è un file Excel valido');
+      return;
+    } else {
+      const fileReader = new FileReader();
+      fileReader.readAsBinaryString(file);
+      fileReader.onload = (e) => {
+        let workBook = XLSX.read(fileReader.result, { type: 'binary' });
+        let data = workBook.SheetNames;
+        this._filt.initSpecialist(
+          XLSX.utils.sheet_to_json(workBook.Sheets[data[0]])
+        );
+      };
+    }
   }
 
-  public exportSpecialists(specialistArray : ISpecialist[]) {
-
+  public exportSpecialists(specialistArray: ISpecialist[]) {
     const EXCEL_TYPE =
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     //custom code
@@ -42,13 +52,12 @@ export class ExcelService {
     this._fileSaver.save(blobData, 'specialistFile');
   }
 
-  formatExcelSpecialistArr(sData: any[]): ISpecialist[]{
-    let specialists : ISpecialist[] = [];
-    sData.map( s => specialists.push(this.formatExcelSpecialist(s)))
+  formatExcelSpecialistArr(sData: any[]): ISpecialist[] {
+    let specialists: ISpecialist[] = [];
+    sData.map((s) => specialists.push(this.formatExcelSpecialist(s)));
     return specialists;
   }
-  formatExcelSpecialist(s: any): ISpecialist{
-
+  formatExcelSpecialist(s: any): ISpecialist {
     return {
       id: s.id,
       name: s.name,
@@ -56,13 +65,12 @@ export class ExcelService {
       phone: s.phone,
       city: s.city,
       mobility: s.mobility,
-      BM: s.BM,
+      BM: s.bm,
       experience: s.experience,
       background: s.background,
       interests: s.interests,
-      available_from: s.available_from ? s.available_from: null,
-      notice: s.notice
-    }
+      available_from: s.available_from ? s.available_from : null,
+    };
   }
 
   //--------------------------------------------------------------------------------------
@@ -70,17 +78,24 @@ export class ExcelService {
   //-------------------------------------------------------------------------------------Metodi Clienti
   public importClients(event: any) {
     const file = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.readAsBinaryString(file);
-    fileReader.onload = (e) => {
-      let workBook = XLSX.read(fileReader.result, { type: 'binary'});
-      let data = workBook.SheetNames;
-      this._filt.initClient(XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]));
-
-    };
+    const extension = file.name.split('.').pop(); //ottengo l'estensione del file
+    if (extension !== 'xlsx' && extension !== 'xls') {
+      alert('Errore: il file non è un file Excel valido');
+      return;
+    } else {
+      const fileReader = new FileReader();
+      fileReader.readAsBinaryString(file);
+      fileReader.onload = (e) => {
+        let workBook = XLSX.read(fileReader.result, { type: 'binary' });
+        let data = workBook.SheetNames;
+        this._filt.initClient(
+          XLSX.utils.sheet_to_json(workBook.Sheets[data[0]])
+        );
+      };
+    }
   }
 
-  public exportClients(clientArray : IClient[]) {
+  public exportClients(clientArray: IClient[]) {
     const EXCEL_TYPE =
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     //custom code
@@ -99,25 +114,25 @@ export class ExcelService {
     this._fileSaver.save(blobData, 'clientFile');
   }
 
-  formatExcelClientArr(cData: IClient[]): IClient[]{
-    let clients : IClient[] = [];
-    cData.map( c => clients.push(this.formatExcelClient(c)))
+  formatExcelClientArr(cData: IClient[]): IClient[] {
+    let clients: IClient[] = [];
+    cData.map((c) => clients.push(this.formatExcelClient(c)));
     return clients;
   }
 
-  public formatExcelClient(c : any) : IClient {
+  public formatExcelClient(c: any): IClient {
     return {
-      name : c.name,
-      logo : c?.logo,
-      city : c.city,
-      BM : c.BM,
-      activities : c.activities,
-      need : c.need
-    }
+      name: c.name,
+      logo: c?.logo,
+      city: c.city,
+      BM: c.bm,
+      activities: c.activities,
+      need: c.need,
+    };
   }
 
   //-------------------------------------------------------------------------------lista preferiti
-  exportFavorites(favoritesArray : ISpecialist[]) {
+  exportFavorites(favoritesArray: ISpecialist[]) {
     const EXCEL_TYPE =
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     //custom code
@@ -135,9 +150,4 @@ export class ExcelService {
     const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
     this._fileSaver.save(blobData, 'favoritesSpecialistFile');
   }
-
-
-
-
-
 }

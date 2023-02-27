@@ -141,31 +141,26 @@ export class FilterService {
   //     ? [this.form.formatDate(val.start), this.form.formatDate(val.end)]
   //     : null;
 
-    if (isClient) {
-      let clientFilter: ICFilter = {
-        name: val.name,
-        region: regionsArr,
-        experience: degreeArr,
-        lookFor: specialtiesArr,
-        // interests: interestsArr,
-        available_from: date,
-        notice: val.notice,
-      };
-      console.log(clientFilter);
-      this.setCFilter(clientFilter);
-    } else {
-      let specialistFilter: ISFilter = {
-        name: val.name,
-        region: regionsArr,
-        mobility: null,
-        degree: degreeArr,
-        skills: specialtiesArr,
-        interests: interestsArr,
-        available_from: date,
-        notice: val.notice,
-      };
-      this.setSFilter(specialistFilter);
-    }
+  //   if (isClient) {
+  //     let clientFilter = {
+  //       name: null,
+  //       BM: null,
+  //       needed_activities: null,
+  //       need: null
+  //     }
+  //     console.log(clientFilter);
+  //     this.setCFilter(clientFilter);
+  //   } else {
+  //     let specialistFilter: ISFilter = {
+  //       id: null,
+  //       BM: null,
+  //       regions: null,
+  //       interests: null,
+  //       experience: null,
+  //       date: null
+  //     };
+  //     this.setSFilter(specialistFilter);
+  //   }
   }
 
   //                 Filter logic
