@@ -41,9 +41,8 @@ export class InfoboxComponent {
     // }
   }
 
-  isClient(element: IClient | ISpecialist) {
-    return !element.hasOwnProperty('id');
-  }
+  isClient(element: IClient | ISpecialist) {    return !element.hasOwnProperty('id');  }
+  isActive(element: any) {    return this.isClient(element)? element.need : null }
 
   filterByCity(arr: any[], cityName: string) {
     return arr.filter((element) => element.city === cityName);
@@ -56,7 +55,7 @@ export class InfoboxComponent {
     return this.form.getMarkerInfo(mark, condition);
   }
 
-  getColor(condition: boolean) {    return this.helper.getColorScheme(condition);  }
+  getColor(condition: boolean, need:boolean) {    return this.helper.getColorScheme(condition, need);  }
   getIcon(condition: boolean) {    return this.helper.getIcon(condition);  }
   getButton(condition: boolean){ return this.helper.getButton(condition)}
 
