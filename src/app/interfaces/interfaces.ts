@@ -5,7 +5,7 @@ export interface IClient {
   bm: string;
   logo?: string;
   activities: string[];
-  need: string[];
+  need?: string;
   latitude?: number;
   longitude?: number;
 }

@@ -52,32 +52,30 @@ export class FilterService {
     this.clients$.next(this.clientArray);
   }
 
-  getClient(): IClient[] {
+  getClients(): IClient[] {
     return this.clientArray;
   }
-  getSpecialist(): ISpecialist[] {
+  getSpecialists(): ISpecialist[] {
     return this.specialistArray;
   }
 
   resetCFilter() {
-    const emptyFilter = {
+    this.setCFilter( {
       name: null,
       bm: null,
       activities: null,
       need: null
-    };
-    this.setCFilter(emptyFilter);
+    });
   }
   resetSFilter() {
-    const emptyFilter = {
+    this.setSFilter( {
       id: null,
       bm: null,
       regions: null,
       interests: null,
       experience: null,
       date: null
-    };
-    this.setSFilter(emptyFilter);
+    });
   }
   resetAllFilters() {
     this.resetCFilter();
@@ -126,6 +124,17 @@ export class FilterService {
   }
   setCFilter(filt: ICFilter) {
     this.cFilterSubj$.next(filt);
+  }
+
+  getClient(clientName: string){
+    return this.clientArray.find(c => c.name === clientName)
+  }
+
+  setActive(client: IClient, activity: string){
+    const c = this.getClient(client.name)  
+    if (!c) {return;}
+    if (c.need === activity) {c.need = ''; return;} 
+    c.need = activity;
   }
 
   createFilter(filter: any, isClient: boolean) {
@@ -221,6 +230,9 @@ export class FilterService {
       }
     }
     return result;
+  }
+  filterByCity(arr: any[], cityName: string) {
+    return arr.filter((element) => element.city === cityName);
   }
 
   //                 Return filter

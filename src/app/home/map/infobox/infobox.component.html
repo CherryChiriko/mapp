@@ -29,8 +29,8 @@ style="
                 <td class="rounded">
                     <p>{{item.key}}</p>
                     <div *ngFor="let val of item.value; let i=index">
-                        <div class="rounded" [ngClass]="'specialties'">{{val}}</div>
-                        <!-- check if need and change its colour -->
+                        <div class="rounded" [ngClass]="isClient(el)? el.need === val? 'clientAct' : 'clientNeed': 'specialties'"
+                        (click)="isClient(el)? setActive(el, val) : null">{{val}}</div>
                     </div>
                 </td>
             </tr>

@@ -74,11 +74,14 @@ export class MapComponent implements OnInit {
   cToggleShow() {    this.showClients = !this.showClients;  }
   sToggleShow() {    this.showSpecialists = !this.showSpecialists;  }
   nToggleShow() {    this.showNeed = !this.showNeed;  }
+  getActiveClients() {  return this.clients.filter(client => client.need)}
+  getInactiveClients() {  return this.clients.filter(client => !client.need)}
 
   showMarkers() {
-    return this.showClients && this.showSpecialists? this.allMarkers
-      : this.showClients? this.clients 
-      : this.showSpecialists? this.specialists : [];
+    return this.showClients && this.showSpecialists && this.showNeed ? this.allMarkers
+      : this.showClients? this.getInactiveClients() 
+      : this.showSpecialists? this.specialists 
+      : this.showNeed? this.getActiveClients() : [];
   }
 
 

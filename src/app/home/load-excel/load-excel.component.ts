@@ -28,10 +28,10 @@ export class LoadExcelComponent {
     this.isClient? this.isCLoaded = true : this.isSLoaded = true;
   }
   save(){
-    this.specialistArray = this._filt.getSpecialist();
+    this.specialistArray = this._filt.getSpecialists();
     this.specialistArrayFormatted = this._excel.formatExcelSpecialistArr(this.specialistArray);
 
-    this.clientArray = this._filt.getClient();
+    this.clientArray = this._filt.getClients();
     this.clientArrayFormatted = this._excel.formatExcelClientArr(this.clientArray);
 
     this.isClient? this._excel.exportClients(this.clientArrayFormatted) : this._excel.exportSpecialists(this.specialistArrayFormatted);

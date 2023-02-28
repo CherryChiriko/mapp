@@ -33,22 +33,11 @@ export class InfoboxComponent {
 
   toggleContacts() {    this.showContacts = !this.showContacts;  }
 
-  setContact() {
-    // if (!this.contacts.length) {
-    //   for (let i = 0; i < this.specialists.length; i++) {
-    //     this.contacts.push(false);
-    //   }
-    // }
-  }
-
   isClient(element: IClient | ISpecialist) {    return !element.hasOwnProperty('id');  }
   isActive(element: any) {    return this.isClient(element)? element.need : null }
 
-  filterByCity(arr: any[], cityName: string) {
-    return arr.filter((element) => element.city === cityName);
-  }
   groupByCity(cityName: string): any[] {
-    return this.filterByCity(this.totalMarkers, cityName);
+    return this.filter.filterByCity(this.totalMarkers, cityName);
   }
 
   markerInfo(condition: boolean, mark: any) {
@@ -60,8 +49,8 @@ export class InfoboxComponent {
   getButton(condition: boolean){ return this.helper.getButton(condition)}
 
   deleteElement(element: any) {
-    this.isClient(element)
-      ? this.filter.removeClient(element)
+    this.isClient(element)? 
+    this.filter.removeClient(element)
       : this.filter.removeSpecialist(element);
   }
 
@@ -79,7 +68,7 @@ export class InfoboxComponent {
     this.isStarFull = false;
   }
 
-  // public getFavoriteList() : ISpecialist[]{
-  //   return this.favoriteSpecialist;
-  // }
+  setActive(client: IClient, activity : string){
+    this.filter.setActive(client, activity)
+  }
 }
