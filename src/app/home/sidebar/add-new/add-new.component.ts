@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ICity, IClient, ISpecialist } from 'src/app/interfaces/interfaces';
+import { ICity, IClient, IRawClient, ISpecialist } from 'src/app/interfaces/interfaces';
 import { FilterService } from 'src/app/services/filter.service';
 import { FormService } from 'src/app/services/form.service';
 import { HelperService } from 'src/app/services/helper.service';
@@ -116,13 +116,13 @@ export class AddNewComponent {
     const activitiesArr: string[] = this.form.convertToArray(val, "activities");
 
     console.log(val)
-    let newClient = {
+    let newClient : IClient = {
       name: val.name,
       logo: val.picture,
       city: cityInfo[0],
       bm: val.bm,
 
-      activities: activitiesArr.join(','),
+      activities: activitiesArr,
       need: val.need
     }
     console.log(newClient)
@@ -151,8 +151,8 @@ export class AddNewComponent {
 
       background: val.background,
       experience: val.experience,
-      interests: interestsArr.join(', '),
-      mobility: regionsArr.join(', '),
+      interests: interestsArr,
+      mobility: regionsArr,
       start: date
     }
     console.log(newSpecialist)

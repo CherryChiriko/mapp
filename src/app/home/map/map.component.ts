@@ -78,10 +78,17 @@ export class MapComponent implements OnInit {
   getInactiveClients() {  return this.clients.filter(client => !client.need)}
 
   showMarkers() {
-    return this.showClients && this.showSpecialists && this.showNeed ? this.allMarkers
-      : this.showClients? this.getInactiveClients() 
-      : this.showSpecialists? this.specialists 
-      : this.showNeed? this.getActiveClients() : [];
+    if (this.showClients && this.showSpecialists && this.showNeed) { return this.allMarkers }
+    else {
+      if (this.showClients) {
+        return this.showNeed ? this.clients : 
+        this.showSpecialists?  [...this.getInactiveClients(), ...this.specialists] : this.getInactiveClients()
+      }
+      if (this.showSpecialists){
+        return this.showNeed? [...this.getActiveClients(), ...this.specialists] : this.specialists
+      }
+      return this.showNeed ? this.getActiveClients() : []
+    } 
   }
 
 

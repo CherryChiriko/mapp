@@ -1,3 +1,28 @@
+export interface IRawClient {
+  name: string;
+  city: string;  
+  logo?: string;
+  bm: string;
+  activities: string[];
+  need ?: string;
+}
+
+export interface IRawSpecialist {
+  name: string;
+  id: string;
+  email: string;
+  phone: string;
+  website?: string;
+  city: string;
+  bm: string;
+  experience: number;
+  background: string[];
+  mobility: string[];
+  interests: string[];
+  available_from?: string;
+  notice?: number;
+}
+
 export interface IClient {
   name: string;
   city: string;
