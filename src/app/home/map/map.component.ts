@@ -39,9 +39,6 @@ export class MapComponent implements OnInit {
   };
   zoom = 5;
 
-  // public height = 450;
-  // public width = 750;
-
   contacts: boolean[] = [];
 
   constructor(
@@ -52,19 +49,20 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit() {
-    this.sMarkersSubs = this.filter
-      .sFilterData()
-      .subscribe((value) => (this.specialists = value));
-
+    
     this.cMarkersSubs = this.filter
-      .cFilterData()
+      .filterData(true)
       .subscribe((value) => (this.clients = value));
 
+    this.sMarkersSubs = this.filter
+      .filterData(false)
+      .subscribe((value) => (this.specialists = value));  
+
     this.allMarkersSubs = combineLatest([
-      this.filter.sFilterData(),
-      this.filter.cFilterData(),
+      this.filter.filterData(true),
+      this.filter.filterData(false),
     ]).subscribe(
-      ([specialists, clients]) =>
+      ([clients, specialists]) =>
         (this.allMarkers = [...clients, ...specialists])
     );
     this.favoriteSpecialistSubs = this._favorite
@@ -74,24 +72,24 @@ export class MapComponent implements OnInit {
     });
   }
 
-  cToggleShow() {
-    this.showClients = !this.showClients;
-  }
-  sToggleShow() {
-    this.showSpecialists = !this.showSpecialists;
-  }
-  nToggleShow() {
-    this.showNeed = !this.showNeed;
-  }
+  cToggleShow() {    this.showClients = !this.showClients;  }
+  sToggleShow() {    this.showSpecialists = !this.showSpecialists;  }
+  nToggleShow() {    this.showNeed = !this.showNeed;  }
+  getActiveClients() {  return this.clients.filter(client => client.need)}
+  getInactiveClients() {  return this.clients.filter(client => !client.need)}
 
   showMarkers() {
-    return this.showClients && this.showSpecialists
-      ? this.allMarkers
-      : this.showClients
-      ? this.clients
-      : this.showSpecialists
-      ? this.specialists
-      : [];
+    if (this.showClients && this.showSpecialists && this.showNeed) { return this.allMarkers }
+    else {
+      if (this.showClients) {
+        return this.showNeed ? this.clients : 
+        this.showSpecialists?  [...this.getInactiveClients(), ...this.specialists] : this.getInactiveClients()
+      }
+      if (this.showSpecialists){
+        return this.showNeed? [...this.getActiveClients(), ...this.specialists] : this.specialists
+      }
+      return this.showNeed ? this.getActiveClients() : []
+    } 
   }
 
 
@@ -104,16 +102,10 @@ export class MapComponent implements OnInit {
   infoWindow.open(marker);
   }
 
-  isClient(element: IClient | ISpecialist) {
-    return !element.hasOwnProperty('id');
-  }
+  isClient(element: IClient | ISpecialist) {    return !element.hasOwnProperty('id');  }
+  isActive(element: any) {    return this.isClient(element)? element.need : null }
 
-  getColor(condition: boolean) {
-    return this.helper.getColorScheme(condition);
-  }
-  getIcon(condition: boolean, need: boolean = false) {
-    return this.helper.getIcon(condition, need);
-  }
+  getIcon(condition: boolean, need: boolean = false) {    return this.helper.getIcon(condition, need);  }
 
   ngOnDestroy() {
     this.sMarkersSubs?.unsubscribe();

@@ -61,6 +61,7 @@ export class FilterComponent {
   }
 
   createFilter(isClient: boolean){
+    console.log("I am filter component")
     const val = isClient? this.cFilterForm.value: this.sFilterForm.value;
     const interestsArr : string[] = this.form.convertToArray(val, "interests");
     const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
@@ -73,7 +74,7 @@ export class FilterComponent {
         name: val.name,
         bm: val.bm,
         activities: interestsArr,
-        need: null
+        need: val.need
       }
       console.log(clientFilter)
       this.filter.setCFilter(clientFilter);
@@ -86,7 +87,7 @@ export class FilterComponent {
         regions: regionsArr,
         interests: interestsArr,
         experience: null,
-        date: date
+        date: val.date
       }
       console.log(specialistFilter)
       this.filter.setSFilter(specialistFilter);
@@ -113,53 +114,3 @@ export class FilterComponent {
 
   getButton(condition: boolean, outline: boolean = false){ return this.helper.getButton(condition, outline)}
 }
-
-
-// const cityInfo: string[] = val.city.split(",");
-//     let date: string | number =
-//     typeof(val.start)==='number'? val.start: this.form.formatDate(val.start);
-//     const interestsArr: string[] = this.form.convertToArray(val, "interests");
-//     const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
-//     this.checkedRegions = [];
-
-//     let newSpecialist = {
-//       name: val.name,
-//       id: val.id,
-//       city: cityInfo[0],
-//       bm: val.bm,
-
-//       email: val.email,
-//       phone: val.phone,
-//       website: val.website,
-
-//       background: val.background,
-//       experience: val.experience,
-//       interests: interestsArr.join(', '),
-//       mobility: regionsArr.join(', '),
-//       start: date
-//     }
-
-
-// const cityInfo: string[] = val.city.split(",");
-//     let date: string | number =
-//     typeof(val.start)==='number'? val.start: this.form.formatDate(val.start);
-//     const interestsArr: string[] = this.form.convertToArray(val, "interests");
-//     const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
-//     this.checkedRegions = [];
-
-//     let newSpecialist = {
-//       name: val.name,
-//       id: val.id,
-//       city: cityInfo[0],
-//       bm: val.bm,
-
-//       email: val.email,
-//       phone: val.phone,
-//       website: val.website,
-
-//       background: val.background,
-//       experience: val.experience,
-//       interests: interestsArr.join(', '),
-//       mobility: regionsArr.join(', '),
-//       start: date
-//     }

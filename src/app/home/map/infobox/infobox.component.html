@@ -1,8 +1,8 @@
 <div class="text-center rounded" *ngFor="let el of groupByCity(mark.city)" 
 style="
---color: {{getColor(isClient(el)).color}}; 
---lightColor: {{getColor(isClient(el)).lightColor}}; 
---darkColor: {{getColor(isClient(el)).darkColor}}">
+--color: {{getColor(isClient(el), isActive(el)).color}}; 
+--lightColor: {{getColor(isClient(el), isActive(el)).lightColor}}; 
+--darkColor: {{getColor(isClient(el), isActive(el)).darkColor}}">
     <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header class="text-center rounded header">
         <mat-panel-title>
@@ -29,8 +29,8 @@ style="
                 <td class="rounded">
                     <p>{{item.key}}</p>
                     <div *ngFor="let val of item.value; let i=index">
-                        <div class="rounded" [ngClass]="'specialties'">{{val}}</div>
-                        <!-- check if need and change its colour -->
+                        <div class="rounded" [ngClass]="isClient(el)? el.need === val? 'clientAct' : 'clientNeed': 'specialties'"
+                        (click)="isClient(el)? setActive(el, val) : null">{{val}}</div>
                     </div>
                 </td>
             </tr>

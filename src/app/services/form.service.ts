@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 import citiesData from 'src/assets/istat-cities.json';
 import geoData from 'src/assets/italy_geo.json';
-import { ICities, ICity, IClient, ISpecialist } from '../interfaces/interfaces';
+import { ICities, ICity, IClient, IRawClient, IRawSpecialist, ISpecialist } from '../interfaces/interfaces';
 import { HelperService } from './helper.service';
 
 @Injectable({
@@ -90,15 +90,14 @@ export class FormService {
 
 
 
-  formatClientArr(cData: any[]): IClient[]{
+  formatClientArr(cData: IRawClient[]): IClient[]{
     let clients : IClient[] = [];
     cData.map( c => clients.push(this.formatClient(c)))
     return clients;
   }
-  formatClient(c: any): IClient{
+  formatClient(c: IRawClient): IClient{
     const [lat, lng] = this.getCityCoordinates(c.city);
     const reg = this.getCityInfo(c.city)?.region;
-    //const activitiesArr = c.activities.split(',');
 
     return {
       name: c.name,
@@ -113,32 +112,31 @@ export class FormService {
     }
   }
 
-  formatSpecialistArr(sData: any[]): ISpecialist[]{
+  formatSpecialistArr(sData: IRawSpecialist[]): ISpecialist[]{
     let specialists : ISpecialist[] = [];
     sData.map( s => specialists.push(this.formatSpecialist(s)))
     return specialists;
   }
-  formatSpecialist(s: any): ISpecialist{
+  formatSpecialist(s: IRawSpecialist): ISpecialist{
     const [lat, lng] = this.getCityCoordinates(s.city);
     const reg = this.getCityInfo(s.city)?.region;
-    //const interestsArr = s.interests.split(',');
 
     return {
       name: s.name,
       id: s.id,
       email: s.email,
       phone: s.phone,
-      website: s.website? s.website: null,
+      website: s.website? s.website: undefined,
       city: s.city,
       region: reg? reg: "",
-      bm : s.bm,
-      avatar: s.avatar? s.avatar: null,
+      bm: s.bm,
+      // avatar: s.avatar? s.avatar: undefined,
       experience: s.experience,
       background: s.background,
       mobility: s.mobility,
-      interests: s.interests,
-      available_from: s.available_from ? s.available_from: null,
-      notice: s.notice ? s.notice : null,
+      interests:  s.interests,
+      available_from: s.available_from ? s.available_from: undefined,
+      notice: s.notice ? s.notice : undefined,
       latitude: lat,
       longitude: lng
     }

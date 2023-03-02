@@ -1,3 +1,28 @@
+export interface IRawClient {
+  name: string;
+  city: string;  
+  logo?: string;
+  bm: string;
+  activities: string[];
+  need ?: string;
+}
+
+export interface IRawSpecialist {
+  name: string;
+  id: string;
+  email: string;
+  phone: string;
+  website?: string;
+  city: string;
+  bm: string;
+  experience: number;
+  background: string[];
+  mobility: string[];
+  interests: string[];
+  available_from?: string;
+  notice?: number;
+}
+
 export interface IClient {
   name: string;
   city: string;
@@ -5,7 +30,7 @@ export interface IClient {
   bm: string;
   logo?: string;
   activities: string[];
-  need: string[];
+  need?: string;
   latitude?: number;
   longitude?: number;
 }
@@ -36,7 +61,7 @@ export interface ISFilter {
   regions: string[] | null;
   interests: string[] | null;
   experience: number | null;
-  date: Date | null;
+  date: number | null;
 }
 
 export interface ICFilter {

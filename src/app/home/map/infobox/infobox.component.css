@@ -16,10 +16,7 @@ mat-expansion-panel-header{
     background-color: var(--lightColor);
     color: var(--darkColor);
 }
-.favourite{
-    background-color: var(--light-alten-yellow);
-    color: var(--main);
-}
+.favourite{    color: var(--main); }
 .star-full {
   font-variation-settings:
   'FILL' 1,
@@ -45,9 +42,21 @@ td{
 /* *{
     border: 1px solid red;
 } */
-.specialties{
-    color: var(--darkColor);
-    background-color: var(--lightColor);
+.specialties, .clientAct,.clientNeed{
     border-color: var(--bs-btn-active-border-color);
     margin: .2rem;  padding: .2rem;
+}
+.specialties, .clientNeed {
+    color: var(--darkColor);
+    background-color: var(--lightColor);
+}
+.clientAct{
+    color: white;
+    background-color: var(--darkColor);
+}
+.clientNeed {
+    color: var(--dark-color-black)
+}
+.clientAct, .clientNeed{
+    cursor: pointer;
 }

@@ -8,9 +8,9 @@ export class HelperService {
 
   constructor(private datePipe: DatePipe) { }
 
-  getColorScheme(condition: boolean){
-    const color = condition? 'red': 'blue';
-    const but = condition? 'danger': 'primary'
+  getColorScheme(condition: boolean, need : boolean = false){
+    const color = need? 'yellow' : condition? 'red': 'blue';
+    const but =  need? 'warning' : condition? 'danger': 'primary'
     return {
       color:      `var(--alten-${color})`,
       lightColor: `var(--light-alten-${color})`,
@@ -24,8 +24,8 @@ export class HelperService {
     const dotColor = need? 'yellow' : this.getColorScheme(condition).dot
     return `${url}${dotColor}-dot.png`;
   }
-  getButton(condition:boolean, outline: boolean = false){
-    const base = `btn-${this.getColorScheme(condition).button}`
+  getButton(condition:boolean, outline: boolean = false, need: boolean = false){
+    const base = `btn-${this.getColorScheme(condition, need).button}`
     return outline? `${base}-outline`: base;
   }
   // groupArray<T, K>(arr: T[], getKey: (el: T) => K): Map<K, T[]> {
@@ -71,4 +71,12 @@ export class HelperService {
     index > -1 ? arr.splice(index, 1): null; 
   }
 
+  selectAll(name: any[], arr: string[] ){
+    for(var i=0; i < name.length; i++){
+      if(name[i].type=='checkbox')  {
+        name[i].checked=true;
+        arr.push(name[i].value)
+      }
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HelperService } from 'src/app/services/helper.service';
 import { FilterService } from 'src/app/services/filter.service';
+import { ICFilter, ISFilter } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +19,7 @@ export class SidebarComponent implements OnInit {
   isSpecialistOpen: boolean = false;
 
   isFilterOn: boolean = true;
-  CFilt: any;  SFilt: any;
+  CFilt!: ICFilter;  SFilt!: ISFilter;
 
   message = { resultMessage: '', success: false};
 
@@ -26,7 +27,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleFilter(){           this.isFilterOpen = !this.isFilterOpen}
+  toggleFilter(){           this.isFilterOpen = !this.isFilterOpen;  }
   toggleFilterSpecialist(){ this.isFilterSpecialistOpen = !this.isFilterSpecialistOpen}
   toggleFilterClient(){     this.isFilterClientOpen = !this.isFilterClientOpen}
   toggleNew(){              this.isNewOpen = !this.isNewOpen}
@@ -54,6 +55,8 @@ export class SidebarComponent implements OnInit {
 
   onNewAdded() {    this.toggleNew(); this.isClientOpen= false; this.isSpecialistOpen = false; }
 
+  cfil(){ this.filter.createFilter(this.CFilt, true)}
+  sfil(){ this.filter.createFilter(this.SFilt, false)}
 }
 
 

@@ -40,9 +40,6 @@ export class FilterService {
     this.specialistArray = this.form.formatSpecialistArr(sData);
     this.specialists$.next(this.specialistArray);
     this.resetAllFilters();
-  }
-
-  formatC(client : IClient[]){
 
   }
 
@@ -56,32 +53,30 @@ export class FilterService {
     this.clients$.next(this.clientArray);
   }
 
-  getClient(): IClient[] {
+  getClients(): IClient[] {
     return this.clientArray;
   }
-  getSpecialist(): ISpecialist[] {
+  getSpecialists(): ISpecialist[] {
     return this.specialistArray;
   }
 
   resetCFilter() {
-    const emptyFilter = {
+    this.setCFilter( {
       name: null,
       bm: null,
       activities: null,
       need: null
-    };
-    this.setCFilter(emptyFilter);
+    });
   }
   resetSFilter() {
-    const emptyFilter = {
+    this.setSFilter( {
       id: null,
       bm: null,
       regions: null,
       interests: null,
       experience: null,
       date: null
-    };
-    this.setSFilter(emptyFilter);
+    });
   }
   resetAllFilters() {
     this.resetCFilter();
@@ -132,114 +127,133 @@ export class FilterService {
     this.cFilterSubj$.next(filt);
   }
 
-  createFilter(filter: any, isClient: boolean) {
-  //   const val = filter;
-  //   const degreeArr: string[] = this.form.convertToArray(val, 'degree');
-  //   const specialtiesArr: string[] = this.form.convertToArray(
-  //     val,
-  //     'specialties'
-  //   );
-  //   const interestsArr: string[] = this.form.convertToArray(val, 'interests');
-  //   const regionsArr: string[] = this.form.convertToArray(val, 'regions');
-  //   const date = val.end
-  //     ? [this.form.formatDate(val.start), this.form.formatDate(val.end)]
-  //     : null;
+  getClient(clientName: string){
+    return this.clientArray.find(c => c.name === clientName)
+  }
 
-  //   if (isClient) {
-  //     let clientFilter = {
-  //       name: null,
-  //       bm: null,
-  //       needed_activities: null,
-  //       need: null
-  //     }
-  //     console.log(clientFilter);
-  //     this.setCFilter(clientFilter);
-  //   } else {
-  //     let specialistFilter: ISFilter = {
-  //       id: null,
-  //       bm: null,
-  //       regions: null,
-  //       interests: null,
-  //       experience: null,
-  //       date: null
-  //     };
-  //     this.setSFilter(specialistFilter);
-  //   }
+  setActive(client: IClient, activity: string){
+    const c = this.getClient(client.name)
+    if (!c) {return;}
+    if (c.need === activity) {c.need = ''; return;}
+    c.need = activity;
+  }
+
+  createFilter(filter: any, isClient: boolean) {
+    const val = filter;
+
+    const activityName = isClient? "activities" : "interests";
+    const activitiesArr : string[] = this.form.convertToArray(val, activityName);
+    // const regionsArr : string[] =    this.form.getRegions(val, this.checkedRegions);
+    // this.checkedRegions = [];
+    const date = this.helper.addDays(val.date);
+
+    console.log('regions ', val.regions, 'date', val.date)
+    console.log('second date ', date)
+
+    if (isClient){
+      let clientFilter: ICFilter = {
+        name: val.name,
+        bm: val.bm,
+        activities: activitiesArr,
+        need: val.need
+      }
+      console.log(clientFilter)
+      this.setCFilter(clientFilter);
+    }
+    else {
+      let specialistFilter: ISFilter = {
+        id: val.id,
+        bm: val.bm,
+        regions: val.regions,
+        interests: activitiesArr,
+        experience: val.experience,
+        date: val.date
+      }
+      console.log(specialistFilter)
+      this.setSFilter(specialistFilter);
+    }
   }
 
   //                 Filter logic
 
-  cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
-    if (!filt) {
-      return arr;
+
+  filterSingleValue(arr: Object[], value: string, key: string): Object[]{
+    let reg = new RegExp(value, 'i');
+    return arr.filter((element: any) => reg.test(element[key]));
+  }
+  filterArray(arr: Object[], value: string[], key: string, condition: boolean): Object[]{
+    if (!value.length) { return arr; }
+    return arr.filter((element: any) =>
+    value.some((el: any) => element[condition? 'need' : key].includes(el))
+    );
+  }
+  filterNumbers(arr: Object[], value: number, key: string,){
+    switch(true){
+      case (key === 'experience') : return arr.filter((element: any) => element.experience >= value );
+      case (key === 'date') : {
+          let prop : any = 'available_from'
+          if (arr.hasOwnProperty(prop)){
+            console.log('HEllo', arr[prop])
+          };
+          return arr;
+          break
+          // return typeof(arr.start) === 'number'? arr.filter( (element:any) => element.start <= value ) :
+          // return 'notice' in arr ?  arr.filter( (element:any) => element.notice <= value ) :
+          // 'available_from' in arr ? arr
+          // : arr;
+        // switch(true){
+        //   case () : return arr.filter( (element:any) => element.notice <= value );
+        //   case ('start')
+        // }
+        // 'avail';
+        // console.log()
+      };
+      default : return arr;
     }
-    let result = arr;
-    for (const [key, value] of Object.entries(filt)) {
-      if (value === null) {
-        continue;
-      }
-      let keyName = key as keyof IClient;
-      // console.log('I am the result so far', result, keyName);
-      if (Array.isArray(value)) {
-        if (!value.length) {
-          continue;
-        }
-        result = result.filter((element: any) =>
-          value.some((el) => element[keyName].includes(el))
-        );
-        continue;
-      } else {
-        let reg = new RegExp(value, 'i');
-        result = result.filter((element: any) => reg.test(element[keyName]));
-        // console.log('and I am the result ', result);
-        continue;
-      }
-    }
-    return result;
+
+  }
+  filterDates(arr: Object[], value: number){
+    return arr.filter((element: any) =>
+    {
+      // element.start ?
+    });
   }
 
-  sFilterLogic(arr: ISpecialist[], filt: ISFilter): ISpecialist[] {
-    if (!filt) {
-      return arr;
-    }
+
+  filterLogic(arr: any[], filt: any, isClient: boolean){
+    if (!filt) {      return arr;    }
     let result = arr;
     for (const [key, value] of Object.entries(filt)) {
-      if (value === null) {
-        continue;
-      }
-      let keyName = key as keyof ISpecialist;
-      // console.log('I am the result so far', result, keyName);
-      if (Array.isArray(value)) {
-        if (!value.length) {
-          continue;
+      const keyName = (isClient? key as keyof ICFilter: key as keyof ISFilter);
+      switch (true) {
+        case (value === null || keyName === 'need') :{ break; }
+        case Array.isArray(value): {
+          const condition : boolean = (key === 'activities' && (filt as any).need)
+          result = this.filterArray(result, value as string[], keyName, condition);
+          break;
         }
-        result = result.filter((element: any) =>
-          value.some((el) => element[keyName].includes(el))
-        );
-        continue;
-      } else {
-        let reg = new RegExp(value, 'i');
-        result = result.filter((element: any) => reg.test(element[keyName]));
-        // if (keyName === 'city'){  result = [...result, ...arr.filter(element => element.canMove)]  }
-        continue;
-      }
-    }
+        case ( typeof(value) === 'number' ): {
+          result = this.filterNumbers(result, value as number, keyName)
+          break;
+        }
+        default: {
+          result = this.filterSingleValue(result, value as string, keyName);
+          break;
+        }
+      }}
     return result;
+  }
+  filterByCity(arr: any[], cityName: string) {
+    return arr.filter((element) => element.city === cityName);
   }
 
   //                 Return filter
 
-  cFilterData(): Observable<IClient[]> {
-    return combineLatest([this.clients$, this.cFilterSubj$]).pipe(
-      map(([client, filterValue]) => this.cFilterLogic(client, filterValue))
+  filterData(isClient: boolean) : Observable<any>{
+    const [bhvr, rep] = isClient? [this.clients$, this.cFilterSubj$] : [this.specialists$, this.sFilterSubj$]
+    return combineLatest([bhvr, rep]).pipe(map(
+      ([client, filterValue]) => this.filterLogic(client, filterValue, isClient))
     );
   }
 
-  sFilterData(): Observable<ISpecialist[]> {
-    return combineLatest([this.specialists$, this.sFilterSubj$]).pipe(
-      map(([specialist, filterValue]) =>
-        this.sFilterLogic(specialist, filterValue)
-      )
-    );
-  }
 }

@@ -22,21 +22,14 @@
     </div>
 
     <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
-        <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark))"
+        <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark), isActive(mark))"
         *ngFor="let mark of showMarkers(); let i=index"
         [position]="{lat: mark.latitude, lng: mark.longitude}"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         >
         <map-info-window #infoWindow="mapInfoWindow" [options]="{disableAutoPan:true}">
-            <app-infobox [mark]="mark" [totalMarkers]="showMarkers()"
-            style="--color: {{getColor(false).color}};
-            --lightColor: {{getColor(false).lightColor}};
-            --darkColor: {{getColor(false).darkColor}}"
-            ></app-infobox>
+            <app-infobox [mark]="mark" [totalMarkers]="showMarkers()"></app-infobox>
         </map-info-window>
         </map-marker>
     </google-map>
 </div>
-
-<!-- <button (click)="addPixel()">+</button>
-<button (click)="reducePixel()">-</button> -->
