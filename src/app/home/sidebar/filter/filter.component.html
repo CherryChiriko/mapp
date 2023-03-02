@@ -8,6 +8,7 @@
             class="form-select text-center my-3"
             formControlName = "bm">
             <option [ngValue]="null" disabled selected>--Business Manager--</option>
+            <option [ngValue]="null">No option selected</option>
             <option *ngFor="let bm of BMs" value="{{bm}}">{{bm}}</option>
         </select>
 
@@ -30,7 +31,7 @@
             </span>
         </mat-expansion-panel>
 
-        <div class="input-group my-3" *ngIf="isClient">
+        <div class=" my-3" *ngIf="isClient">
             <input type="checkbox" class="form-check-input" id="need"
                 formControlName="need" name="need">
             <label class="form-check-label ms-3" for="need">
