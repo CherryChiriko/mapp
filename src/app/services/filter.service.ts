@@ -170,38 +170,43 @@ export class FilterService {
 
   //                 Filter logic
 
-  filterLogic(arr: Object[], filt: Object){
+  filterSingleValue(arr: Object[], value: string, key: string): Object[]{
+    let reg = new RegExp(value, 'i');
+    return arr.filter((element: any) => reg.test(element[key]));
+  }
+  filterArray(arr: Object[], value: string[], key: string, condition: boolean): Object[]{
+    if (!value.length) { return arr; }
+    return arr.filter((element: any) =>
+    value.some((el: any) => element[condition? 'need' : key].includes(el))
+    );
+  }
+  // processClientsAndSpecialists(arr: IClient[] | ISpecialist[]) {
+  //   return 'need' in arr[0]? arr as ISpecialist[]: arr as IClient[];
+  // }
+  filterLogic(arr: any[], filt: any){
     if (!filt) {      return arr;    }
+    // let result = this.processClientsAndSpecialists(arr);
     let result = arr;
     for (const [key, value] of Object.entries(filt)) {
-      if (value === null) {        continue;      }
-      let keyName = key as keyof IClient;
-      if (keyName === 'need') {    continue;      }
-      console.log('I am the result so far', result, keyName);
+      const keyName = key as keyof IClient;
+      if (value === null || keyName === 'need') { continue; }
       switch (true) {
         case Array.isArray(value): {
-          if (!value.length) { continue;  }
-          if (keyName === 'activities' && filt.need) {
-            result = result.filter((element: any) =>
-            value.some((el: any) => element.need.includes(el))); 
-            break;
-          }
-          result = result.filter((element: any) =>
-          value.some((el: any) => element[keyName].includes(el))
-          );
+          const condition : boolean = (key === 'activities' && (filt as any).need)
+          result = this.filterArray(result, value as string[], keyName, condition);
           break;
         }
         default: {
-          let reg = new RegExp(value, 'i');
-          result = result.filter((element: any) => reg.test(element[keyName]));
-          console.log('and I am the result ', result);
+          result = this.filterSingleValue(result, value as string, keyName);
           break;
         }
       }}
     return result;
   }
   cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
-    return this.filterLogic(arr, filt);
+    // return this.filterLogic(arr, filt);
+    return arr;
+
     // if (!filt) {      return arr;    }
     // let result = arr;
     // for (const [key, value] of Object.entries(filt)) {
@@ -268,7 +273,7 @@ export class FilterService {
 
   cFilterData(): Observable<IClient[]> {
     return combineLatest([this.clients$, this.cFilterSubj$]).pipe(
-      map(([client, filterValue]) => this.cFilterLogic(client, filterValue))
+      map(([client, filterValue]) => this.filterLogic(client, filterValue))
     );
   }
 
