@@ -98,7 +98,7 @@ export class FormService {
   formatClient(c: any): IClient{
     const [lat, lng] = this.getCityCoordinates(c.city);
     const reg = this.getCityInfo(c.city)?.region;
-    const activitiesArr = c.activities.split(',');
+    //const activitiesArr = c.activities.split(',');
 
     return {
       name: c.name,
@@ -106,7 +106,7 @@ export class FormService {
       region: reg? reg : "",
       bm: c.bm,
       logo: c?.logo,
-      activities: activitiesArr,
+      activities: c.activities,
       need: c.need,
       latitude: lat,
       longitude: lng
@@ -121,7 +121,7 @@ export class FormService {
   formatSpecialist(s: any): ISpecialist{
     const [lat, lng] = this.getCityCoordinates(s.city);
     const reg = this.getCityInfo(s.city)?.region;
-    const interestsArr = s.interests.split(',');
+    //const interestsArr = s.interests.split(',');
 
     return {
       name: s.name,
@@ -136,7 +136,7 @@ export class FormService {
       experience: s.experience,
       background: s.background,
       mobility: s.mobility,
-      interests: interestsArr,
+      interests: s.interests,
       available_from: s.available_from ? s.available_from: null,
       notice: s.notice ? s.notice : null,
       latitude: lat,
@@ -145,8 +145,8 @@ export class FormService {
   }
 
   getMarkerInfo(mark: any, isClient: boolean){
-    return isClient ? 
-    {"Activities" : mark.activities} : 
+    return isClient ?
+    {"Activities" : mark.activities} :
     {"Interests" : mark.interests}
-  }   
+  }
 }

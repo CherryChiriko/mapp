@@ -151,8 +151,8 @@ export class AddNewComponent {
 
       background: val.background,
       experience: val.experience,
-      interests: interestsArr.join(', '),
-      mobility: regionsArr.join(', '),
+      interests: interestsArr.join(','),
+      mobility: regionsArr.join(','),
       start: date
     }
     console.log(newSpecialist)
