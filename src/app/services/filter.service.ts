@@ -138,65 +138,57 @@ export class FilterService {
   }
 
   createFilter(filter: any, isClient: boolean) {
-  //   const val = filter;
-  //   const degreeArr: string[] = this.form.convertToArray(val, 'degree');
-  //   const specialtiesArr: string[] = this.form.convertToArray(
-  //     val,
-  //     'specialties'
-  //   );
-  //   const interestsArr: string[] = this.form.convertToArray(val, 'interests');
-  //   const regionsArr: string[] = this.form.convertToArray(val, 'regions');
-  //   const date = val.end
-  //     ? [this.form.formatDate(val.start), this.form.formatDate(val.end)]
-  //     : null;
+    console.log("I am filter service")
+    const val = filter;
+    // const interestsArr : string[] = this.form.convertToArray(val, "interests");
+    // this.checkedRegions = [];
+    console.log(val.interests)
+    const date = this.helper.addDays(val.date);
 
-  //   if (isClient) {
-  //     let clientFilter = {
-  //       name: null,
-  //       bm: null,
-  //       needed_activities: null,
-  //       need: null
-  //     }
-  //     console.log(clientFilter);
-  //     this.setCFilter(clientFilter);
-  //   } else {
-  //     let specialistFilter: ISFilter = {
-  //       id: null,
-  //       bm: null,
-  //       regions: null,
-  //       interests: null,
-  //       experience: null,
-  //       date: null
-  //     };
-  //     this.setSFilter(specialistFilter);
-  //   }
+    if (isClient){
+      let clientFilter: ICFilter = {
+        name: val.name,
+        bm: val.bm,
+        activities: val.interests,
+        need: val.need
+      }
+      console.log(clientFilter)
+      this.setCFilter(clientFilter);
+    }
+    else {
+      let specialistFilter: ISFilter = {
+        id: val.id,
+        bm: val.bm,
+        regions: val.regions,
+        interests: val.interests,
+        experience: val.experience,
+        date: date
+      }
+      console.log(specialistFilter)
+      this.setSFilter(specialistFilter);
+    }
   }
 
   //                 Filter logic
 
   cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
-    if (!filt) {
-      return arr;
-    }
+    if (!filt) {      return arr;    }
     let result = arr;
     for (const [key, value] of Object.entries(filt)) {
-      if (value === null) {
-        continue;
-      }
+      if (value === null) {        continue;      }
       let keyName = key as keyof IClient;
-      // console.log('I am the result so far', result, keyName);
+      console.log('I am the result so far', result, keyName);
       if (Array.isArray(value)) {
-        if (!value.length) {
-          continue;
-        }
+        if (!value.length) {          continue;        }
         result = result.filter((element: any) =>
           value.some((el) => element[keyName].includes(el))
         );
         continue;
-      } else {
+      } 
+      else {
         let reg = new RegExp(value, 'i');
         result = result.filter((element: any) => reg.test(element[keyName]));
-        // console.log('and I am the result ', result);
+        console.log('and I am the result ', result);
         continue;
       }
     }

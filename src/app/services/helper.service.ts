@@ -71,4 +71,12 @@ export class HelperService {
     index > -1 ? arr.splice(index, 1): null; 
   }
 
+  selectAll(name: any[], arr: string[] ){
+    for(var i=0; i < name.length; i++){
+      if(name[i].type=='checkbox')  {
+        name[i].checked=true;
+        arr.push(name[i].value)
+      }
+    }
+  }
 }
