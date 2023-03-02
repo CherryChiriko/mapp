@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleFilter(){           this.isFilterOpen = !this.isFilterOpen}
+  toggleFilter(){           this.isFilterOpen = !this.isFilterOpen;  }
   toggleFilterSpecialist(){ this.isFilterSpecialistOpen = !this.isFilterSpecialistOpen}
   toggleFilterClient(){     this.isFilterClientOpen = !this.isFilterClientOpen}
   toggleNew(){              this.isNewOpen = !this.isNewOpen}
@@ -55,7 +55,8 @@ export class SidebarComponent implements OnInit {
 
   onNewAdded() {    this.toggleNew(); this.isClientOpen= false; this.isSpecialistOpen = false; }
 
-  fil(){ this.filter.createFilter(this.CFilt, true)}
+  cfil(){ this.filter.createFilter(this.CFilt, true)}
+  sfil(){ this.filter.createFilter(this.SFilt, false)}
 }
 
 

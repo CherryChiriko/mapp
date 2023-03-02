@@ -87,7 +87,7 @@ export class FilterComponent {
         regions: regionsArr,
         interests: interestsArr,
         experience: null,
-        date: date
+        date: val.date
       }
       console.log(specialistFilter)
       this.filter.setSFilter(specialistFilter);

@@ -72,14 +72,9 @@ export class AddNewComponent {
 
   
   checkAllItaly(){
-
-    const northRegions: any = document.getElementsByName("North");
-    const centerRegions: any = document.getElementsByName("Centre");
-    const southRegions: any = document.getElementsByName("South");
-
-    this.helper.selectAll(northRegions, this.checkedRegions);
-    this.helper.selectAll(centerRegions, this.checkedRegions);
-    this.helper.selectAll(southRegions, this.checkedRegions);
+    this.checkAll("North");
+    this.checkAll("Centre");
+    this.checkAll("South");
   }
 
   checkAll(macro: string){

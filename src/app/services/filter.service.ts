@@ -139,10 +139,15 @@ export class FilterService {
 
   createFilter(filter: any, isClient: boolean) {
     const val = filter;
-    // const interestsArr : string[] = this.form.convertToArray(val, "interests");
-    const activitiesArr : string[] = this.form.convertToArray(val, "activities");
+    
+    const activityName = isClient? "activities" : "interests";
+    const activitiesArr : string[] = this.form.convertToArray(val, activityName);
+    // const regionsArr : string[] =    this.form.getRegions(val, this.checkedRegions);
     // this.checkedRegions = [];
     const date = this.helper.addDays(val.date);
+
+    console.log('regions ', val.regions, 'date', val.date)
+    console.log('second date ', date)
 
     if (isClient){
       let clientFilter: ICFilter = {
@@ -159,9 +164,9 @@ export class FilterService {
         id: val.id,
         bm: val.bm,
         regions: val.regions,
-        interests: val.interests,
+        interests: activitiesArr,
         experience: val.experience,
-        date: date
+        date: val.date
       }
       console.log(specialistFilter)
       this.setSFilter(specialistFilter);
@@ -170,6 +175,7 @@ export class FilterService {
 
   //                 Filter logic
 
+  
   filterSingleValue(arr: Object[], value: string, key: string): Object[]{
     let reg = new RegExp(value, 'i');
     return arr.filter((element: any) => reg.test(element[key]));
@@ -180,20 +186,53 @@ export class FilterService {
     value.some((el: any) => element[condition? 'need' : key].includes(el))
     );
   }
-  // processClientsAndSpecialists(arr: IClient[] | ISpecialist[]) {
-  //   return 'need' in arr[0]? arr as ISpecialist[]: arr as IClient[];
-  // }
-  filterLogic(arr: any[], filt: any){
+  filterNumbers(arr: Object[], value: number, key: string,){
+    switch(true){
+      case (key === 'experience') : return arr.filter((element: any) => element.experience >= value );
+      case (key === 'date') : {
+          let prop : any = 'available_from'
+          if (arr.hasOwnProperty(prop)){
+            console.log('HEllo', arr[prop])
+          };
+          return arr;
+          break
+          // return typeof(arr.start) === 'number'? arr.filter( (element:any) => element.start <= value ) :
+          // return 'notice' in arr ?  arr.filter( (element:any) => element.notice <= value ) :
+          // 'available_from' in arr ? arr
+          // : arr; 
+        // switch(true){
+        //   case () : return arr.filter( (element:any) => element.notice <= value );
+        //   case ('start')
+        // }  
+        // 'avail';
+        // console.log()
+      };
+      default : return arr;
+    }
+    
+  }
+  filterDates(arr: Object[], value: number){
+    return arr.filter((element: any) =>    
+    {
+      // element.start ? 
+    });
+  }
+
+
+  filterLogic(arr: any[], filt: any, isClient: boolean){
     if (!filt) {      return arr;    }
-    // let result = this.processClientsAndSpecialists(arr);
     let result = arr;
     for (const [key, value] of Object.entries(filt)) {
-      const keyName = key as keyof IClient;
-      if (value === null || keyName === 'need') { continue; }
+      const keyName = (isClient? key as keyof ICFilter: key as keyof ISFilter);
       switch (true) {
+        case (value === null || keyName === 'need') :{ break; }
         case Array.isArray(value): {
           const condition : boolean = (key === 'activities' && (filt as any).need)
           result = this.filterArray(result, value as string[], keyName, condition);
+          break;
+        }
+        case ( typeof(value) === 'number' ): {
+          result = this.filterNumbers(result, value as number, keyName)
           break;
         }
         default: {
@@ -203,85 +242,17 @@ export class FilterService {
       }}
     return result;
   }
-  cFilterLogic(arr: IClient[], filt: ICFilter): IClient[] {
-    // return this.filterLogic(arr, filt);
-    return arr;
-
-    // if (!filt) {      return arr;    }
-    // let result = arr;
-    // for (const [key, value] of Object.entries(filt)) {
-    //   if (value === null) {        continue;      }
-    //   let keyName = key as keyof IClient;
-    //   if (keyName === 'need') {    continue;      }
-    //   console.log('I am the result so far', result, keyName);
-    //   switch (true) {
-    //     case Array.isArray(value): {
-    //       if (!value.length) { continue;  }
-    //       if (keyName === 'activities' && filt.need) {
-    //         result = result.filter((element: any) =>
-    //         value.some((el: any) => element.need.includes(el))); 
-    //         break;
-    //       }
-    //       result = result.filter((element: any) =>
-    //       value.some((el: any) => element[keyName].includes(el))
-    //       );
-    //       break;
-    //     }
-    //     default: {
-    //       let reg = new RegExp(value, 'i');
-    //       result = result.filter((element: any) => reg.test(element[keyName]));
-    //       console.log('and I am the result ', result);
-    //       break;
-    //     }
-    //   }}
-    // return result;
-  }
-
-  sFilterLogic(arr: ISpecialist[], filt: ISFilter): ISpecialist[] {
-    if (!filt) {
-      return arr;
-    }
-    let result = arr;
-    for (const [key, value] of Object.entries(filt)) {
-      if (value === null) {
-        continue;
-      }
-      let keyName = key as keyof ISpecialist;
-      // console.log('I am the result so far', result, keyName);
-      if (Array.isArray(value)) {
-        if (!value.length) {
-          continue;
-        }
-        result = result.filter((element: any) =>
-          value.some((el) => element[keyName].includes(el))
-        );
-        continue;
-      } else {
-        let reg = new RegExp(value, 'i');
-        result = result.filter((element: any) => reg.test(element[keyName]));
-        // if (keyName === 'city'){  result = [...result, ...arr.filter(element => element.canMove)]  }
-        continue;
-      }
-    }
-    return result;
-  }
   filterByCity(arr: any[], cityName: string) {
     return arr.filter((element) => element.city === cityName);
   }
 
   //                 Return filter
 
-  cFilterData(): Observable<IClient[]> {
-    return combineLatest([this.clients$, this.cFilterSubj$]).pipe(
-      map(([client, filterValue]) => this.filterLogic(client, filterValue))
+  filterData(isClient: boolean) : Observable<any>{
+    const [bhvr, rep] = isClient? [this.clients$, this.cFilterSubj$] : [this.specialists$, this.sFilterSubj$]
+    return combineLatest([bhvr, rep]).pipe(map(
+      ([client, filterValue]) => this.filterLogic(client, filterValue, isClient))
     );
   }
-
-  sFilterData(): Observable<ISpecialist[]> {
-    return combineLatest([this.specialists$, this.sFilterSubj$]).pipe(
-      map(([specialist, filterValue]) =>
-        this.sFilterLogic(specialist, filterValue)
-      )
-    );
-  }
+  
 }

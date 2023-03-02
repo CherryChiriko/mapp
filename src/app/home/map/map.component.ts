@@ -49,19 +49,20 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit() {
-    this.sMarkersSubs = this.filter
-      .sFilterData()
-      .subscribe((value) => (this.specialists = value));
-
+    
     this.cMarkersSubs = this.filter
-      .cFilterData()
+      .filterData(true)
       .subscribe((value) => (this.clients = value));
 
+    this.sMarkersSubs = this.filter
+      .filterData(false)
+      .subscribe((value) => (this.specialists = value));  
+
     this.allMarkersSubs = combineLatest([
-      this.filter.sFilterData(),
-      this.filter.cFilterData(),
+      this.filter.filterData(true),
+      this.filter.filterData(false),
     ]).subscribe(
-      ([specialists, clients]) =>
+      ([clients, specialists]) =>
         (this.allMarkers = [...clients, ...specialists])
     );
     this.favoriteSpecialistSubs = this._favorite

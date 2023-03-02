@@ -61,7 +61,7 @@ export interface ISFilter {
   regions: string[] | null;
   interests: string[] | null;
   experience: number | null;
-  date: Date | null;
+  date: number | null;
 }
 
 export interface ICFilter {
