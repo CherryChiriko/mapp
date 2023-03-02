@@ -70,7 +70,7 @@ export class AddNewComponent {
     this.form.addElementToFormGroup(this.specialistForm, 'mobility', this.regionArr)
   }
 
-  
+
   checkAllItaly(){
     this.checkAll("North");
     this.checkAll("Centre");
@@ -124,13 +124,8 @@ export class AddNewComponent {
 
       background: val.background,
       experience: val.experience,
-<<<<<<< HEAD
-      interests: interestsArr.join(','),
-      mobility: regionsArr.join(','),
-=======
       interests: interestsArr,
       mobility: regionsArr,
->>>>>>> aa8ba5386d2b6b27093ce294db49d0526d6a58e7
       start: date
     }
     console.log(newSpecialist)
