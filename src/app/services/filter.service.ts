@@ -36,7 +36,7 @@ export class FilterService {
   constructor(private form: FormService, private helper: HelperService) {
 
 
-   /* this.clientArray = this.form.formatClientArr(cData);
+   /*this.clientArray = this.form.formatClientArr(cData);
     this.clients$.next(this.clientArray);
     this.specialistArray = this.form.formatSpecialistArr(sData);
     this.specialists$.next(this.specialistArray);*/
@@ -148,7 +148,7 @@ export class FilterService {
     const activityName = isClient? "activities" : "interests";
     const activitiesArr : string[] = this.form.convertToArray(val, activityName);
     // console.log(val.regions, val, this.form.convertToArray(val, 'mobility'))
-    const checkedRegions: string[] = this.form.convertToArray(val, 'regions');
+    const checkedRegions: string[] | null = !isClient? this.form.convertToArray(val, 'mobility'): null;
     // const regionsArr : string[] =    this.form.getRegions(val, checkedRegions);
     const date = this.helper.addDays(val.date);
 
