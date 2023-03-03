@@ -43,7 +43,7 @@ export class FilterComponent {
     this.sFilterForm = new FormGroup({
       id: new FormControl(null),
       bm: new FormControl(null),
-      regions: new FormGroup({}),
+      mobility: new FormGroup({}),
       interests: new FormGroup({}),
       experience: new FormControl(null),
       date: new FormControl(null)
@@ -51,7 +51,7 @@ export class FilterComponent {
 
     this.form.addElementToFormGroup(this.cFilterForm, 'activities', this.rolesArr)
     this.form.addElementToFormGroup(this.sFilterForm, 'interests', this.rolesArr)
-    this.form.addElementToFormGroup(this.sFilterForm, 'regions', this.regionArr)
+    this.form.addElementToFormGroup(this.sFilterForm, 'mobility', this.regionArr)
 
     this.sFilterForm.valueChanges
     .subscribe(() => this.onSFormGroupChange.emit(this.sFilterForm.value));
@@ -84,7 +84,7 @@ export class FilterComponent {
   //     let specialistFilter: ISFilter = {
   //       id: val.id,
   //       bm: val.bm,
-  //       regions: regionsArr,
+  //       : regionsArr,
   //       interests: interestsArr,
   //       experience: null,
   //       date: val.date

@@ -36,10 +36,10 @@ export class FilterService {
   constructor(private form: FormService, private helper: HelperService) {
 
 
-   /*this.clientArray = this.form.formatClientArr(cData);
+    this.clientArray = this.form.formatClientArr(cData);
     this.clients$.next(this.clientArray);
     this.specialistArray = this.form.formatSpecialistArr(sData);
-    this.specialists$.next(this.specialistArray);*/
+    this.specialists$.next(this.specialistArray);
     this.resetAllFilters();
 
   }
@@ -143,9 +143,12 @@ export class FilterService {
   }
 
   createFilter(filter: any, isClient: boolean) {
+    if (!filter) {return;}
     const val = filter;
 
+    console.log(val)
     const activityName = isClient? "activities" : "interests";
+
     const activitiesArr : string[] = this.form.convertToArray(val, activityName);
     // console.log(val.regions, val, this.form.convertToArray(val, 'mobility'))
     const checkedRegions: string[] | null = !isClient? this.form.convertToArray(val, 'mobility'): null;
@@ -225,7 +228,7 @@ export class FilterService {
           break;
         }
         case ( typeof(value) === 'number' ): {
-          result = this.filterNumbers(result, value as number, keyName)
+          // result = this.filterNumbers(result, value as number, keyName)
           break;
         }
         default: {
