@@ -1,6 +1,6 @@
 export interface IRawClient {
   name: string;
-  city: string;  
+  city: string;
   logo?: string;
   bm: string;
   activities: string[];
@@ -58,7 +58,7 @@ export interface ISpecialist {
 export interface ISFilter {
   id: string | null;
   bm: string | null;
-  regions: string[] | null;
+  mobility: string[] | null;
   interests: string[] | null;
   experience: number | null;
   date: number | null;

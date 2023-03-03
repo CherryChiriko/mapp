@@ -1,5 +1,5 @@
 <div id="sidebar-div" class="d-flex flex-column flex-shrink-0 p-3 text-center rounded">
-    <div> 
+    <div>
         <div class="row">
             <h4 (click)="toggleFilter()" [ngClass]="isFilterOpen? 'col-9': ''">Filter</h4>
             <div class="form-check form-switch col-1" [hidden]="!isFilterOpen">
@@ -8,21 +8,21 @@
                 <label class="form-check-label" for="onOff">{{isFilterOn? 'On' : 'Off'}}</label>
             </div>
         </div>
-        
+
         <div *ngIf="isFilterOpen">
             <button class="btn m-2" [ngClass]="getButton(true)" (click)="toggleFilterClient()">Client</button>
-            <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleFilterSpecialist()">Consultant</button>    
-            
+            <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleFilterSpecialist()">Consultant</button>
+
             <app-filter *ngIf="isFilterClientOpen" [isClient]="true"
-            style="--color: {{getColor(true).color}}; 
-           --lightColor: {{getColor(true).lightColor}}; 
+            style="--color: {{getColor(true).color}};
+           --lightColor: {{getColor(true).lightColor}};
            --darkColor: {{getColor(true).darkColor}}"
            (onCFormGroupChange)="onCFormGroupChangeEvent($event)"
-           ></app-filter>  
+           ></app-filter>
 
             <app-filter *ngIf="isFilterSpecialistOpen" [isClient]="false"
-            style="--color: {{getColor(false).color}}; 
-           --lightColor: {{getColor(false).lightColor}}; 
+            style="--color: {{getColor(false).color}};
+           --lightColor: {{getColor(false).lightColor}};
            --darkColor: {{getColor(false).darkColor}}"
            (onSFormGroupChange)="onSFormGroupChangeEvent($event)"></app-filter>
 
@@ -32,23 +32,23 @@
         </div>
         <hr>
         <h4 (click)="toggleNew()">Add New</h4>
-        <div *ngIf="isNewOpen"> 
+        <div *ngIf="isNewOpen">
         <button class="btn m-2" [ngClass]="getButton(true)" (click)="toggleClient()">Client</button>
-        <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleSpecialist()">Consultant</button>    
-           <app-add-new 
+        <button class="btn m-2" [ngClass]="getButton(false)" (click)="toggleSpecialist()">Consultant</button>
+           <app-add-new
            (add)="onNewAdded()"
            [isClient]="true" *ngIf="isClientOpen"
-           style="--color: {{getColor(true).color}}; 
-           --lightColor: {{getColor(true).lightColor}}; 
+           style="--color: {{getColor(true).color}};
+           --lightColor: {{getColor(true).lightColor}};
            --darkColor: {{getColor(true).darkColor}}"></app-add-new>
-           
+
            <app-add-new [isClient]="false" *ngIf="isSpecialistOpen"
            (add)="onNewAdded()"
-           style="--color: {{getColor(false).color}}; 
-           --lightColor: {{getColor(false).lightColor}}; 
+           style="--color: {{getColor(false).color}};
+           --lightColor: {{getColor(false).lightColor}};
            --darkColor: {{getColor(false).darkColor}}"></app-add-new>
         </div>
     </div>
+    <button class="btn" (click)="fil(true)">Apply C filter</button>
+    <button class="btn" (click)="fil(false)">Apply S filter</button>
 
-    <button (click)="cfil()">Click me C</button>
-    <button (click)="sfil()">Click me S</button>

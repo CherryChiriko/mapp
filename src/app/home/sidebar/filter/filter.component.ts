@@ -60,40 +60,40 @@ export class FilterComponent {
 
   }
 
-  createFilter(isClient: boolean){
-    console.log("I am filter component")
-    const val = isClient? this.cFilterForm.value: this.sFilterForm.value;
-    const interestsArr : string[] = this.form.convertToArray(val, "interests");
-    const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
-    this.checkedRegions = [];
+  // createFilter(isClient: boolean){
+  //   console.log("I am filter component")
+  //   const val = isClient? this.cFilterForm.value: this.sFilterForm.value;
+  //   const interestsArr : string[] = this.form.convertToArray(val, "interests");
+  //   const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
+  //   this.checkedRegions = [];
 
-    const date = this.helper.addDays(val.date);
+  //   const date = this.helper.addDays(val.date);
 
-    if (isClient){
-      let clientFilter: ICFilter = {
-        name: val.name,
-        bm: val.bm,
-        activities: interestsArr,
-        need: val.need
-      }
-      console.log(clientFilter)
-      this.filter.setCFilter(clientFilter);
-      this.cFilterForm.reset();
-    }
-    else {
-      let specialistFilter: ISFilter = {
-        id: val.id,
-        bm: val.bm,
-        regions: regionsArr,
-        interests: interestsArr,
-        experience: null,
-        date: val.date
-      }
-      console.log(specialistFilter)
-      this.filter.setSFilter(specialistFilter);
-      this.sFilterForm.reset();
-    }
-  }
+  //   if (isClient){
+  //     let clientFilter: ICFilter = {
+  //       name: val.name,
+  //       bm: val.bm,
+  //       activities: interestsArr,
+  //       need: val.need
+  //     }
+  //     console.log(clientFilter)
+  //     this.filter.setCFilter(clientFilter);
+  //     this.cFilterForm.reset();
+  //   }
+  //   else {
+  //     let specialistFilter: ISFilter = {
+  //       id: val.id,
+  //       bm: val.bm,
+  //       regions: regionsArr,
+  //       interests: interestsArr,
+  //       experience: null,
+  //       date: val.date
+  //     }
+  //     console.log(specialistFilter)
+  //     this.filter.setSFilter(specialistFilter);
+  //     this.sFilterForm.reset();
+  //   }
+  // }
 
   clearSFilter(){
     this.cFilterForm.reset(); this.filter.resetSFilter(); this.checkedRegions = [];};
@@ -113,4 +113,5 @@ export class FilterComponent {
   }
 
   getButton(condition: boolean, outline: boolean = false){ return this.helper.getButton(condition, outline)}
+
 }
