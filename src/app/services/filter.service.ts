@@ -76,7 +76,7 @@ export class FilterService {
     this.setSFilter( {
       id: null,
       bm: null,
-      regions: null,
+      mobility: null,
       interests: null,
       experience: null,
       date: null
@@ -147,8 +147,9 @@ export class FilterService {
 
     const activityName = isClient? "activities" : "interests";
     const activitiesArr : string[] = this.form.convertToArray(val, activityName);
-    // const regionsArr : string[] =    this.form.getRegions(val, this.checkedRegions);
-    // this.checkedRegions = [];
+    // console.log(val.regions, val, this.form.convertToArray(val, 'mobility'))
+    const checkedRegions: string[] = this.form.convertToArray(val, 'regions');
+    // const regionsArr : string[] =    this.form.getRegions(val, checkedRegions);
     const date = this.helper.addDays(val.date);
 
     console.log('regions ', val.regions, 'date', val.date)
@@ -168,7 +169,7 @@ export class FilterService {
       let specialistFilter: ISFilter = {
         id: val.id,
         bm: val.bm,
-        regions: val.regions,
+        mobility: checkedRegions,
         interests: activitiesArr,
         experience: val.experience,
         date: val.date
@@ -195,22 +196,13 @@ export class FilterService {
     switch(true){
       case (key === 'experience') : return arr.filter((element: any) => element.experience >= value );
       case (key === 'date') : {
-          let prop : any = 'available_from'
-          if (arr.hasOwnProperty(prop)){
-            console.log('HEllo', arr[prop])
-          };
+          const prop: string = 'notice';
+
+          arr.filter((element: any) => {
+            element[prop] ?  element.notice <= value :
+            console.log(element[key])
+          })
           return arr;
-          break
-          // return typeof(arr.start) === 'number'? arr.filter( (element:any) => element.start <= value ) :
-          // return 'notice' in arr ?  arr.filter( (element:any) => element.notice <= value ) :
-          // 'available_from' in arr ? arr
-          // : arr;
-        // switch(true){
-        //   case () : return arr.filter( (element:any) => element.notice <= value );
-        //   case ('start')
-        // }
-        // 'avail';
-        // console.log()
       };
       default : return arr;
     }
@@ -234,6 +226,8 @@ export class FilterService {
         case Array.isArray(value): {
           const condition : boolean = (key === 'activities' && (filt as any).need)
           result = this.filterArray(result, value as string[], keyName, condition);
+
+          if (keyName === 'mobility'){console.log('here ', result)}
           break;
         }
         case ( typeof(value) === 'number' ): {
