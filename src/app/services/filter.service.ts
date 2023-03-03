@@ -188,29 +188,25 @@ export class FilterService {
     value.some((el: any) => element[condition? 'need' : key].includes(el))
     );
   }
+
+  filterDates(arr: Object[], value: number){
+    return arr.filter((element: any) => {
+      // if (element.notice) {} else {
+      // console.log(this.helper.stringToDate(element['available_from']) > this.helper.addDays(value)  )}
+      element['notice'] ?  element.notice <= value :
+      this.helper.stringToDate(element['available_from']) <= this.helper.addDays(value)
+    })
+  }
   filterNumbers(arr: Object[], value: number, key: string,){
     switch(true){
       case (key === 'experience') : return arr.filter((element: any) => element.experience >= value );
       case (key === 'date') : {
-          const prop: string = 'notice';
-
-          arr.filter((element: any) => {
-            element[prop] ?  element.notice <= value :
-            console.log(element[key])
-          })
+          this.filterDates(arr, value);
           return arr;
       };
       default : return arr;
     }
-
   }
-  filterDates(arr: Object[], value: number){
-    return arr.filter((element: any) =>
-    {
-      // element.start ?
-    });
-  }
-
 
   filterLogic(arr: any[], filt: any, isClient: boolean){
     if (!filt) {      return arr;    }
@@ -222,8 +218,6 @@ export class FilterService {
         case Array.isArray(value): {
           const condition : boolean = (key === 'activities' && (filt as any).need)
           result = this.filterArray(result, value as string[], keyName, condition);
-
-          if (keyName === 'mobility'){console.log('here ', result)}
           break;
         }
         case ( typeof(value) === 'number' ): {

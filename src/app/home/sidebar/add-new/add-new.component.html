@@ -38,7 +38,7 @@
             <mat-form-field appearance="outline" >
                 <mat-label>Phone number</mat-label>
                 <ngx-mat-intl-tel-input formControlName="phone"
-                    [enablePlaceholder]="true" [enableSearch]="true" 
+                    [enablePlaceholder]="true" [enableSearch]="true"
                     [preferredCountries]="['it']"
                     name="phone" #phone>
                 </ngx-mat-intl-tel-input>
@@ -141,7 +141,7 @@
                 type="checkbox" role="switch" id="onOff-notice" checked>
                 <label class="form-check-label" for="onOff-notice">{{showNotice? 'Notice' : 'Starting date'}}</label>
             </div>
-                  
+
             <div class="input-group my-3" *ngIf="showNotice">
                 <span class="me-3">Notice time</span>
                 <input type="number" name="notice"
@@ -158,8 +158,8 @@
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
             </div>
-            
-              
+
+
         </div>
 
         <button class="btn m-2 mb-4" [ngClass]="getButton(isClient)"

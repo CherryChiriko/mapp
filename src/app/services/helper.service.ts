@@ -17,7 +17,7 @@ export class HelperService {
       darkColor:  `var(--dark-alten-${color})`,
       dot: `${color}`,
       button: `${but}`,
-    } 
+    }
   }
   getIcon(condition: boolean, need : boolean = false){
     const url = "http://maps.google.com/mapfiles/ms/icons/";
@@ -32,7 +32,7 @@ export class HelperService {
   //   const map = new Map<K, T[]>;
   //   for (const el of arr) {
   //     const key: K = getKey(el);
-  //     let group: T[] | undefined = map.get(key); 
+  //     let group: T[] | undefined = map.get(key);
   //     if (!group) {
   //       group = [];
   //     }
@@ -65,10 +65,13 @@ export class HelperService {
   formatDate(date: Date): string{
     return this.datePipe.transform(date,'dd/MM/YYYY')!;
   }
+  stringToDate(dateString: string): Date{
+    return new Date(Date.parse(dateString.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')));
+  }
 
-  removeElement(element: any, arr: any[]){  
+  removeElement(element: any, arr: any[]){
     const index = arr.indexOf(element)
-    index > -1 ? arr.splice(index, 1): null; 
+    index > -1 ? arr.splice(index, 1): null;
   }
 
   selectAll(name: any[], arr: string[] ){
