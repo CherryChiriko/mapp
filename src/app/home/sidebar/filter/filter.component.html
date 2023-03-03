@@ -50,7 +50,7 @@
         <div *ngIf="!isClient" class="contacts rounded container">
             <p> Mobility </p>
             <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions"
-            formArrayName="regions">
+            formArrayName="mobility">
                 <mat-expansion-panel-header class="rounded">
                     <mat-panel-title class="rounded ">
                         {{ macroregion.area }}
@@ -86,8 +86,6 @@
         <span>
         <button class="btn m-2 mb-4" [ngClass]="getButton(isClient, true)"
         (click)="clearFilter(isClient)">Clear</button>
-        <!-- <button class="btn m-2 mb-4" [ngClass]="getButton(isClient, true)"
-        (click)="applyFilter(isClient)">Filter</button> -->
         </span>
     </form>
 </div>
