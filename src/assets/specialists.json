@@ -37,7 +37,7 @@
         "experience": 0,
         "background": ["Ing. Gestionale"],
         "interests": ["Data Scientist", "FE"],
-        "available_from": "01/05/2023"
+        "available_from": "01/03/2023"
   },
   {
         "id": "TDACA20",
@@ -63,7 +63,7 @@
         "background": ["Perito Informatico"],
         "experience": 0,
         "interests": ["Sviluppo SW"],
-        "notice": 12
+        "notice": 15
   }
 
 ]

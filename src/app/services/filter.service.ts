@@ -150,7 +150,7 @@ export class FilterService {
     const activityName = isClient? "activities" : "interests";
 
     const activitiesArr : string[] = this.form.convertToArray(val, activityName);
-    const checkedRegions: string[] = this.form.convertToArray(val, 'mobility');
+    const checkedRegions: string[] | null = !isClient? this.form.convertToArray(val, 'mobility'): null;
 
     if (isClient){
       let clientFilter: ICFilter = {
@@ -191,18 +191,18 @@ export class FilterService {
   }
 
   filterDates(arr: Object[], value: number){
-    return arr.filter((element: any) => {
-      // if (element.notice) {} else {
-      // console.log(this.helper.stringToDate(element['available_from']) > this.helper.addDays(value)  )}
-      element['notice'] ?  element.notice <= value :
-      this.helper.stringToDate(element['available_from']) <= this.helper.addDays(value)
+    arr.filter((element : any) => {
+      return element.hasOwnProperty('notice') ?  element.notice <= value :
+      !this.helper.dateCompare(this.helper.stringToDate(element['available_from']), this.helper.addDays(value))
     })
   }
+
   filterNumbers(arr: Object[], value: number, key: string,){
     switch(true){
       case (key === 'experience') : return arr.filter((element: any) => element.experience >= value );
       case (key === 'date') : {
           this.filterDates(arr, value);
+          console.log(arr)
           return arr;
       };
       default : return arr;
@@ -222,7 +222,7 @@ export class FilterService {
           break;
         }
         case ( typeof(value) === 'number' ): {
-          // result = this.filterNumbers(result, value as number, keyName)
+          result = this.filterNumbers(result, value as number, keyName)
           break;
         }
         default: {
