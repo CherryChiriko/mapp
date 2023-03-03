@@ -33,6 +33,8 @@ export class LoadExcelComponent {
 
     this.clientArray = this._filt.getClients();
     this.clientArrayFormatted = this._excel.formatExcelClientArr(this.clientArray);
+    console.log(this.clientArrayFormatted);
+
 
     this.isClient? this._excel.exportClients(this.clientArrayFormatted) : this._excel.exportSpecialists(this.specialistArrayFormatted);
   }

@@ -9,6 +9,7 @@ import {
 import {
   ICFilter,
   IClient,
+  IRawClient,
   ISFilter,
   ISpecialist,
 } from '../interfaces/interfaces';
@@ -35,10 +36,10 @@ export class FilterService {
   constructor(private form: FormService, private helper: HelperService) {
 
 
-    this.clientArray = this.form.formatClientArr(cData);
+   /* this.clientArray = this.form.formatClientArr(cData);
     this.clients$.next(this.clientArray);
     this.specialistArray = this.form.formatSpecialistArr(sData);
-    this.specialists$.next(this.specialistArray);
+    this.specialists$.next(this.specialistArray);*/
     this.resetAllFilters();
 
   }
@@ -46,11 +47,14 @@ export class FilterService {
   initSpecialist(specialist: ISpecialist[]) {
     this.specialistArray = this.form.formatSpecialistArr(specialist);
     this.specialists$.next(this.specialistArray);
+    console.log(this.specialistArray);
   }
 
   initClient(client: IClient[]) {
     this.clientArray = this.form.formatClientArr(client);
     this.clients$.next(this.clientArray);
+    console.log(this.clientArray);
+
   }
 
   getClients(): IClient[] {

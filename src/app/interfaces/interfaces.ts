@@ -1,6 +1,6 @@
 export interface IRawClient {
   name: string;
-  city: string;  
+  city: string;
   logo?: string;
   bm: string;
   activities: string[];
