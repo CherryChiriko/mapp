@@ -1,8 +1,10 @@
+import { provideImageKitLoader } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { FileSaverService } from 'ngx-filesaver';
 import * as XLSX from 'xlsx';
 import { IClient, ISpecialist } from '../interfaces/interfaces';
 import { FilterService } from './filter.service';
+import { FormService } from './form.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,8 @@ import { FilterService } from './filter.service';
 export class ExcelService {
   constructor(
     private _filt: FilterService,
-    private _fileSaver: FileSaverService
+    private _fileSaver: FileSaverService,
+    private _form : FormService
   ) {}
 
   //-------------------------------------------------------------------------Metodi Specialisti
@@ -26,10 +29,33 @@ export class ExcelService {
       fileReader.onload = (e) => {
         let workBook = XLSX.read(fileReader.result, { type: 'binary' });
         let data = workBook.SheetNames;
-        this._filt.initSpecialist(
-          XLSX.utils.sheet_to_json(workBook.Sheets[data[0]])
-        );
+        let rawData =  XLSX.utils.sheet_to_json(workBook.Sheets[data[0]]);
+        let format = rawData.map((val) => this.formatSp(val));
+        this._filt.initSpecialist(format);
       };
+    }
+  }
+
+  formatSp(s: any){
+    let interestsStr = s.interests;
+    let interestsArr = interestsStr.split(',');
+
+    let mobilityStr = s.mobility;
+    let mobilityArr = mobilityStr.split(',');
+    return {
+      name: s.name,
+      id: s.id,
+      email: s.email,
+      phone: s.phone,
+      website: s.website? s.website: undefined,
+      city: s.city,
+      bm: s.bm,
+      experience: s.experience,
+      background: s.background,
+      mobility: mobilityArr,
+      interests:  interestsArr,
+      available_from: s.available_from ? s.available_from: undefined,
+      notice: s.notice ? s.notice : undefined,
     }
   }
 
@@ -58,17 +84,23 @@ export class ExcelService {
     return specialists;
   }
   formatExcelSpecialist(s: any): ISpecialist {
+    let interestsArr = s.interests;
+    let interestsStr = interestsArr.join(',');
+
+    let mobilityArr = s.mobility;
+    let mobilityStr = mobilityArr.join(',');
+
     return {
       id: s.id,
       name: s.name,
       email: s.email,
       phone: s.phone,
       city: s.city,
-      mobility: s.mobility,
+      mobility: mobilityStr,
       bm: s.bm,
       experience: s.experience,
       background: s.background,
-      interests: s.interests,
+      interests: interestsStr,
       available_from: s.available_from ? s.available_from : null,
       notice : s.notice
     };
@@ -89,10 +121,26 @@ export class ExcelService {
       fileReader.onload = (e) => {
         let workBook = XLSX.read(fileReader.result, { type: 'binary' });
         let data = workBook.SheetNames;
-        this._filt.initClient(
-          XLSX.utils.sheet_to_json(workBook.Sheets[data[0]])
+        let rawData = XLSX.utils.sheet_to_json(workBook.Sheets[data[0]])
+        let format = rawData.map((val) =>
+          this.formatCl(val)
         );
+        this._filt.initClient(format);
       };
+    }
+  }
+
+  formatCl(client : any) {
+    let activitiesStr = client.activities;
+    let activitiesAr = activitiesStr.split(',');
+
+    return {
+      name: client.name,
+      city: client.city,
+      bm: client.bm,
+      logo: client?.logo,
+      activities: activitiesAr,
+      need: client.need
     }
   }
 
@@ -122,12 +170,14 @@ export class ExcelService {
   }
 
   public formatExcelClient(c: any): IClient {
+    let activitiesArr = c.activities;
+    let activitiesStr = activitiesArr.join(',');
     return {
       name : c.name,
       logo : c?.logo,
       city : c.city,
       bm : c.bm,
-      activities : c.activities,
+      activities : activitiesStr,
       need : c.need
     }
   }
