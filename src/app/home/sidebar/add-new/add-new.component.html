@@ -59,6 +59,7 @@
             Enter a valid website</small>
         </div>
 
+        <div class="contacts rounded container my-3">
         <p>{{isClient? 'Activities': 'Interests'}}</p>
         <mat-expansion-panel hideToggle *ngFor="let roles of rolesArrTot"  class="mb-2"
         formArrayName="{{isClient? 'activities': 'interests'}}">
@@ -70,7 +71,7 @@
             <span *ngFor="let role of roles.roles; let i=index">
                 <input type="checkbox" class="btn-check" autocomplete="off"
                 name="{{isClient? 'c': 's'}}-{{role}}"
-                id="{{isClient? 'c': 's'}}-{{role}}" value="{{role}}"
+                id="{{isClient? 'c': 's'}}-{{role}}" [value]="role"
                 formControlName="{{role}}">
                 <label class="btn specialties" [ngClass]="getButton(false)" for="{{isClient? 'c': 's'}}-{{role}}">
                 {{ role }}
@@ -78,13 +79,16 @@
             </span>
         </mat-expansion-panel>
 
-        <div class="input-group my-3" *ngIf="isClient">
+        <div class="input-group my-3">
             <select name="need" id="need"
             class="form-select text-center my-3"
-            formControlName = "need">
-                <option [ngValue]="null" disabled selected>--Active need--</option>
-                <option *ngFor="let n of clientForm.value.activities" value="{{n}}">{{n}}</option>
+            formControlName = "{{isClient? 'need': 'main'}}">
+                <option [ngValue]="null" disabled selected>{{isClient?'--Active need--': '--Main interest--'}}</option>
+                <option [value]="n"
+                *ngFor="let n of isClient? convertToArray(clientForm.value, 'activities') :
+                convertToArray(specialistForm.value, 'interests')" >{{n}}</option>
             </select>
+        </div>
         </div>
 
         <div *ngIf="!isClient" class="contacts rounded container my-3">
@@ -93,7 +97,7 @@
             class="form-select text-center my-3"
             formControlName = "background">
                 <option [ngValue]="null" disabled selected>--Background--</option>
-                <option *ngFor="let d of degArr" value="{{d}}">{{d}}</option>
+                <option *ngFor="let d of degArr" [value]="d">{{d}}</option>
             </select>
 
             <div class="input-group mb-3">
@@ -107,11 +111,13 @@
 
         <div *ngIf="!isClient" class="contacts rounded container">
             <p> Mobility </p>
+            <div class="form-check form-switch col my-3">
             <input type="checkbox" class="form-check-input" id="all-Italy"
-                (click)="checkAllItaly()">
+              (click)="checkAllItaly()" role="switch">
                 <label class="form-check-label all" for="all-Italy">
                     All Italy
                 </label>
+            </div>
                 <hr>
             <mat-expansion-panel hideToggle *ngFor="let macroregion of macroregions"
             formArrayName="mobility">
@@ -120,12 +126,16 @@
                         {{ macroregion.area }}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
+
+                <div class="form-check form-switch col my-3">
                 <input type="checkbox" class="form-check-input" id="all-{{macroregion.area}}"
-                (click)="checkAll(macroregion.area)">
+                (click)="checkAll(restrictRegions(macroregion.area))" role="switch">
                 <label class="form-check-label all" for="all-{{macroregion.area}}">
                     All
                 </label>
+                </div>
                 <hr>
+
                 <span *ngFor="let region of macroregion.regions; let i=index">
                     <input type="checkbox" class="btn-check" autocomplete="off" name="{{macroregion.area}}"
                     id="new-{{region}}" value="{{region}}"
@@ -162,7 +172,7 @@
 
         </div>
 
-        <button class="btn m-2 mb-4" [ngClass]="getButton(isClient)"
+        <button class="btn m-2 mb-4 mt-3" [ngClass]="getButton(isClient)"
         (click)="add()">Add {{isClient? "client": "consultant"}}</button>
 
     </form>

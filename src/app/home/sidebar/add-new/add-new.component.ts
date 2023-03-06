@@ -33,6 +33,7 @@ export class AddNewComponent {
   checkedRegions: string[] = [];
 
   showNotice: boolean = true;
+  isAllChecked = {"North": false, "Centre": false, "South": false};
 
   constructor(private filter : FilterService, private form: FormService,
     private helper: HelperService, private snackBar: MatSnackBar){}
@@ -61,6 +62,7 @@ export class AddNewComponent {
       background: new FormControl(null),
       experience: new FormControl(null),
       interests: new FormGroup({}),
+      main: new FormControl(null),
       mobility: new FormGroup({}),
       start: new FormControl<Date | null | number>(null)
     });
@@ -70,23 +72,27 @@ export class AddNewComponent {
     this.form.addElementToFormGroup(this.specialistForm, 'mobility', this.regionArr)
   }
 
-
-  checkAllItaly(){
-    this.checkAll("North");
-    this.checkAll("Centre");
-    this.checkAll("South");
+  convertToArray(val: any, name: string){
+    return this.form.convertToArray(val, name);
   }
 
-  checkAll(macro: string){
-    const element: any = document.getElementsByName(macro);
-    this.helper.selectAll(element, this.checkedRegions);
+  checkAllItaly(){
+    this.checkAll("North");    this.checkAll("Centre");    this.checkAll("South");
+  }
+  checkAll(macro: "North" | "Centre" | "South"){
+    const element: any   = document.getElementsByName(macro);
+    const body   : any[] = [element, this.checkedRegions, this.isAllChecked[macro]];
+    this.isAllChecked[macro] = this.helper.selectAll(body);
+  }
+  restrictRegions(macro: string): "North" | "Centre" | "South" {
+    return this.helper.restrictRegions(macro)
   }
 
   addClient(){
     const val = this.clientForm.value;
 
     const cityInfo: string[] = val.city.split(",");
-    const activitiesArr: string[] = this.form.convertToArray(val, "activities");
+    const activitiesArr: string[] = this.convertToArray(val, "activities");
 
     console.log(val)
     let newClient : IClient = {
@@ -108,7 +114,10 @@ export class AddNewComponent {
     const cityInfo: string[] = val.city.split(",");
     let date: string | number =
     typeof(val.start)==='number'? val.start: this.helper.formatDate(val.start);
-    const interestsArr: string[] = this.form.convertToArray(val, "interests");
+
+    let interestsArr: string[] = this.convertToArray(val, "interests");
+    interestsArr = this.helper.moveElementToStart(val.main, interestsArr);
+
     const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
     this.checkedRegions = [];
 
@@ -143,6 +152,7 @@ export class AddNewComponent {
     this.snackBar.open(res.resultMessage, '', { duration: 2000 });
     res.success = false;
   }
+
 
 }
 

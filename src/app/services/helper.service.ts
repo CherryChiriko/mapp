@@ -74,12 +74,32 @@ export class HelperService {
     index > -1 ? arr.splice(index, 1): null;
   }
 
-  selectAll(name: any[], arr: string[] ){
+  selectAll(body: any[] ): boolean{
+    const [name, arr, condition] = body
     for(var i=0; i < name.length; i++){
       if(name[i].type=='checkbox')  {
-        name[i].checked=true;
-        arr.push(name[i].value)
+        name[i].checked = !condition;
+        !condition? arr.push(name[i].value) :
+        this.removeElement(name[i].value, arr);
       }
+    }
+    return !condition;
+  }
+
+  moveElementToStart(element: string, arr: string[]){
+    arr = arr.filter(item => item !== element);
+    arr.unshift(element);
+    return arr;
+  }
+
+  restrictRegions(macro: string): "North" | "Centre" | "South" {
+    switch (macro) {
+      case "North":
+      case "Centre":
+      case "South":
+        return macro as "North" | "Centre" | "South";
+      default:
+        throw new Error(`Invalid macroregion: ${macro}`);
     }
   }
 }

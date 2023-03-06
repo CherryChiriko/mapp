@@ -68,11 +68,11 @@ export class FormService {
   getCityInfo(cityName: string){
     return this.getAllCities()?.find( city => city.name === cityName)
   }
-  getRegions(val: any, checekedRegions: string[]){
+  getRegions(val: any, checkedRegions: string[]){
     const regionsToAdd: string[] = this.convertToArray(val, "mobility");
     const regionsToRemove: string[] = this.convertToNegativeArr(val);
 
-    let arr: string[] = [...checekedRegions,...regionsToAdd];
+    let arr: string[] = [...checkedRegions,...regionsToAdd];
     regionsToRemove.map( region =>
       this.helper.removeElement(region, arr)
     )
