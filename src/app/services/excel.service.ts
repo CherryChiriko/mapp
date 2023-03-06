@@ -21,7 +21,7 @@ export class ExcelService {
     const file = event.target.files[0];
     const extension = file.name.split('.').pop(); //ottengo l'estensione del file
     if (extension !== 'xlsx' && extension !== 'xls') {
-      alert('Errore: il file non è un file Excel valido');
+      alert('Error: invalid file format');
       return;
     } else {
       const fileReader = new FileReader();

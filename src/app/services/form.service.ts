@@ -89,7 +89,6 @@ export class FormService {
   }
 
 
-
   formatClientArr(cData: IRawClient[]): IClient[]{
     let clients : IClient[] = [];
     cData.map( c => clients.push(this.formatClient(c)))

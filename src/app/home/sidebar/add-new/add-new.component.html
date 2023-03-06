@@ -8,11 +8,10 @@
             <option *ngFor="let city of citiesArr"
             value="{{[city.name, city.region, city.country]}}">{{city.name}}</option>
         </select>
-        <!-- <small style="color: var(--darkColor)"
-        *ngIf="clientForm?.errors?.['required'] &&
-        clientForm?.get('city')?.touched">** Required field **</small>             -->
         <small style="color: var(--darkColor)"
-        *ngIf="clientForm?.get('city')?.invalid && clientForm?.errors?.['required']">** Required field **</small>
+        *ngIf="isClient? (clientForm?.get('city')?.errors?.['required'] && clientForm?.touched) :
+        (specialistForm?.get('city')?.errors?.['required'] && specialistForm?.touched)">
+        ** Required field **</small>
 
         <input type="text" name="name"
         class="form-control text-center my-2" placeholder="Name"
@@ -146,10 +145,14 @@
                 </span>
             </mat-expansion-panel>
             <hr>
-            <div class="form-check form-switch col my-3">
-                <input class="form-check-input" (click)="showNotice = !showNotice"
-                type="checkbox" role="switch" id="onOff-notice" checked>
-                <label class="form-check-label" for="onOff-notice">{{showNotice? 'Notice' : 'Starting date'}}</label>
+
+            <div class="col my-3 d-flex">
+              <div class="form-text text-1 mx-2">Start date</div>
+              <div class="form-check form-switch form-check-inline">
+                <input class="form-check-input form-check-inline" type="checkbox"
+                (click)="toggleNotice()" checked role="switch">
+              </div>
+              <div class="form-text text-2 ms-2">Notice</div>
             </div>
 
             <div class="input-group my-3" *ngIf="showNotice">

@@ -145,6 +145,8 @@ export class AddNewComponent {
   getButton(condition: boolean){return this.helper.getButton(condition)}
 
   add() {
+    (this.isClient && !this.clientForm.value.city) || (!this.isClient && !this.specialistForm.value.city) ?
+    alert(`City is missing`) : null;
     this.isClient? this.addClient() : this.addSpecialist();
     this.result.emit(
       { resultMessage: `${this.isClient? 'Client': 'Consultant'} successfully added`, success: true})
@@ -153,6 +155,7 @@ export class AddNewComponent {
     res.success = false;
   }
 
+  toggleNotice(){this.showNotice = !this.showNotice}
 
 }
 
