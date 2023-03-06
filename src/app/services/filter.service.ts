@@ -91,7 +91,6 @@ export class FilterService {
       this.clients$.next(this.clientArray);
     }
   }
-
   addSpecialist(newSpecialist: ISpecialist) {
     if (this.checkSpecialist(newSpecialist.id)) {
       alert(`Consultant with ID ${newSpecialist.id} is already present`);
@@ -132,7 +131,6 @@ export class FilterService {
   getClient(clientName: string){
     return this.clientArray.find(c => c.name === clientName)
   }
-
   setActive(client: IClient, activity: string){
     const c = this.getClient(client.name)
     if (!c) {return;}

@@ -53,47 +53,16 @@ export class FilterComponent {
     this.form.addElementToFormGroup(this.sFilterForm, 'interests', this.rolesArr)
     this.form.addElementToFormGroup(this.sFilterForm, 'mobility', this.regionArr)
 
+    const filterForm = this.isClient ? this.cFilterForm : this.sFilterForm;
+    filterForm.valueChanges.subscribe( val =>{
+      this.filter.createFilter(val, this.isClient)
+    })
     this.sFilterForm.valueChanges
     .subscribe(() => this.onSFormGroupChange.emit(this.sFilterForm.value));
     this.cFilterForm.valueChanges
     .subscribe(() => this.onCFormGroupChange.emit(this.cFilterForm.value));
 
   }
-
-  // createFilter(isClient: boolean){
-  //   console.log("I am filter component")
-  //   const val = isClient? this.cFilterForm.value: this.sFilterForm.value;
-  //   const interestsArr : string[] = this.form.convertToArray(val, "interests");
-  //   const regionsArr : string[] = this.form.getRegions(val, this.checkedRegions);
-  //   this.checkedRegions = [];
-
-  //   const date = this.helper.addDays(val.date);
-
-  //   if (isClient){
-  //     let clientFilter: ICFilter = {
-  //       name: val.name,
-  //       bm: val.bm,
-  //       activities: interestsArr,
-  //       need: val.need
-  //     }
-  //     console.log(clientFilter)
-  //     this.filter.setCFilter(clientFilter);
-  //     this.cFilterForm.reset();
-  //   }
-  //   else {
-  //     let specialistFilter: ISFilter = {
-  //       id: val.id,
-  //       bm: val.bm,
-  //       : regionsArr,
-  //       interests: interestsArr,
-  //       experience: null,
-  //       date: val.date
-  //     }
-  //     console.log(specialistFilter)
-  //     this.filter.setSFilter(specialistFilter);
-  //     this.sFilterForm.reset();
-  //   }
-  // }
 
   clearSFilter(){
     this.cFilterForm.reset(); this.filter.resetSFilter(); this.checkedRegions = [];};

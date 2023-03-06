@@ -72,7 +72,7 @@
                 name="{{isClient? 'c': 's'}}-{{role}}"
                 id="{{isClient? 'c': 's'}}-{{role}}" [value]="role"
                 formControlName="{{role}}">
-                <label class="btn specialties" [ngClass]="getButton(false)" for="{{isClient? 'c': 's'}}-{{role}}">
+                <label class="btn specialties" [ngClass]="getButton(isClient)" for="{{isClient? 'c': 's'}}-{{role}}">
                 {{ role }}
                 </label>
             </span>

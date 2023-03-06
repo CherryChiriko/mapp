@@ -45,6 +45,10 @@ p{
   margin-left: 1rem;
 }
 
+.outline-button{
+  border: 1px solid var(--darkColor);
+  color: var(--darkColor);
+}
 /* *{
   border: 1px solid red;
 } */
@@ -54,7 +58,7 @@ p{
   /* .mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title .btn {
     border-radius: 0.25rem 0.25rem 0 0;
   } */
-  
+
   /* .mat-expansion-panel-header:not(.mat-expanded) .mat-expansion-panel-header-title {
     justify-content: center;
     background-color: #f0f0f0;
@@ -63,11 +67,11 @@ p{
     padding: 0.375rem 0.75rem;
     cursor: pointer;
   }
-  
+
   .mat-expansion-panel-header:not(.mat-expanded) .mat-expansion-panel-header-title .btn {
     margin-right: 0.5rem;
   } */
-    
+
   /* .mat-expansion-panel {
     max-width: 10rem;
   } */
@@ -76,7 +80,7 @@ p{
     display: flex;
     flex-direction: row;
   }
-  
+
   .in-text{
     background-color: var(--color);
     color: white;

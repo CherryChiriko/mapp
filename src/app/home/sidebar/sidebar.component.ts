@@ -61,9 +61,6 @@ export class SidebarComponent implements OnInit {
 
   onNewAdded() {    this.toggleNew(); this.isClientOpen= false; this.isSpecialistOpen = false; }
 
-  fil(isClient: boolean){
-    const f = isClient? this.CFilt : this.SFilt;
-    this.filter.createFilter(f, isClient)}
 }
 
 

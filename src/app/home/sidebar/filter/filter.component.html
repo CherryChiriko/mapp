@@ -25,7 +25,7 @@
                 name="{{isClient? 'c': 's'}}-{{role}}"
                 id="{{isClient? 'c': 's'}}-{{role}}" value="{{role}}"
                 formControlName="{{role}}">
-                <label class="btn specialties" [ngClass]="getButton(false)" for="{{isClient? 'c': 's'}}-{{role}}">
+                <label class="btn specialties" [ngClass]="getButton(isClient)" for="{{isClient? 'c': 's'}}-{{role}}">
                 {{ role }}
                 </label>
             </span>
@@ -66,7 +66,7 @@
                     <input type="checkbox" class="btn-check" autocomplete="off" name="{{macroregion.area}}"
                     id="new-{{region}}" value="{{region}}"
                     formControlName="{{region}}">
-                    <label class="btn specialties" [ngClass]="getButton(false)" for="new-{{region}}">
+                    <label class="btn specialties" [ngClass]="getButton(isClient)" for="new-{{region}}">
                     {{ region }}
                     </label>
                 </span>
@@ -84,7 +84,7 @@
         </div>
 
         <span>
-        <button class="btn m-2 mb-4" [ngClass]="getButton(isClient, true)"
+        <button class="btn m-2 mb-4 outline-button" [ngClass]="getButton(isClient, true)"
         (click)="clearFilter(isClient)">Clear</button>
         </span>
     </form>
