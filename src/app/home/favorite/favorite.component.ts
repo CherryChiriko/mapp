@@ -24,7 +24,8 @@ export class FavoriteComponent {
   removeFavorite(favorite: ISpecialist){this.favoriteList.removeFavoriteSpecialist(favorite)}
 
   saveFavorite(){
-    this._excel.exportFavorites(this.favorites);
+    let favoriteArrayFormatted = this._excel.formatExcelSpecialistArr(this.favorites);
+    this._excel.exportFavorites(favoriteArrayFormatted);
   }
   ngOnDestroy(){
     this.favorite$.unsubscribe();
