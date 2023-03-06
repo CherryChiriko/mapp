@@ -51,11 +51,32 @@ export class SidebarComponent implements OnInit {
     this.isFilterOn?
     this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
     this.isFilterOn?
-    this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter()
+    this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
   }
 
-  onCFormGroupChangeEvent(event: any) {   this.CFilt = event;  }
-  onSFormGroupChangeEvent(event: any) {   this.SFilt = event;  }
+  onCFormGroupChangeEvent(event: any) {
+    this.CFilt = event;
+    this.isFilterOn?
+    this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
+  }
+  onSFormGroupChangeEvent(event: any) {
+    this.SFilt = event;
+    this.isFilterOn?
+    this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
+  }
+
+  onFormGroupChangeEvent(event: any, isClient: boolean) {
+    let filt  = isClient ? this.CFilt : this.SFilt;
+    filt = event;
+  }
+  sendToFilter(isClient: boolean){
+    const filt  = isClient ? this.CFilt : this.SFilt;
+    const clear = isClient ? this.filter.resetCFilter() : this.filter.resetSFilter();
+    this.isFilterOn?
+    this.filter.createFilter(filt, isClient): clear;
+    // this.isFilterOn?
+    // this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
+  }
 
   getButton(condition: boolean){ return this.helper.getButton(condition)}
 

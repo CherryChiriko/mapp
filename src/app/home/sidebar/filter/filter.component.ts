@@ -14,8 +14,9 @@ import data from 'src/assets/specifics.json';
 })
 export class FilterComponent {
   @Input() isClient!: boolean;
+  @Output() private onFormGroupChange = new EventEmitter<any>();
+  // @Output() private onCFormGroupChange = new EventEmitter<any>();
   @Output() private onSFormGroupChange = new EventEmitter<any>();
-  @Output() private onCFormGroupChange = new EventEmitter<any>();
 
   BMs: string[] = data.BMs;
   rolesArrTot: any = data.activities;
@@ -53,14 +54,17 @@ export class FilterComponent {
     this.form.addElementToFormGroup(this.sFilterForm, 'interests', this.rolesArr)
     this.form.addElementToFormGroup(this.sFilterForm, 'mobility', this.regionArr)
 
+    // const filterForm = this.isClient ? this.cFilterForm : this.sFilterForm;
+    // filterForm.valueChanges.subscribe( val =>{
+    //   this.filter.createFilter(val, this.isClient)
+    // })
     const filterForm = this.isClient ? this.cFilterForm : this.sFilterForm;
-    filterForm.valueChanges.subscribe( val =>{
-      this.filter.createFilter(val, this.isClient)
-    })
+    filterForm.valueChanges
+    .subscribe(() => this.onFormGroupChange.emit(filterForm.value));
+    // this.cFilterForm.valueChanges
+    // .subscribe(() => this.onCFormGroupChange.emit(this.cFilterForm.value));
     this.sFilterForm.valueChanges
     .subscribe(() => this.onSFormGroupChange.emit(this.sFilterForm.value));
-    this.cFilterForm.valueChanges
-    .subscribe(() => this.onCFormGroupChange.emit(this.cFilterForm.value));
 
   }
 
