@@ -144,10 +144,11 @@ export class FilterService {
 
     console.log(val)
     const activityName = isClient? "activities" : "interests";
-    const activitiesArr : string[] = this.form.convertToArray(val, activityName);
-    // const checkedRegions: string[] | null = !isClient? this.form.convertToArray(val, 'mobility'): null;
-    const regionsArr : string[] | null =  !isClient?  this.form.getRegions(val, checkedRegions) : null;
-    console.log('regions ', checkedRegions, val.regions)
+    const activitiesArr : string[] = Array.isArray(val[activityName])?
+    val[activityName] : this.form.convertToArray(val, activityName);
+    const regionsArr : string[] | null =
+    !isClient && val.mobility ?  this.form.getRegions(val, checkedRegions) : null;
+    // const activitiesArr : string[] = [];
 
     if (isClient){
       let clientFilter: ICFilter = {
@@ -173,6 +174,27 @@ export class FilterService {
     }
   }
 
+  filterForCompany(client: IClient){
+    const interestsArr = client.need? [client.need] : client.activities
+    const filt : ISFilter = {
+      id: null,
+      bm: null,
+      mobility: null,
+      interests: interestsArr,
+      experience: null,
+      date: null
+    }
+    this.createFilter(filt, false)
+  }
+  filterForSpecialist(specialist: ISpecialist){
+    const filt = {
+      name: null,
+      bm: null,
+      activities: specialist.interests,
+      need: true
+    }
+    this.createFilter(filt, true)
+  }
   //                 Filter logic
 
 

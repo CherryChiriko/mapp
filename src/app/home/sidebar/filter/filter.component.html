@@ -57,7 +57,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <input type="checkbox" class="form-check-input" id="all-{{macroregion.area}}"
-                (click)="checkAll(restrictRegions(macroregion.area))">
+                (click)="checkAll(restrictRegions(macroregion.area))" role="switch">
                 <label class="form-check-label all" for="all-{{macroregion.area}}">
                     All
                 </label>

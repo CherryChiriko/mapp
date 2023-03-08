@@ -1,7 +1,7 @@
-<div class="text-center rounded" *ngFor="let el of groupByCity(mark.city)" 
+<div class="text-center rounded" *ngFor="let el of groupByCity(mark.city)"
 style="
---color: {{getColor(isClient(el), isActive(el)).color}}; 
---lightColor: {{getColor(isClient(el), isActive(el)).lightColor}}; 
+--color: {{getColor(isClient(el), isActive(el)).color}};
+--lightColor: {{getColor(isClient(el), isActive(el)).lightColor}};
 --darkColor: {{getColor(isClient(el), isActive(el)).darkColor}}">
     <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header class="text-center rounded header">
@@ -10,7 +10,7 @@ style="
              (click)="isStarFull? removeFavorite(el): addFavorite(el); $event.stopPropagation();">
                 <i *ngIf="!isStarFull" class="material-icons align-middle me-2">star_border</i>
                 <i *ngIf="isStarFull" class="star-full material-icons align-middle me-2">star</i>
-            </div> 
+            </div>
             <div class="tag row">
                 <div class="col" *ngIf="isClient(el) && el.logo">
                     <!-- <div style="background-color: white;"> -->
@@ -35,6 +35,10 @@ style="
                 </td>
             </tr>
         </table>
+        <span *ngIf="isClient(el)">
+          <button class="btn me-2" [ngClass]="getButton(isClient(el))" (click)="match(el)">Find match</button>
+          <button class="btn btn-danger" (click)="deleteElement(el)">Delete</button>
+      </span>
         <span *ngIf="!isClient(el)">
             <button class="btn me-2" [ngClass]="getButton(isClient(el))">
                 <i (click)="toggleContacts()"
@@ -54,7 +58,7 @@ style="
                 <td class="contacts p-3 rounded"><i class="material-symbols-outlined mr-2">language</i>
                 <a class="m-0" href="`${el.website}`" target="blank">{{el.website}}</a></td></tr>
         </table>
-    </mat-expansion-panel>   
+    </mat-expansion-panel>
 </div>
 
 
