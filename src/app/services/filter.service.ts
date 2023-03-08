@@ -138,15 +138,15 @@ export class FilterService {
     c.need = activity;
   }
 
-  createFilter(filter: any, isClient: boolean) {
+  createFilter(filter: any, isClient: boolean, checkedRegions: string[] = []) {
     if (!filter) {return;}
     const val = filter;
 
     console.log(val)
     const activityName = isClient? "activities" : "interests";
     const activitiesArr : string[] = this.form.convertToArray(val, activityName);
-    const checkedRegions: string[] | null = !isClient? this.form.convertToArray(val, 'mobility'): null;
-    // const regionsArr : string[] =    this.form.getRegions(val, checkedRegions);
+    // const checkedRegions: string[] | null = !isClient? this.form.convertToArray(val, 'mobility'): null;
+    const regionsArr : string[] | null =  !isClient?  this.form.getRegions(val, checkedRegions) : null;
     console.log('regions ', checkedRegions, val.regions)
 
     if (isClient){
@@ -163,7 +163,7 @@ export class FilterService {
       let specialistFilter: ISFilter = {
         id: val.id,
         bm: val.bm,
-        mobility: checkedRegions,
+        mobility: regionsArr,
         interests: activitiesArr,
         experience: val.experience,
         date: val.date
@@ -189,7 +189,6 @@ export class FilterService {
 
   filterDates(arr: any[], value: number){
     let result: any[] = [];
-
     arr.forEach( element => {
       switch (true) {
         case element.available_from && this.helper.stringToDate(element['available_from']) <= this.helper.addDays(value): result.push(element); console.log("Here"); break;

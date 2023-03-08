@@ -21,8 +21,6 @@ export class SidebarComponent implements OnInit {
   isFilterOn: boolean = true;
   CFilt!: ICFilter;  SFilt!: ISFilter;
 
-  message = { resultMessage: '', success: false};
-
   constructor(private helper: HelperService, private filter: FilterService){}
 
   ngOnInit(): void {}
@@ -50,21 +48,22 @@ export class SidebarComponent implements OnInit {
     this.sendAllToFilter();
   }
 
-  // onCFormGroupChangeEvent(event: any) {
-  //   this.CFilt = event;
-  //   this.isFilterOn?
-  //   this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
-  // }
-  onSFormGroupChangeEvent(event: any) {
-    this.SFilt = event;
+  onCFormGroupChangeEvent(event: any[]) {
+    this.CFilt = event[0];
     this.isFilterOn?
-    this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
+    this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
+  }
+  onSFormGroupChangeEvent(event: any[]) {
+    this.SFilt = event[0];
+    const checkedRegions: string[] = event[1]
+    this.isFilterOn?
+    this.filter.createFilter(this.SFilt, false, checkedRegions): this.filter.resetSFilter();
   }
 
-  onFormGroupChangeEvent(event: any, isClient: boolean) {
-    if (isClient) { this.CFilt = event}
-    // isClient ? this.CFilt : this.SFilt = event;
-  }
+  // onFormGroupChangeEvent(event: any, isClient: boolean) {
+  //   if (isClient) { this.CFilt = event}
+  //   // isClient ? this.CFilt : this.SFilt = event;
+  // }
 
   sendToFilter(isClient: boolean){
     const filt  = isClient ? this.CFilt : this.SFilt;

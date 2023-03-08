@@ -50,22 +50,30 @@ p{
   justify-content: center;
   color: white;
 }
-.mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title {
-  color: var(--darkColor);
-}
 .mat-expansion-panel-header {
   background-color: var(--color);
   margin: .5rem; padding:0;
 }
+.mat-expansion-panel-header:hover .mat-expansion-panel-header-title{
+  color: var(--darkColor);
+}
+.mat-expansion-panel-header-title{
+  margin-left: 1rem;
+}
+
+.mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title {
+  color: var(--darkColor);
+  background-color: white;
+}
 .mat-expansion-panel-header.mat-expanded {
   border: 1px solid var(--darkColor);
   margin: .5rem; padding:0;
+  color: var(--darkColor);
+  background-color: white;
 }
-.mat-expansion-panel-header:hover .mat-expansion-panel-header-title{
-  color: var(--darkColor)
-}
-.mat-expansion-panel-header-title{
-margin-left: 1rem;
+.mat-expansion-panel-header.mat-epanded:hover .mat-expansion-panel-header-title{
+  color: var(--darkColor);
+  background-color: white;
 }
 
 .specialties{
