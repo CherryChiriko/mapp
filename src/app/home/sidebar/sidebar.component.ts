@@ -47,18 +47,14 @@ export class SidebarComponent implements OnInit {
 
   onOffFilter(){
     this.toggleOnOff();
-
-    this.isFilterOn?
-    this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
-    this.isFilterOn?
-    this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
+    this.sendAllToFilter();
   }
 
-  onCFormGroupChangeEvent(event: any) {
-    this.CFilt = event;
-    this.isFilterOn?
-    this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
-  }
+  // onCFormGroupChangeEvent(event: any) {
+  //   this.CFilt = event;
+  //   this.isFilterOn?
+  //   this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
+  // }
   onSFormGroupChangeEvent(event: any) {
     this.SFilt = event;
     this.isFilterOn?
@@ -66,17 +62,17 @@ export class SidebarComponent implements OnInit {
   }
 
   onFormGroupChangeEvent(event: any, isClient: boolean) {
-    let filt  = isClient ? this.CFilt : this.SFilt;
-    filt = event;
+    if (isClient) { this.CFilt = event}
+    // isClient ? this.CFilt : this.SFilt = event;
   }
+
   sendToFilter(isClient: boolean){
     const filt  = isClient ? this.CFilt : this.SFilt;
     const clear = isClient ? this.filter.resetCFilter() : this.filter.resetSFilter();
     this.isFilterOn?
     this.filter.createFilter(filt, isClient): clear;
-    // this.isFilterOn?
-    // this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
   }
+  sendAllToFilter(){ this.sendToFilter(true); this.sendToFilter(false);}
 
   getButton(condition: boolean){ return this.helper.getButton(condition)}
 
