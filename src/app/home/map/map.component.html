@@ -1,19 +1,20 @@
 
-<div class="container mt-5">
+<div class="container mt-5" [style.width.px]="width+100">
+  {{width}}
     <div class="row">
-        <img class="mb-2 col-1" src="{{getIcon(true)}}">
+        <img class="mb-2 col-1 marker-icon" src="{{getIcon(true)}}">
         <div class="form-check form-switch col-3">
             <input class="form-check-input" (click)="cToggleShow()"
             type="checkbox" role="switch" id="cOnOff" checked>
             <label class="form-check-label" for="cOnOff">{{showClients? 'On' : 'Off'}}</label>
         </div>
-        <img class="mb-2 col-1" src="{{getIcon(false)}}">
+        <img class="mb-2 col-1  marker-icon" src="{{getIcon(false)}}">
         <div class="form-check form-switch col-3">
             <input class="form-check-input" (click)="sToggleShow()"
             type="checkbox" role="switch" id="sOnOff" checked>
             <label class="form-check-label" for="sOnOff">{{showSpecialists? 'On' : 'Off'}}</label>
         </div>
-        <img class="mb-2 col-1" src="{{getIcon(false, true)}}">
+        <img class="mb-2 col-1  marker-icon" src="{{getIcon(false, true)}}">
         <div class="form-check form-switch col-3">
             <input class="form-check-input" (click)="nToggleShow()"
             type="checkbox" role="switch" id="nOnOff" checked>
@@ -21,7 +22,7 @@
         </div>
     </div>
 
-    <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
+    <google-map id="map" [height]="height" [width]="width" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark), isActive(mark))"
         *ngFor="let mark of showMarkers(); let i=index"
         [position]="{lat: mark.latitude, lng: mark.longitude}"

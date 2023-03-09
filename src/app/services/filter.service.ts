@@ -138,21 +138,16 @@ export class FilterService {
     c.need = activity;
   }
 
-  createFilter(filter: any, isClient: boolean) {
+  createFilter(filter: any, isClient: boolean, checkedRegions: string[] = []) {
     if (!filter) {return;}
     const val = filter;
 
     console.log(val)
     const activityName = isClient? "activities" : "interests";
-
-    const activitiesArr : string[] = this.form.convertToArray(val, activityName);
-    // console.log(val.regions, val, this.form.convertToArray(val, 'mobility'))
-    const checkedRegions: string[] | null = !isClient? this.form.convertToArray(val, 'mobility'): null;
-    // const regionsArr : string[] =    this.form.getRegions(val, checkedRegions);
-    const date = this.helper.addDays(val.date);
-
-    console.log('regions ', val.regions, 'date', val.date)
-    console.log('second date ', date)
+    const activitiesArr : string[] = Array.isArray(val[activityName])?
+    val[activityName] : this.form.convertToArray(val, activityName);
+    const regionsArr : string[] | null =
+    !isClient && val.mobility ?  this.form.getRegions(val, checkedRegions) : null;
 
     if (isClient){
       let clientFilter: ICFilter = {
@@ -168,7 +163,7 @@ export class FilterService {
       let specialistFilter: ISFilter = {
         id: val.id,
         bm: val.bm,
-        mobility: checkedRegions,
+        mobility: regionsArr,
         interests: activitiesArr,
         experience: val.experience,
         date: val.date
@@ -178,6 +173,27 @@ export class FilterService {
     }
   }
 
+  filterForCompany(client: IClient){
+    const interestsArr = client.need? [client.need] : client.activities
+    const filt : ISFilter = {
+      id: null,
+      bm: null,
+      mobility: null,
+      interests: interestsArr,
+      experience: null,
+      date: null
+    }
+    this.createFilter(filt, false)
+  }
+  filterForSpecialist(specialist: ISpecialist){
+    const filt = {
+      name: null,
+      bm: null,
+      activities: specialist.interests,
+      need: true
+    }
+    this.createFilter(filt, true)
+  }
   //                 Filter logic
 
 
@@ -192,20 +208,21 @@ export class FilterService {
     );
   }
 
-  filterDates(arr: Object[], value: number){
-    return arr.filter((element: any) => {
-      // if (element.notice) {} else {
-      // console.log(this.helper.stringToDate(element['available_from']) > this.helper.addDays(value)  )}
-      element['notice'] ?  element.notice <= value :
-      this.helper.stringToDate(element['available_from']) <= this.helper.addDays(value)
+  filterDates(arr: any[], value: number){
+    let result: any[] = [];
+    arr.forEach( element => {
+      switch (true) {
+        case element.available_from && this.helper.stringToDate(element['available_from']) <= this.helper.addDays(value): result.push(element); console.log("Here"); break;
+        case element.notice && element.notice <= value:      result.push(element); break;
+      }
     })
+    return result
   }
   filterNumbers(arr: Object[], value: number, key: string,){
     switch(true){
       case (key === 'experience') : return arr.filter((element: any) => element.experience >= value );
       case (key === 'date') : {
-          this.filterDates(arr, value);
-          return arr;
+          return this.filterDates(arr, value);
       };
       default : return arr;
     }
@@ -224,7 +241,7 @@ export class FilterService {
           break;
         }
         case ( typeof(value) === 'number' ): {
-          // result = this.filterNumbers(result, value as number, keyName)
+          result = this.filterNumbers(result, value as number, keyName)
           break;
         }
         default: {

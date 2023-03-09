@@ -1,5 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { combineLatest, Subscription } from 'rxjs';
 import { IClient, ISpecialist } from 'src/app/interfaces/interfaces';
@@ -32,14 +32,12 @@ export class MapComponent implements OnInit {
   isStarFull: boolean = false;
 
 
-
   center: google.maps.LatLngLiteral = {
     lat: INITIAL_COORDS[0],
     lng: INITIAL_COORDS[1],
   };
-  zoom = 5;
+  zoom = 5;  height = 400;  width = 750;
 
-  contacts: boolean[] = [];
 
   constructor(
     private filter: FilterService,
@@ -47,16 +45,21 @@ export class MapComponent implements OnInit {
     private _favorite : FavoriteListService
   ) {}
 
+  @HostListener('window:resize', ['$event'])
+	onResize(event: { target: { innerWidth: number; }; }) {
+		this.width  = event.target.innerWidth / 2;
+    this.height = event.target.innerWidth / (2*1.875);
+	}
 
   ngOnInit() {
-    
+
     this.cMarkersSubs = this.filter
       .filterData(true)
       .subscribe((value) => (this.clients = value));
 
     this.sMarkersSubs = this.filter
       .filterData(false)
-      .subscribe((value) => (this.specialists = value));  
+      .subscribe((value) => (this.specialists = value));
 
     this.allMarkersSubs = combineLatest([
       this.filter.filterData(true),
@@ -82,14 +85,14 @@ export class MapComponent implements OnInit {
     if (this.showClients && this.showSpecialists && this.showNeed) { return this.allMarkers }
     else {
       if (this.showClients) {
-        return this.showNeed ? this.clients : 
+        return this.showNeed ? this.clients :
         this.showSpecialists?  [...this.getInactiveClients(), ...this.specialists] : this.getInactiveClients()
       }
       if (this.showSpecialists){
         return this.showNeed? [...this.getActiveClients(), ...this.specialists] : this.specialists
       }
       return this.showNeed ? this.getActiveClients() : []
-    } 
+    }
   }
 
 

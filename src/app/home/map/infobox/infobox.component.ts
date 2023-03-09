@@ -14,7 +14,7 @@ import { HelperService } from 'src/app/services/helper.service';
 export class InfoboxComponent {
   @Input() mark!: any;
   @Input() totalMarkers!: any;
-  
+
   isStarFull: boolean = false;
   showContacts: boolean = false;
 
@@ -28,7 +28,7 @@ export class InfoboxComponent {
 
   ngOnInit() {  }
 
-  originalOrder = 
+  originalOrder =
   (    a: KeyValue<string, string>,    b: KeyValue<string, string>  ): number => { return 0; };
 
   toggleContacts() {    this.showContacts = !this.showContacts;  }
@@ -49,14 +49,16 @@ export class InfoboxComponent {
   getButton(condition: boolean){ return this.helper.getButton(condition)}
 
   deleteElement(element: any) {
-    this.isClient(element)? 
+    this.isClient(element)?
     this.filter.removeClient(element)
       : this.filter.removeSpecialist(element);
   }
 
-  match(person: any){}
-  filterForCompany(client: IClient) {}
-  filterForSpecialist(specialist: ISpecialist) {}
+  match(person: any){
+    this.isClient(person)?
+    this.filter.filterForCompany(person as IClient) :
+    this.filter.filterForSpecialist(person as ISpecialist)
+  }
 
   public addFavorite(item : ISpecialist) {
     this._favorite.addSpecialistFavorite(item);

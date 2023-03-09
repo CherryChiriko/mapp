@@ -4,7 +4,7 @@
             class="form-control text-center my-2" placeholder="{{isClient? 'Name': 'ID'}}"
             formControlName = "{{isClient? 'name': 'id'}}">
 
-        <select name="bm" id="{{isClient? 'c-': 's-'}}bm"
+        <select name="{{isClient? 'c-': 's-'}}bm" id="{{isClient? 'c-': 's-'}}bm"
             class="form-select text-center my-3"
             formControlName = "bm">
             <option [ngValue]="null" disabled selected>--Business Manager--</option>
@@ -57,7 +57,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <input type="checkbox" class="form-check-input" id="all-{{macroregion.area}}"
-                (click)="checkAll(macroregion.area)">
+                (click)="checkAll(restrictRegions(macroregion.area))" role="switch">
                 <label class="form-check-label all" for="all-{{macroregion.area}}">
                     All
                 </label>

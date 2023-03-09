@@ -1,8 +1,8 @@
 .favorite{
     position: absolute;
-    right: -10rem;
+    left: 100%;
     top: 0;
-    max-width: 10rem;
+    width: 10rem;
 }
 .favorite-star{
     color: var(--main);
@@ -18,13 +18,25 @@
   'opsz' 48
 }
 
-mat-expansion-panel-header{    
+mat-expansion-panel-header{
     background-color: var(--alten-blue) !important;
-} 
+}
 .contact-box{
     border: transparent;
     margin-left: -.5rem; margin-right: -.5rem;
-    margin-top: .5rem;  
+    margin-top: .5rem;
     text-align: center;
     background-color: var(--light-alten-blue);
+}
+
+@media screen and (max-width: 1500px) {
+  .favorite{
+    width: 7.5rem;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .favorite{
+    width: 100%;
+    position: inherit;
+  }
 }

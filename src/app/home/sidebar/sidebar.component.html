@@ -17,7 +17,7 @@
             style="--color: {{getColor(true).color}};
            --lightColor: {{getColor(true).lightColor}};
            --darkColor: {{getColor(true).darkColor}}"
-           (onFormGroupChange)="onFormGroupChangeEvent($event, true)"
+           (onCFormGroupChange)="onCFormGroupChangeEvent($event)"
            ></app-filter>
 
             <app-filter *ngIf="isFilterSpecialistOpen" [isClient]="false"

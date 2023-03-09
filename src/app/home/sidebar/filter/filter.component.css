@@ -16,34 +16,39 @@ p{
     border-color: var(--bs-btn-active-border-color);
     margin: .2rem;
 }
-.contacts{
-  border: 1px solid var(--darkColor)
-}
-.all{
-  margin-left: 1rem;
-}
+.contacts{  border: 1px solid var(--darkColor)}
+.all{  margin-left: 1rem;}
 
 .mat-expansion-panel-header .mat-expansion-panel-header-title {
     justify-content: center;
     color: white;
 }
-.mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title {
-    color: var(--darkColor);
-}
 .mat-expansion-panel-header {
     background-color: var(--color);
     margin: .5rem; padding:0;
 }
-.mat-expansion-panel-header.mat-expanded {
-    border: 1px solid var(--darkColor);
-    margin: .5rem; padding:0;
-}
 .mat-expansion-panel-header:hover .mat-expansion-panel-header-title{
-    color: var(--darkColor)
+  color: var(--darkColor);
 }
 .mat-expansion-panel-header-title{
   margin-left: 1rem;
 }
+
+.mat-expansion-panel-header.mat-expanded {
+    border: 1px solid var(--darkColor);
+    margin: .5rem; padding:0;
+    color: var(--darkColor);
+    background-color: white;
+}
+.mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title {
+  color: var(--darkColor);
+  background-color: white;
+}
+.mat-expansion-panel-header.mat-epanded:hover .mat-expansion-panel-header-title{
+  color: var(--darkColor);
+  background-color: white;
+}
+
 
 .outline-button{
   border: 1px solid var(--darkColor);
@@ -52,29 +57,6 @@ p{
 /* *{
   border: 1px solid red;
 } */
-
-
-
-  /* .mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title .btn {
-    border-radius: 0.25rem 0.25rem 0 0;
-  } */
-
-  /* .mat-expansion-panel-header:not(.mat-expanded) .mat-expansion-panel-header-title {
-    justify-content: center;
-    background-color: #f0f0f0;
-    border: 1px solid #c4c4c4;
-    border-radius: 0.25rem;
-    padding: 0.375rem 0.75rem;
-    cursor: pointer;
-  }
-
-  .mat-expansion-panel-header:not(.mat-expanded) .mat-expansion-panel-header-title .btn {
-    margin-right: 0.5rem;
-  } */
-
-  /* .mat-expansion-panel {
-    max-width: 10rem;
-  } */
 
   .mat-expansion-panel-content {
     display: flex;

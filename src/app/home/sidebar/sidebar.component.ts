@@ -21,8 +21,6 @@ export class SidebarComponent implements OnInit {
   isFilterOn: boolean = true;
   CFilt!: ICFilter;  SFilt!: ISFilter;
 
-  message = { resultMessage: '', success: false};
-
   constructor(private helper: HelperService, private filter: FilterService){}
 
   ngOnInit(): void {}
@@ -47,36 +45,33 @@ export class SidebarComponent implements OnInit {
 
   onOffFilter(){
     this.toggleOnOff();
-
-    this.isFilterOn?
-    this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
-    this.isFilterOn?
-    this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
+    this.sendAllToFilter();
   }
 
-  onCFormGroupChangeEvent(event: any) {
-    this.CFilt = event;
+  onCFormGroupChangeEvent(event: any[]) {
+    this.CFilt = event[0];
     this.isFilterOn?
     this.filter.createFilter(this.CFilt, true): this.filter.resetCFilter();
   }
-  onSFormGroupChangeEvent(event: any) {
-    this.SFilt = event;
+  onSFormGroupChangeEvent(event: any[]) {
+    this.SFilt = event[0];
+    const checkedRegions: string[] = event[1]
     this.isFilterOn?
-    this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
+    this.filter.createFilter(this.SFilt, false, checkedRegions): this.filter.resetSFilter();
   }
 
-  onFormGroupChangeEvent(event: any, isClient: boolean) {
-    let filt  = isClient ? this.CFilt : this.SFilt;
-    filt = event;
-  }
+  // onFormGroupChangeEvent(event: any, isClient: boolean) {
+  //   if (isClient) { this.CFilt = event}
+  //   // isClient ? this.CFilt : this.SFilt = event;
+  // }
+
   sendToFilter(isClient: boolean){
     const filt  = isClient ? this.CFilt : this.SFilt;
     const clear = isClient ? this.filter.resetCFilter() : this.filter.resetSFilter();
     this.isFilterOn?
     this.filter.createFilter(filt, isClient): clear;
-    // this.isFilterOn?
-    // this.filter.createFilter(this.SFilt, false): this.filter.resetSFilter();
   }
+  sendAllToFilter(){ this.sendToFilter(true); this.sendToFilter(false);}
 
   getButton(condition: boolean){ return this.helper.getButton(condition)}
 

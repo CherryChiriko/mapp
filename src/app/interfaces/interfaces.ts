@@ -59,6 +59,7 @@ export interface ISFilter {
   id: string | null;
   bm: string | null;
   mobility: string[] | null;
+  regions?: string[] | null;
   interests: string[] | null;
   experience: number | null;
   date: number | null;
