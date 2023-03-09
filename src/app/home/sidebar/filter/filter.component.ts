@@ -65,7 +65,7 @@ export class FilterComponent {
   }
 
   clearSFilter(){
-    this.cFilterForm.reset(); this.filter.resetSFilter(); this.checkedRegions = [];};
+    this.sFilterForm.reset(); this.filter.resetSFilter(); this.checkedRegions = [];};
   clearCFilter(){
     this.cFilterForm.reset(); this.filter.resetCFilter()};
 

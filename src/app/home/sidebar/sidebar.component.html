@@ -25,10 +25,6 @@
            --lightColor: {{getColor(false).lightColor}};
            --darkColor: {{getColor(false).darkColor}}"
            (onSFormGroupChange)="onSFormGroupChangeEvent($event)"></app-filter>
-
-           <button class="btn btn-danger m-2" (click)="clearFilter()"
-           *ngIf="isFilterClientOpen || isFilterSpecialistOpen">
-            Clear all</button>
         </div>
         <hr>
         <h4 (click)="toggleNew()">Add New</h4>

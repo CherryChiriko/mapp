@@ -41,8 +41,6 @@ export class SidebarComponent implements OnInit {
 
   getColor(condition: boolean){return this.helper.getColorScheme(condition)}
 
-  clearFilter(){ this.filter.resetAllFilters();}
-
   onOffFilter(){
     this.toggleOnOff();
     this.sendAllToFilter();
