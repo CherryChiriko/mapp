@@ -102,6 +102,7 @@ export class ExcelService {
       background: s.background,
       interests: interestsStr,
       available_from: s.available_from ? s.available_from : null,
+      //available_from: new Date(s.available_from).toLocaleDateString("it-IT"),
       notice : s.notice
     };
   }

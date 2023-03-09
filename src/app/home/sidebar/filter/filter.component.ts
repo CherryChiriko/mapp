@@ -15,7 +15,7 @@ import data from 'src/assets/specifics.json';
 export class FilterComponent {
   @Input() isClient!: boolean;
   @Output() private onFormGroupChange = new EventEmitter<any>();
-  // @Output() private onCFormGroupChange = new EventEmitter<any>();
+  //@Output() private onCFormGroupChange = new EventEmitter<any>();
   @Output() private onSFormGroupChange = new EventEmitter<any>();
 
   BMs: string[] = data.BMs;
