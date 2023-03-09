@@ -47,8 +47,8 @@ export class MapComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
 	onResize(event: { target: { innerWidth: number; }; }) {
-		this.width = event.target.innerWidth / 2;
-    this.height = event.target.innerWidth/(2*1.875);
+		this.width  = event.target.innerWidth / 2;
+    this.height = event.target.innerWidth / (2*1.875);
 	}
 
   ngOnInit() {

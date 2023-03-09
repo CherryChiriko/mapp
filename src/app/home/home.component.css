@@ -1,4 +1,4 @@
-.left-aligned{
+.right-aligned{
     width: 30%;
     position: absolute;
     right: 5rem;
@@ -8,15 +8,26 @@
     background-color: var(--main);
     align-content: center;
 }
-/* *{
+*{
     border: 1px solid red;
-} */
+}
+
+@media screen and (max-width: 1200px) {
+  /* #map-div {margin-left: -100px; margin-top: 100px; padding: 0; border: 1px solid blueviolet} */
+  #total-div{ padding: 0; margin: 0;}
+  #map{
+    position: absolute; left: 0;
+    background-color: violet;
+  }
+}
 
 @media screen and (max-width: 1000px) {
-    .left-aligned {
-      width:40%;
-    }
-    /* .map{
-        width: 300px;
-    } */
+    .right-aligned {      width:40%;    }
+    #map{ position: absolute; left: 0;
+    background-color: blue;}
+    #total-div{ padding: 0; margin: 0;}
+}
+
+@media screen and (max-width: 600px) {
+
 }
