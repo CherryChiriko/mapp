@@ -36,7 +36,7 @@ export class MapComponent implements OnInit {
     lat: INITIAL_COORDS[0],
     lng: INITIAL_COORDS[1],
   };
-  zoom = 5;  height = 400;  width = 750;
+  zoom = 5;  height = window.innerWidth / (2*1.875);  width = window.innerWidth / 2;
 
 
   constructor(

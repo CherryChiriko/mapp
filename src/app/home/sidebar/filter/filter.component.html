@@ -23,7 +23,7 @@
             <span *ngFor="let role of roles.roles; let i=index">
                 <input type="checkbox" class="btn-check" autocomplete="off"
                 name="{{isClient? 'c': 's'}}-{{role}}"
-                id="{{isClient? 'c': 's'}}-{{role}}" value="{{role}}"
+                id="{{isClient? 'c': 's'}}-{{role}}"
                 formControlName="{{role}}">
                 <label class="btn specialties" [ngClass]="getButton(isClient)" for="{{isClient? 'c': 's'}}-{{role}}">
                 {{ role }}
@@ -64,7 +64,7 @@
                 <hr>
                 <span *ngFor="let region of macroregion.regions; let i=index">
                     <input type="checkbox" class="btn-check" autocomplete="off" name="{{macroregion.area}}"
-                    id="new-{{region}}" value="{{region}}"
+                    id="new-{{region}}"
                     formControlName="{{region}}">
                     <label class="btn specialties" [ngClass]="getButton(isClient)" for="new-{{region}}">
                     {{ region }}

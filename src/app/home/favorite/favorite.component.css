@@ -45,7 +45,7 @@ mat-expansion-panel-header{
   .favorite{    width: 7.5rem;  }
 }
 @media screen and (max-width: 1050px) {
-  .favorite{    width: 100%; position: inherit;  }
+  .favorite{    width: 100%; position: inherit; margin-top: 1rem; }
 }
 /* @media screen and (max-width: 1200px) {
   .favorite{

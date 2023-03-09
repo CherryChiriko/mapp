@@ -8,9 +8,9 @@
     background-color: var(--main);
     align-content: center;
 }
-*{
+/* *{
     border: 1px solid red;
-}
+} */
 
 @media screen and (max-width: 1400px) {
   #total-div     {     padding: 0; margin: 0;        }
@@ -21,15 +21,16 @@
   .right-aligned {     right: 4.5rem;                }
 }
 @media screen and (max-width: 1200px) {
-  .right-aligned {     right: 4rem;                  }
+  .right-aligned {     right: 1rem; width:35%                  }
 }
 @media screen and (max-width: 1000px) {
-  .right-aligned {      width:40%; right: 0;       }
-  #map{   background-color: blue;}
+  .right-aligned {     right: 0;                     }
+  /* #map{   background-color: blue;} */
+  #total-div     {      width:90%      }
 }
 @media screen and (max-width: 800px) {
   .right-aligned {      width:40%;                   }
-  #map{   background-color: violet;}
+  /* #map{   background-color: violet;} */
 }
 /* @media screen and (max-width: 1200px) { */
   /* #map-div {margin-left: -100px; margin-top: 100px; padding: 0; border: 1px solid blueviolet} */
