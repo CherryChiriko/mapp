@@ -148,7 +148,6 @@ export class FilterService {
     val[activityName] : this.form.convertToArray(val, activityName);
     const regionsArr : string[] | null =
     !isClient && val.mobility ?  this.form.getRegions(val, checkedRegions) : null;
-    // const activitiesArr : string[] = [];
 
     if (isClient){
       let clientFilter: ICFilter = {

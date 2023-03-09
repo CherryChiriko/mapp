@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <google-map #map height="400px" width="750px" [center]="center" [zoom]="zoom">
+    <google-map id="map" [height]="height" [width]="width" [center]="center" [zoom]="zoom">
         <map-marker #marker="mapMarker" [icon]="getIcon(isClient(mark), isActive(mark))"
         *ngFor="let mark of showMarkers(); let i=index"
         [position]="{lat: mark.latitude, lng: mark.longitude}"
