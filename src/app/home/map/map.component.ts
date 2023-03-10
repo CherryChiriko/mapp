@@ -36,7 +36,9 @@ export class MapComponent implements OnInit {
     lat: INITIAL_COORDS[0],
     lng: INITIAL_COORDS[1],
   };
-  zoom = 5;  height = window.innerWidth / (2*1.875);  width = window.innerWidth / 2;
+  zoom = 5;
+  height = window.innerWidth <= 1050? window.innerWidth / 2 : window.innerWidth / (2*1.875);
+  width = window.innerWidth / 2;
 
 
   constructor(
@@ -48,7 +50,7 @@ export class MapComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
 	onResize(event: { target: { innerWidth: number; }; }) {
 		this.width  = event.target.innerWidth / 2;
-    this.height = event.target.innerWidth / (2*1.875);
+    this.height = window.innerWidth <= 1050? window.innerWidth / 2 : window.innerWidth / (2*1.875);
 	}
 
   ngOnInit() {
