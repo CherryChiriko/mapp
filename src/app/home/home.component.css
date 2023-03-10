@@ -1,46 +1,23 @@
 .right-aligned{
     width: 30%;
     position: absolute;
-    right: 5rem;
+    right: 11rem;
+    min-width: 315px;
 }
 .sidebar, .excel {    width: 100%;}
 .excel{
     background-color: var(--main);
     align-content: center;
 }
+#total-div{  margin: 0;}
+#map {  position: relative; left: 0;}
 /* *{
     border: 1px solid red;
 } */
 
-@media screen and (max-width: 1400px) {
-  #total-div     {     padding: 0; margin: 0;        }
-  #map           {     position: absolute; left: 0;  }
-  .right-aligned {     right: 4rem;                  }
-}
-@media screen and (max-width: 1250px) {
-  .right-aligned {     right: 4.5rem;                }
-}
-@media screen and (max-width: 1200px) {
-  .right-aligned {     right: 1rem; width:35%                  }
-}
-@media screen and (max-width: 1000px) {
-  .right-aligned {     right: 0;                     }
-  /* #map{   background-color: blue;} */
-  #total-div     {      width:90%      }
-}
-@media screen and (max-width: 800px) {
-  .right-aligned {      width:40%;                   }
-  /* #map{   background-color: violet;} */
-}
-/* @media screen and (max-width: 1200px) { */
-  /* #map-div {margin-left: -100px; margin-top: 100px; padding: 0; border: 1px solid blueviolet} */
-  /* #total-div{ padding: 0; margin: 0;}
-  #map{    background-color: violet;  }
-  .right-aligned{    right: 0;  }
-} */
 
-
-
-@media screen and (max-width: 600px) {
-
+@media screen and (max-width: 1050px){
+  #map           {     width:100vw;                       }
+  .right-aligned {     left: 35vw; position: relative;    }
 }
+

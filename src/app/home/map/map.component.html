@@ -1,7 +1,6 @@
 
-<div class="container mt-5" [style.width.px]="width+100">
-  <!-- {{width}} -->
-    <div class="row">
+<div class="ms-3 mt-5" [style.width.px]="width">
+    <div class="row" id="marker-row">
         <img class="mb-2 col-1 marker-icon" src="{{getIcon(true)}}">
         <div class="form-check form-switch col-3">
             <input class="form-check-input" (click)="cToggleShow()"

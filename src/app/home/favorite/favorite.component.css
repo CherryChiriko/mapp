@@ -29,27 +29,9 @@ mat-expansion-panel-header{
     background-color: var(--light-alten-blue);
 }
 
-@media screen and (max-width: 1500px) {
-  .favorite{    width: 7.5rem;  }
-}
-@media screen and (max-width: 1400px) {
-  .favorite{    width: 10rem;  }
-}
-@media screen and (max-width: 1250px) {
-  .favorite{    width: 7.5rem;  }
-}
-@media screen and (max-width: 1200px) {
-  .favorite{    width: 10rem;  }
-}
-@media screen and (max-width: 1100px) {
-  .favorite{    width: 7.5rem;  }
-}
+/* @media screen and (max-width: 1500px){
+  .favorite{    width: 20rem; }
+} */
 @media screen and (max-width: 1050px) {
   .favorite{    width: 100%; position: inherit; margin-top: 1rem; }
 }
-/* @media screen and (max-width: 1200px) {
-  .favorite{
-    width: 100%;
-    position: inherit;
-  }
-} */
