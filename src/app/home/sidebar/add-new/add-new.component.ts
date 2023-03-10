@@ -138,6 +138,8 @@ export class AddNewComponent {
       interests: interestsArr,
       mobility: regionsArr,
       //start: date
+      available_from: val.available_from ? val.available_from : null,
+      notice : val.notice
     }
     console.log(newSpecialist)
     this.filter.addSpecialist(this.form.formatSpecialist(newSpecialist));
