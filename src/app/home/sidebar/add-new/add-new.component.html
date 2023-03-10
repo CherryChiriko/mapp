@@ -159,14 +159,14 @@
                 <span class="me-3">Notice time</span>
                 <input type="number" name="notice"
                     class="form-control "  min="1" max="100"
-                    formControlName = "start">
+                    formControlName = "notice">
                 <span class="input-group-text in-text">days</span>
             </div>
 
             <div class="input-group my-3" *ngIf="!showNotice">
                 <mat-form-field>
                     <mat-label>Pick a date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName = "start">
+                    <input matInput [matDatepicker]="picker" formControlName = "available_from">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>

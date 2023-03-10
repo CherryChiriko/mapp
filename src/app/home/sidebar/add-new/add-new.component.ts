@@ -64,7 +64,9 @@ export class AddNewComponent {
       interests: new FormGroup({}),
       main: new FormControl(null),
       mobility: new FormGroup({}),
-      start: new FormControl<Date | null | number>(null)
+      //start: new FormControl<Date | null | number>(null)
+      notice: new FormControl<number | null>(null),
+      available_from: new FormControl<Date | null>(null)
     });
 
     this.form.addElementToFormGroup(this.clientForm, 'activities', this.rolesArr)
@@ -135,7 +137,7 @@ export class AddNewComponent {
       experience: val.experience,
       interests: interestsArr,
       mobility: regionsArr,
-      start: date
+      //start: date
     }
     console.log(newSpecialist)
     this.filter.addSpecialist(this.form.formatSpecialist(newSpecialist));
